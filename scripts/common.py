@@ -6,6 +6,9 @@ ROOT = Path(__file__).resolve().parent.parent
 CONFIG = json.loads((ROOT / 'site.json').read_text())
 OVERVIEW = json.loads((ROOT / 'data/overview.json').read_text())
 CITATIONS = json.loads((ROOT / 'data/citations.json').read_text())
+MAP_FILE = ROOT / 'verification/paper/statement-map.yaml'
+PAPER_FILE = ROOT / 'verification/paper/paper.json'
+NAME_FIELDS = ('challenge', 'library', 'algebraic_analysis')
 REFS = ROOT / 'verification/lean-references/references.json'
 DAG = ROOT / 'verification/lean-dag/graph.json'
 RECORD = ROOT / 'verification/record.json'
@@ -56,18 +59,20 @@ def check_formal(formal):
     return head
 
 
+def statement_map():
+    """The paper's statement map, as copied by scripts/paper.py."""
+    import yaml
+    return yaml.safe_load(MAP_FILE.read_text())
+
+
+def names_of(entry, fields=NAME_FIELDS):
+    return [x['name'] for f in fields for x in entry.get(f, [])]
+
+
 def all_lean_names():
-    """Every Lean name the overview data mentions."""
-    names = set()
-    for group in ('results', 'lemmas', 'formal_only'):
-        for item in OVERVIEW[group]:
-            for key in ('challenge', 'library', 'lean'):
-                if isinstance(item.get(key), list):
-                    names.update(item[key])
-            names.update(s['decl'] for s in item.get('steps', []))
-    for c in CITATIONS['citations'].values():
-        names.update(c['lean'])
-    return sorted(names)
+    """Every Lean name the statement map mentions."""
+    smap = statement_map()
+    return sorted({n for e in smap['environments'] + smap.get('proof_steps', []) for n in names_of(e)})
 
 
 def comparator_names(formal=None):

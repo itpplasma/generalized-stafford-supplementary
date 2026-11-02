@@ -168,7 +168,11 @@ def main():
     # constant, including the names the overview cites directly.
     wanted = set(all_lean_names()) | set(comparator_names(formal))
     names = sorted({u[3] for found in usages.values() for u in found} | wanted)
-    ranges = lean_ranges(formal, CONFIG['formal']['import_groups'], names)
+    # Library files built but not imported by the project resolve in their own environment.
+    lib_root = next(r for r in roots if r[0] == 'library')
+    built_lib = [rel.removesuffix('.lean').replace('/', '.') for rel in linked['library']
+                 if (lib_root[2] / rel.replace('.lean', '.olean')).exists()]
+    ranges = lean_ranges(formal, CONFIG['formal']['import_groups'] + [built_lib], names)
     targets, index = [], {}
     for name in names:
         if name in ranges and (owner := locate(roots, ranges[name][0])):

@@ -1,30 +1,50 @@
 {
-  "title": "Theorem A in Lean",
+  "title": "Theorem A: paper and Lean proof",
   "subtitle": "Affine generation over simple Noetherian rings with infinite centre: the formal proof",
   "formal": {
     "repo": "itpplasma/generalized-stafford-formal",
-    "commit": "17f84e3bc693b309f40dc5c75a901ec891214bf0",
+    "commit": "e63321970bcb7cf360a378bf48368f23d9bc1e6a",
     "label": "generalized-stafford-formal",
     "pages": "sources/formal",
-    "lean_state": ["*.lean", "lakefile.toml", "lake-manifest.json", "lean-toolchain"],
-    "skip_prefixes": ["tests/"],
+    "lean_state": [
+      "*.lean",
+      "lakefile.toml",
+      "lake-manifest.json",
+      "lean-toolchain"
+    ],
+    "skip_prefixes": [
+      "tests/"
+    ],
     "import_groups": [
-      ["GeneralizedStafford", "GeneralizedStaffordSolution"],
-      ["GeneralizedStaffordChallenge"],
-      ["Challenge"],
-      ["Solution"]
+      [
+        "GeneralizedStafford",
+        "GeneralizedStaffordSolution"
+      ],
+      [
+        "GeneralizedStaffordChallenge"
+      ],
+      [
+        "Challenge"
+      ],
+      [
+        "Solution"
+      ]
     ],
     "challenge": {
       "file": "GeneralizedStaffordChallenge.lean",
       "copy": "Challenge.lean",
-      "sha256": "2546aae28ceca93fa72326d09bf415fd15a40add94967f8148ab0492c6ef06a5"
+      "sha256": "272c7eb9454d5ef02e6d5bb5ea41e0cbc3d112be9d2a5e931a29b7226dfd413f"
     },
-    "solution": {"file": "GeneralizedStaffordSolution.lean", "copy": "Solution.lean"},
+    "solution": {
+      "file": "GeneralizedStaffordSolution.lean",
+      "copy": "Solution.lean"
+    },
     "comparator": "comparator.json",
     "verification_record": {
       "path": "docs/verification.md",
-      "commit": "b9124425a1bc043e437750b3bcd53e19efde09a7",
-      "note": "The record of the pinned commit is committed in its child commit, which changes no Lean file."
+      "commit": "fd58e810ccb3299772caf425bd89cccd704a3190",
+      "section": "Verification record: challenge restricted to the paper",
+      "note": "The record of the pinned commit is committed in a later commit, which changes no Lean file."
     }
   },
   "library": {
@@ -35,26 +55,100 @@
     "pages": "sources/library"
   },
   "dag": {
-    "imports": ["GeneralizedStafford", "GeneralizedStaffordSolution"],
-    "roots": ["GeneralizedStafford", "GeneralizedStaffordSolution"],
+    "imports": [
+      "GeneralizedStafford",
+      "GeneralizedStaffordSolution"
+    ],
+    "roots": [
+      "GeneralizedStafford",
+      "GeneralizedStaffordSolution"
+    ],
     "helpers": 8,
     "leaves": [
-      {"id": "goldie", "text": "Goldie theory: regular elements form an Ore set, classical quotient ring, Goldie rank",
-       "source": "AlgebraicAnalysis RingTheory.Goldie, Ore", "prefixes": ["AlgebraicAnalysis.RingTheory.Goldie", "AlgebraicAnalysis.Ore", "AlgebraicAnalysis.Module.DenominatorTorsion"]},
-      {"id": "pencil", "text": "central pencils, escape and maximal rank",
-       "source": "AlgebraicAnalysis Module.TorsionEscape", "prefixes": ["AlgebraicAnalysis.Module.TorsionEscape"]},
-      {"id": "germ", "text": "germ calculus for the quotient by Kdim < e: epic germs, Schur division rings, critical filtrations",
-       "source": "AlgebraicAnalysis Module.Germ*, DualSeparation*, Critical*", "prefixes": ["AlgebraicAnalysis.Module.Germ", "AlgebraicAnalysis.Module.DualSeparation", "AlgebraicAnalysis.Module.Critical", "AlgebraicAnalysis.Module.LocSmall"]},
-      {"id": "deviation", "text": "deviation (Gabriel-Rentschler) dimension",
-       "source": "AlgebraicAnalysis Module.Deviation*, Order.Deviation", "prefixes": ["AlgebraicAnalysis.Module.Deviation", "AlgebraicAnalysis.Order.Deviation"]},
-      {"id": "filtered", "text": "filtered rings with commutative Noetherian associated graded ring",
-       "source": "AlgebraicAnalysis Filtration, RingTheory.InfiniteCenter", "prefixes": ["AlgebraicAnalysis.Filtration", "AlgebraicAnalysis.RingTheory.InfiniteCenter"]},
-      {"id": "weyl", "text": "Weyl algebra: simple Noetherian domain, Bernstein filtration",
-       "source": "AlgebraicAnalysis Weyl", "prefixes": ["AlgebraicAnalysis.Weyl"]},
-      {"id": "diffop", "text": "differential operators on smooth affine domains",
-       "source": "AlgebraicAnalysis DifferentialOperators", "prefixes": ["AlgebraicAnalysis.DifferentialOperators"]},
-      {"id": "enveloping", "text": "enveloping algebras: PBW presentation",
-       "source": "AlgebraicAnalysis Enveloping", "prefixes": ["AlgebraicAnalysis.Enveloping"]}
+      {
+        "id": "goldie",
+        "text": "Goldie theory: regular elements form an Ore set, classical quotient ring, Goldie rank",
+        "source": "AlgebraicAnalysis RingTheory.Goldie, Ore",
+        "prefixes": [
+          "AlgebraicAnalysis.RingTheory.Goldie",
+          "AlgebraicAnalysis.Ore",
+          "AlgebraicAnalysis.Module.DenominatorTorsion"
+        ]
+      },
+      {
+        "id": "pencil",
+        "text": "central pencils, escape and maximal rank",
+        "source": "AlgebraicAnalysis Module.TorsionEscape",
+        "prefixes": [
+          "AlgebraicAnalysis.Module.TorsionEscape"
+        ]
+      },
+      {
+        "id": "germ",
+        "text": "germ calculus for the quotient by Kdim < e: epic germs, Schur division rings, critical filtrations",
+        "source": "AlgebraicAnalysis Module.Germ*, DualSeparation*, Critical*",
+        "prefixes": [
+          "AlgebraicAnalysis.Module.Germ",
+          "AlgebraicAnalysis.Module.DualSeparation",
+          "AlgebraicAnalysis.Module.Critical",
+          "AlgebraicAnalysis.Module.LocSmall"
+        ]
+      },
+      {
+        "id": "deviation",
+        "text": "deviation (Gabriel-Rentschler) dimension",
+        "source": "AlgebraicAnalysis Module.Deviation*, Order.Deviation",
+        "prefixes": [
+          "AlgebraicAnalysis.Module.Deviation",
+          "AlgebraicAnalysis.Order.Deviation"
+        ]
+      },
+      {
+        "id": "filtered",
+        "text": "filtered rings with commutative Noetherian associated graded ring",
+        "source": "AlgebraicAnalysis Filtration, RingTheory.InfiniteCenter",
+        "prefixes": [
+          "AlgebraicAnalysis.Filtration",
+          "AlgebraicAnalysis.RingTheory.InfiniteCenter"
+        ]
+      },
+      {
+        "id": "weyl",
+        "text": "Weyl algebra: simple Noetherian domain, Bernstein filtration",
+        "source": "AlgebraicAnalysis Weyl",
+        "prefixes": [
+          "AlgebraicAnalysis.Weyl"
+        ]
+      },
+      {
+        "id": "diffop",
+        "text": "differential operators on smooth affine domains",
+        "source": "AlgebraicAnalysis DifferentialOperators",
+        "prefixes": [
+          "AlgebraicAnalysis.DifferentialOperators"
+        ]
+      },
+      {
+        "id": "enveloping",
+        "text": "enveloping algebras: PBW presentation",
+        "source": "AlgebraicAnalysis Enveloping",
+        "prefixes": [
+          "AlgebraicAnalysis.Enveloping"
+        ]
+      }
+    ],
+    "library_roots": [
+      "AlgebraicAnalysis"
+    ]
+  },
+  "paper": {
+    "repo": "itpplasma/generalized-stafford-paper",
+    "commit": "148631ad09edd9bcad8df3b6eaee6f7e60fc56ce",
+    "map": "statement-map.yaml",
+    "katex": "0.16.22",
+    "attributions": [
+      "Stafford1978b",
+      "Robson1976"
     ]
   }
 }

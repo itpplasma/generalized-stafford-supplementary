@@ -107,22 +107,41 @@ try {
   receipt.first_screen = first;
   assert.equal(first.open_details, 0, 'drill-down sections must start closed');
   await shot('index-desktop.png');
-  // Cited literature results form their own panel, one row per citation.
-  const citations = JSON.parse(fs.readFileSync(path.join(root, 'data/citations.json'), 'utf8')).citations;
-  receipt.citation_rows = await evaluate(`document.querySelectorAll('#citations tbody tr').length`);
-  assert.equal(receipt.citation_rows, Object.keys(citations).length);
+  // Known results: one row per statement-map entry with a citation; one comparison
+  // row per labelled environment of the paper; no math rendering errors.
+  const map = fs.readFileSync(path.join(root, 'verification/paper/statement-map.yaml'), 'utf8');
+  const paper = JSON.parse(fs.readFileSync(path.join(root, 'verification/paper/paper.json'), 'utf8'));
+  receipt.known_rows = await evaluate(`document.querySelectorAll('#citations tbody tr').length`);
+  assert.equal(receipt.known_rows, (map.match(/^    cite:/gm) || []).length);
+  receipt.comparison_rows = await evaluate(`document.querySelectorAll('#paper details.cmp[id^="paper-"]').length`);
+  assert.equal(receipt.comparison_rows, paper.envs.filter(e => e.label).length);
+  receipt.step_rows = await evaluate(`document.querySelectorAll('#paper details.cmp[id^="cmp-step:"]').length`);
+  assert.equal(receipt.step_rows, Object.keys(paper.steps).length);
+  assert.equal(await evaluate(`document.querySelectorAll('.katex-error').length`), 0);
+  assert.equal(await evaluate(`document.querySelectorAll('#paper details[open]').length`), 0);
   await evaluate(`document.getElementById('citations').scrollIntoView()`);
   await shot('index-citations.png');
+  await evaluate(`location.hash = 'paper-thm:Aprime'`);
+  await evaluate(`new Promise(r => setTimeout(r, 150))`);
+  assert.equal(await evaluate(`document.getElementById('paper-thm:Aprime').open`), true);
+  await shot('index-compare-theoremAprime.png');
+  await evaluate(`location.hash = 'cmp-step:descent-step'`);
+  await evaluate(`new Promise(r => setTimeout(r, 150))`);
+  await shot('index-compare-descent-steps.png');
+  await evaluate(`location.hash = 'printed-graph'`);
+  await evaluate(`new Promise(r => setTimeout(r, 150))`);
+  await shot('index-printed-graph.png');
+  await evaluate(`document.querySelectorAll('main details').forEach(d => d.open = false); location.hash = ''; window.scrollTo(0, 0)`);
   await evaluate(`window.scrollTo(0, 0)`);
   // Drill-down: the descent row opens with its proof steps, and a preview shows on focus.
-  await evaluate(`location.hash = 'lemma-DESC'`);
+  await evaluate(`location.hash = 'lemma-descent'`);
   await evaluate(`new Promise(r => setTimeout(r, 100))`);
-  assert.equal(await evaluate(`document.querySelector('#lemma-DESC details').open`), true);
-  await evaluate(`document.querySelector('#lemma-DESC a[data-p]').focus()`);
+  assert.equal(await evaluate(`document.querySelector('#lemma-descent details').open`), true);
+  await evaluate(`document.querySelector('#lemma-descent a[data-p]').focus()`);
   assert.equal(await evaluate(`getComputedStyle(document.querySelector('.lean-preview')).display`), 'block');
   await shot('index-descent-open.png');
-  await evaluate(`document.activeElement.blur(); location.hash = 'result-A'`);
-  await evaluate(`(() => { const d = document.querySelector('#result-A details details'); d.open = true; d.scrollIntoView(); })()`);
+  await evaluate(`document.activeElement.blur(); location.hash = 'result-thm:A'`);
+  await evaluate(`(() => { const d = document.querySelector('[id="result-thm:A"] details details'); d.open = true; d.scrollIntoView(); })()`);
   await shot('index-theoremA-open.png');
   await send('Emulation.setEmulatedMedia', {features: [{name: 'prefers-color-scheme', value: 'dark'}]}, session);
   await open('index.html');
@@ -137,9 +156,9 @@ try {
     open_details: await evaluate(`document.querySelectorAll('main details[open]').length`)};
   assert.equal(receipt.pages['lean-dag.html'].open_details, 0);
   await shot('lean-dag-desktop.png');
-  await evaluate(`location.hash = 'key-DESC'`);
+  await evaluate(`location.hash = 'key-step:descent'`);
   await evaluate(`new Promise(r => setTimeout(r, 100))`);
-  assert.equal(await evaluate(`document.getElementById('key-DESC').open`), true);
+  assert.equal(await evaluate(`document.getElementById('key-step:descent').open`), true);
   await shot('lean-dag-descent.png');
   await open('lean-dag.html', 390, 844, true);
   assert.equal(await evaluate('document.documentElement.scrollWidth > innerWidth + 1'), false, 'lean-dag.html overflows at phone width');

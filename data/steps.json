@@ -1,0 +1,12 @@
+{
+  "about": "Where each proof step of the paper's statement map (proof_steps) is printed. The paper gives steps neutral labels but no LaTeX anchors, so each is located by the environment whose statement or proof contains it and, for part of a proof, by the LaTeX source text that opens and closes the passage. scripts/paper.py fails when a step of the map has no entry or an entry no longer matches the source. `split` cuts the passage into numbered sub-steps that build-site.py pairs with the `-- Step N` comments of the Lean proof.",
+  "steps": {
+    "select": {"env": "lem:select", "part": "statement"},
+    "select-steps-1-2": {"env": "lem:select", "part": "proof", "from": "\\emph{Step 1.}", "split": "\\emph{Step "},
+    "select-step-1": {"env": "lem:select", "part": "proof", "from": "\\emph{Step 1.}", "to": "\\emph{Step 2.}"},
+    "pencil-stability": {"env": "lem:stability", "part": "statement"},
+    "descent-base": {"env": "thm:Aprime", "part": "proof", "from": "$\\mathrm P(N+1)$ holds", "to": "We show that"},
+    "descent-step": {"env": "thm:Aprime", "part": "proof", "from": "\\emph{Step 1 (", "split": "\\emph{Step "},
+    "descent-termination": {"env": "thm:Aprime", "part": "proof", "from": "We show that", "to": "Fix $x$"}
+  }
+}

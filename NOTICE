@@ -1,17 +1,27 @@
-Theorem A in Lean: supplementary material.
+Stafford's identity over simple Noetherian rings: paper and Lean proof,
+supplementary material.
 
 Copyright 2026 Christopher Albert.
 
-The generator scripts, the curated overview data and the generated pages are
+The generator scripts, the curated data under data/ and the page structure are
 distributed under the Apache License, Version 2.0; see LICENSES/Apache-2.0.txt.
 scripts/LeanDeclRanges.lean, scripts/LeanDag.lean and the reference, graph and
 check scripts are adapted from itpplasma/stafford38-supplementary (Apache-2.0,
 same author).
+
+The paper text rendered in index.html, verification/paper/ and paper/main.pdf
+come from itpplasma/generalized-stafford-paper (Christopher Albert, Johanna
+Moser, Maximilian Philipp). That repository states no licence; the authors keep
+their rights, and the material is included for review.
 
 The bundled source pages under sources/formal reproduce Lean files of
 itpplasma/generalized-stafford-formal, and those under sources/library Lean
 files of itpplasma/algebraic-analysis, both under Apache-2.0 with their own
 NOTICE files. verification/formal-verification.md is an unmodified copy of
 docs/verification.md of itpplasma/generalized-stafford-formal. Linked Mathlib
-and Lean sources retain their respective licences. The exact revisions are in
-site.json and verification/record.json.
+and Lean sources retain their respective licences.
+
+assets/katex/ contains the stylesheet and fonts of KaTeX 0.16.22, MIT licence,
+copyright Khan Academy and other contributors; see assets/katex/LICENSE.
+The exact revisions are in site.json, verification/record.json and
+verification/paper/paper.json.

@@ -2,13 +2,15 @@
 Raw dependency graph of a Lean project, as Lean's environment has it.
 
 Run from a built formal checkout (scripts/build-lean-dag.py does this):
-  lake env lean --run <supplementary>/scripts/LeanDag.lean <modules.txt> <roots.txt> <out.json>
+  lake env lean --run <supplementary>/scripts/LeanDag.lean <modules.txt> <roots.txt> <libroots.txt> <out.json>
 Imports the modules listed in modules.txt. A constant belongs to the project
 when the root of its module name is listed in roots.txt. For every project
 constant the output lists its module, its kind and the constants used by its
 type and value: project constants under `uses`, constants of other packages
 under `external`; `externals` gives the module, kind and
-instance-or-projection flag of each of those. scripts/build-lean-dag.py
+instance-or-projection flag of each of those. `library` lists, for every
+constant of a module rooted in libroots.txt that the project reaches through
+such constants, the library constants it uses. scripts/build-lean-dag.py
 contracts this graph to the key declarations of site.json.
 -/
 import Lean
@@ -21,11 +23,12 @@ def kind : ConstantInfo → String
   | .recInfo _ => "rec" | .quotInfo _ => "quot"
 
 def main (args : List String) : IO Unit := do
-  let [modulesPath, rootsPath, outPath] := args
-    | throw (IO.userError "usage: LeanDag modules.txt roots.txt out.json")
+  let [modulesPath, rootsPath, libRootsPath, outPath] := args
+    | throw (IO.userError "usage: LeanDag modules.txt roots.txt libroots.txt out.json")
   initSearchPath (← findSysroot)
   let imports := ((← IO.FS.lines modulesPath).filter (· ≠ "")).map fun m => { module := m.toName }
   let projectRoots := ((← IO.FS.lines rootsPath).filter (· ≠ "")).map String.toName |>.toList
+  let libraryRoots := ((← IO.FS.lines libRootsPath).filter (· ≠ "")).map String.toName |>.toList
   let env ← importModules imports {}
   let modules := env.header.moduleNames
   let moduleOf (c : Name) : Option Name := (env.getModuleIdxFor? c).map (modules[·.toNat]!)
@@ -51,5 +54,24 @@ def main (args : List String) : IO Unit := do
   let externals := seen.toList.filterMap fun d => (env.find? d).map fun info =>
     (d.toString, Json.arr #[Json.str ((moduleOf d).getD .anonymous).toString, Json.str (kind info),
       Json.bool (Meta.isInstanceCore env d || env.isProjectionFn d)])
+  let isLibrary (c : Name) : Bool := match moduleOf c with
+    | some m => libraryRoots.contains m.getRoot
+    | none => false
+  -- Library constants reachable from the project through library constants.
+  let mut todo : Array Name := seen.toList.filter isLibrary |>.toArray
+  let mut done : NameSet := {}
+  let mut library : Array (String × Json) := #[]
+  while h : todo.size > 0 do
+    let c := todo.back
+    todo := todo.pop
+    if done.contains c then continue
+    done := done.insert c
+    let some info := env.find? c | continue
+    let mut uses : Array Json := #[]
+    for d in info.getUsedConstantsAsSet do
+      if d != c && isLibrary d then
+        uses := uses.push (Json.str d.toString)
+        unless done.contains d do todo := todo.push d
+    library := library.push (c.toString, Json.arr uses)
   IO.FS.writeFile outPath (Json.mkObj [("constants", Json.mkObj out.toList),
-    ("externals", Json.mkObj externals)]).compress
+    ("externals", Json.mkObj externals), ("library", Json.mkObj library.toList)]).compress

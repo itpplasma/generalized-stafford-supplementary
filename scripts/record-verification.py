@@ -54,7 +54,7 @@ def main():
     endpoints = blob(formal, pin, 'docs/endpoints.txt').decode().split()
     text = blob(formal, rec['commit'], rec['path']).decode()
     (ROOT / 'verification/formal-verification.md').write_text(text)
-    section = re.search(r'## Release verification record\n(.*?)\n## ', text, re.S)[1].strip()
+    section = re.search(r'## ' + re.escape(rec['section']) + r'\n(.*?)\n## ', text, re.S)[1].strip()
     commands = re.search(r'```sh\n(.*?)```', section, re.S)[1].strip().split('\n')
     if pin not in section or got not in section:
         raise SystemExit('the release verification record does not name the pin and the challenge sha256')

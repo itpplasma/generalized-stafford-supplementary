@@ -3,7 +3,7 @@
 
 With --formal (a built checkout with the Lean state of the pinned commit) the
 script runs scripts/LeanDag.lean and scripts/LeanDeclRanges.lean, contracts
-Lean's own dependency graph to the key declarations of data/overview.json and
+Lean's own dependency graph to the key declarations of the paper's statement map and
 stores the result in verification/lean-dag/graph.json. Without --formal it
 renders from that file. Every edge comes from the constants Lean records in
 the declarations' types and proofs; nothing is inferred from names. Library
@@ -13,7 +13,7 @@ Requires Graphviz (`dot`).
 from pathlib import Path
 import argparse, json, re
 
-from common import BASE_CSS, CITATIONS, CONFIG, DAG, OVERVIEW, PAGES, ROOT, attr, check_formal, comparator_names, \
+from common import BASE_CSS, CONFIG, DAG, OVERVIEW, PAGES, ROOT, attr, check_formal, comparator_names, \
     esc, lean_run, scratch
 from graphs import FILL, HEAD, SVG_CSS, label, name_lines, node, svg, width
 
@@ -21,27 +21,61 @@ LEAVES = {leaf['id']: leaf for leaf in CONFIG['dag']['leaves']}
 HELPERS = CONFIG['dag'].get('helpers', 8)
 
 
-def keys(compared):
-    """Key nodes: id -> dict(names, title, short, label, kind), in reading order."""
+MAIN = ('thm:Aprime', 'thm:A')
+DESCENT = ('descent-base', 'descent-step', 'descent-termination')
+
+
+def paper_names():
+    from common import PAPER_FILE
+    paper = json.loads(PAPER_FILE.read_text())
     out = {}
-    for item in OVERVIEW['lemmas']:
-        if item['lean']:
-            out[item['id']] = dict(names=item['lean'], title=item['title'], short=item['short'],
-                                   label=item.get('label'), kind='dep', anchor=f'lemma-{item["id"]}')
-    for item in OVERVIEW['formal_only']:
-        names = compared if item['lean'] == 'comparator' else item['lean']
-        out[item['id']] = dict(names=names, title=item['title'], short=item['short'], label=None,
-                               kind='goal' if item['id'] == 'SOL' else 'step', anchor=None)
-    for item in OVERVIEW['results']:
-        out[item['id']] = dict(names=item['library'], title=item['title'], short=item['name'],
-                               label=item['label'], kind='goal' if item['id'] in ('AP', 'A') else 'stmt',
-                               anchor=f'result-{item["id"]}')
-    seen = {}
-    for nid, k in out.items():
-        for n in k['names']:
-            if n in seen:
-                raise SystemExit(f'{n} belongs to two key nodes: {seen[n]}, {nid}')
-            seen[n] = nid
+    for e in paper['envs']:
+        if e['label']:
+            out[e['label']] = e['name']
+        for i in e['items']:
+            out[i['label']] = e['name'] + i['number']
+    return out
+
+
+def project(names):
+    return [n for n in names if n.startswith(('GeneralizedStafford.', 'GeneralizedStaffordChallenge.'))]
+
+
+def keys(compared):
+    """Key nodes, one per statement-map entry with project declarations:
+    id -> dict(names, title, short, label, kind, anchor). Names may be shared."""
+    from common import statement_map, names_of
+    smap, pname = statement_map(), paper_names()
+    out = {}
+    for e in smap['environments']:
+        names = project(names_of(e, ('library',)))
+        if not names:
+            continue
+        lab = e['label']
+        kind = ('goal' if lab in MAIN else 'cited' if 'cite' in e else 'stmt' if e.get('challenge') else 'dep')
+        anchor = ('known-' if 'cite' in e else 'result-' if e.get('challenge') else 'lemma-') + lab
+        out[lab] = dict(names=names, title=pname[lab], short=e['title'], label=lab, kind=kind, anchor=anchor)
+    covered = {n for k in out.values() for n in k['names']}
+    steps = {s['step']: s for s in smap.get('proof_steps', [])}
+    groups = [('step:descent', DESCENT, 'Proof of Theorem A′', 'two-call descent: base, Steps 1-8, endpoint')]
+    groups += [(f'step:{x}', (x,), 'Proof step', steps[x]['title']) for x in steps if x not in DESCENT]
+    for sid, members, title, short in groups:
+        names = [n for x in members for n in project(names_of(steps[x], ('library',))) if n not in covered]
+        if names:
+            out[sid] = dict(names=names, title=title, short=short, label=None, kind='step',
+                            anchor='lemma-descent' if sid == 'step:descent' else f'cmp-{sid}')
+    out['SOL'] = dict(names=compared, title='Palomar solution', short=f'the {len(compared)} compared statements',
+                      label=None, kind='goal', anchor=None)
+    return out
+
+
+def cited_names():
+    """Library (AlgebraicAnalysis) declarations of the map -> labels citing them."""
+    from common import statement_map
+    out = {}
+    for e in statement_map()['environments']:
+        for x in e.get('algebraic_analysis', []):
+            out.setdefault(x['name'], []).append(e['label'])
     return out
 
 
@@ -67,10 +101,14 @@ def extract(formal):
         tmp = Path(tmp)
         (tmp / 'modules.txt').write_text('\n'.join(CONFIG['dag']['imports']) + '\n')
         (tmp / 'roots.txt').write_text('\n'.join(CONFIG['dag']['roots']) + '\n')
-        lean_run(formal, 'LeanDag.lean', tmp / 'modules.txt', tmp / 'roots.txt', tmp / 'raw.json')
+        (tmp / 'libroots.txt').write_text('\n'.join(CONFIG['dag']['library_roots']) + '\n')
+        lean_run(formal, 'LeanDag.lean', tmp / 'modules.txt', tmp / 'roots.txt', tmp / 'libroots.txt', tmp / 'raw.json')
         raw = json.loads((tmp / 'raw.json').read_text())
         g, ext = raw['constants'], raw['externals']
-        owner = {name: nid for nid, k in K.items() for name in k['names']}
+        owner = {}
+        for nid, k in K.items():
+            for name in k['names']:
+                owner.setdefault(name, []).append(nid)
         missing = [n for n in owner if n not in g]
         if missing:
             raise SystemExit('unknown key declarations: ' + ', '.join(missing))
@@ -80,10 +118,22 @@ def extract(formal):
             return (name in ext and ext[name][1] == 'theorem' and not ext[name][2]
                     and not name.rpartition('.')[2].startswith('inst'))
 
-        cited = {n: key for key, c in CITATIONS['citations'].items() for n in c['lean']}
-        missing = [n for n in cited if n not in ext]
-        if missing:
-            raise SystemExit('cited declarations the project does not use directly: ' + ', '.join(missing))
+        cited = cited_names()
+        lib = raw['library']
+        lib_memo = {}
+        def lib_cites(e):
+            """Labels whose library declarations `e` reaches through library constants."""
+            if e not in lib_memo:
+                found, todo, seen = set(), [e], {e}
+                while todo:
+                    c = todo.pop()
+                    found.update(cited.get(c, ()))
+                    for d in lib.get(c, ()):
+                        if d not in seen:
+                            seen.add(d)
+                            todo.append(d)
+                lib_memo[e] = found
+            return lib_memo[e]
         memo = {}
         def reach(start, stop):
             """Keys and leaves reached from `start` through constants outside `stop`."""
@@ -95,11 +145,10 @@ def extract(formal):
                 for e in g[c]['external']:
                     if result(e) and (lid := leaf_of(ext[e][0])):
                         leaves.add(lid)
-                    if e in cited:
-                        cites.add(cited[e])
+                    cites.update(lib_cites(e))
                 for d in g[c]['uses']:
                     if d in owner and d not in stop:
-                        found.add(owner[d])
+                        found.update(owner[d])
                     elif d in g and d not in seen and d not in owner:
                         seen.add(d)
                         todo.append(d)
@@ -119,11 +168,9 @@ def extract(formal):
                     if d in g and d not in owner and visible(g, d) and g[d]['kind'] == 'theorem':
                         hk, hl, _ = reach(d, stop)
                         helpers[d] = dict(keys=sorted(hk - {nid}), leaves=sorted(hl))
-            nodes[nid] = dict(keys=sorted(found - {nid}), leaves=sorted(leaves), cites=sorted(cites),
+            nodes[nid] = dict(keys=sorted(found - {nid}), leaves=sorted(leaves), cites=sorted(cites - {nid}),
                               helpers=helpers)
-        unused = sorted(set(cited.values()) - {c for v in nodes.values() for c in v['cites']})
-        if unused:
-            raise SystemExit('citations whose Lean declarations no key declaration uses: ' + ', '.join(unused))
+
 
         full = {n: dict(module=v['module'], kind=v['kind'],
                         uses=sorted(d for d in v['uses'] if d in g and visible(g, d)))
@@ -147,32 +194,26 @@ def source_href(ranges, name, here=ROOT):
     return f'./{PAGES["formal"]}/{module.replace(".", "/")}.lean.html#L{line}'
 
 
+def closure(nodes):
+    """All keys each key depends on, transitively (shared names may close cycles)."""
+    out = {}
+    for start in nodes:
+        seen, todo = set(), list(nodes[start]['keys'])
+        while todo:
+            k = todo.pop()
+            if k not in seen:
+                seen.add(k)
+                todo.extend(nodes[k]['keys'])
+        out[start] = seen - {start}
+    return out
+
+
 def reduce_leaves(nodes):
     """Draw a leaf only into the first nodes that use it: drop X -> K when a
     key below K (one K depends on) already uses X."""
-    below = {}
-    def closure(nid):
-        if nid not in below:
-            below[nid] = set()
-            for k in nodes[nid]['keys']:
-                below[nid] |= {k} | closure(k)
-        return below[nid]
-    return {nid: [l for l in v['leaves'] if not any(l in nodes[b]['leaves'] for b in closure(nid))]
+    below = closure(nodes)
+    return {nid: [l for l in v['leaves'] if not any(l in nodes[b]['leaves'] for b in below[nid])]
             for nid, v in nodes.items()}
-
-
-def closure(nodes):
-    """All keys each key depends on, transitively."""
-    out = {}
-    def deps(k):
-        if k not in out:
-            out[k] = set()
-            for j in nodes[k]['keys']:
-                out[k] |= {j} | deps(j)
-        return out[k]
-    for k in nodes:
-        deps(k)
-    return out
 
 
 def reduce_keys(nodes):
@@ -277,10 +318,17 @@ if(!t)return;for(let p=t;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=tru
 addEventListener('hashchange',open);open();})();'''
 
 
+def anchor_of(label):
+    from common import statement_map
+    e = next(x for x in statement_map()['environments'] if x['label'] == label)
+    return ('known-' if 'cite' in e else 'result-' if e.get('challenge') else 'lemma-') + label
+
+
 def page(data):
     K = keys(data['compared'])
+    pname = paper_names()
     nodes, ranges = data['nodes'], data['ranges']
-    kinds = [('cited', 'library input (AlgebraicAnalysis)'), ('dep', 'main lemma'), ('step', 'formal-only step'),
+    kinds = [('cited', 'library input or known result of the paper'), ('dep', 'lemma'), ('step', 'proof step'),
              ('stmt', 'result'), ('goal', 'main theorem or the compared statements')]
     legend = ''.join(f'<li style="--f:var(--{FILL[c]});--k:var(--{FILL[c]}k)">{t}</li>' for c, t in kinds)
     cards = []
@@ -292,8 +340,8 @@ def page(data):
         if len(k['names']) > 12:
             decls += f' · and {len(k["names"]) - 12} more'
         cites = nodes[nid].get('cites', [])
-        cited = (f'<p class="small cites">Known results used (formalized): '
-                 + '; '.join(f'<a href="index.html#citations">{esc(CITATIONS["citations"][c]["reference"] + ", " + CITATIONS["citations"][c]["item"])}</a>' for c in cites)
+        cited = (f'<p class="small cites">{CONFIG["library"]["label"]} declarations of the paper used: '
+                 + '; '.join(f'<a href="index.html#{anchor_of(c)}">{esc(pname.get(c, c))}</a>' for c in cites)
                  + '</p>') if cites else ''
         direct = sorted(nodes[nid]['helpers'])
         listing = (f'<details><summary class="small">All {len(direct)} project lemmas used directly</summary>'
