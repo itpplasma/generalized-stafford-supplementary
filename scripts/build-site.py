@@ -325,7 +325,7 @@ def reference(env):
         b = paper['bib'][key]
         items = re.split(r',\s*', loc)
         pages = [page_of(key, it) for it in items]
-        where = ', '.join(f'{it} ({p})' if p else f'{it} (page not checked)' for it, p in zip(items, pages))
+        where = ', '.join(f'{it} ({p})' if p else it for it, p in zip(items, pages))
         parts.append(f'<a href="#bib-{key}">[{b["n"]}]</a> {esc(b["author"])} {esc(b["year"])}, {esc(where)}')
     return '<br>'.join(parts)
 
