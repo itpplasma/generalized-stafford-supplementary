@@ -1,11 +1,11 @@
 {
 "schema": 1,
 "repo": "itpplasma/generalized-stafford-paper",
-"commit": "148631ad09edd9bcad8df3b6eaee6f7e60fc56ce",
-"commit_date": "2026-11-02T15:31:59+01:00",
+"commit": "1ddc1697376d63035de90fdcfd1c3047ab117847",
+"commit_date": "2026-11-02T16:24:58+01:00",
 "pdf": {
 "path": "paper/main.pdf",
-"sha256": "489ea501651383f616527da0c412aaf67ca63d907d25a0c6a2294bceeb341f13",
+"sha256": "e4d629c8199c0e6f5ecb1e359dcfe8e00224d4d46c4460c7368c6ada59364fd1",
 "pages": 18
 },
 "katex": "0.16.22",
@@ -206,7 +206,7 @@
 "n": 29,
 "author": "",
 "year": "2026",
-"html": "generalized-stafford-formal: a <span>L</span>ean 4 formalization of <span>S</span>tafford’s identity over simple <span>N</span>oetherian rings. <a href=\"https://github.com/itpplasma/generalized-stafford-formal\" class=\"uri\">https://github.com/itpplasma/generalized-stafford-formal</a>, commit e63321970bcb7cf360a378bf48368f23d9bc1e6a (2026)"
+"html": "generalized-stafford-formal: a <span>L</span>ean 4 formalization of <span>S</span>tafford’s identity over simple <span>N</span>oetherian rings. <a href=\"https://github.com/itpplasma/generalized-stafford-formal\" class=\"uri\">https://github.com/itpplasma/generalized-stafford-formal</a>, commit dd9447beb20b889a158a74fdb9328f99a774a994 (2026)"
 },
 "Comparator": {
 "n": 30,

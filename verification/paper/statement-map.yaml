@@ -23,7 +23,7 @@
 # until the statement is formalized.
 
 formal_repository: itpplasma/generalized-stafford-formal
-pin: e63321970bcb7cf360a378bf48368f23d9bc1e6a
+pin: dd9447beb20b889a158a74fdb9328f99a774a994
 
 environments:
   - label: thm:Aprime

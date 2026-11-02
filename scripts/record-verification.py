@@ -56,7 +56,8 @@ def main():
     (ROOT / 'verification/formal-verification.md').write_text(text)
     section = re.search(r'## ' + re.escape(rec['section']) + r'\n(.*?)\n## ', text, re.S)[1].strip()
     commands = re.search(r'```sh\n(.*?)```', section, re.S)[1].strip().split('\n')
-    if pin not in section or got not in section:
+    # The record names the pin by its abbreviated hash.
+    if pin[:7] not in section or got not in section:
         raise SystemExit('the release verification record does not name the pin and the challenge sha256')
     gates = re.search(r'## Gates\n(.*?)\n## ', text, re.S)[1].strip()
 

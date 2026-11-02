@@ -19,6 +19,19 @@ statements. Whether those statements match the intended mathematics is the separ
 statement-faithfulness question. Neither check is human review, and none of
 them is publication.
 
+## Verification record: module-system port
+
+Status: commit `dd9447b` on branch `module-port`, 2 November 2026, same pins and Palomar tool revisions as the records below. Every tracked Lean file now begins with `module`, imports with `public import` and opens `@[expose] public section`, as the Palomar registry requires. In the challenge (both copies) this changes only the header, the import keywords and the section visibility, except for one further change: the proofs of the six non-compared closure lemmas of `diffOps` (`endCommutator_add`, `endCommutator_mul`, `isOrderLE_zero`, `isOrderLE_add`, `isOrderLE_succ`, `isOrderLE_mul`) were rewritten, statements unchanged, so that they create no auxiliary declarations. In a module such declarations get private names containing the module name, and Comparator, which compares the proof terms that `diffOps` uses, rejected the solution copy in `GeneralizedStafford/Challenge/DiffOpTransport.lean` until both sides were rewritten identically. This proof-text change was approved. The challenge was then shortened to 924 lines for Palomar's 1,000-line limit by rewrapping and condensing comments and docstrings and removing blank lines, with declarations unchanged. Commands, each under a 16 GiB memory cap:
+
+```sh
+PYTHON=python3 scripts/verify.sh
+scripts/verify-palomar.sh
+```
+
+Both exited 0, with the same outcomes as the record below: 81 endpoint axiom reports with axioms exactly `propext`, `Classical.choice`, `Quot.sound`; duplicate files byte-identical, exactly 41 `sorry` holes, both import-closure checks passed, and all 41 compared theorems accepted (`nanoda kernel accepts the solution`, `Lean default kernel accepts the solution`, `Your solution is okay!`). The challenge sha256 is `b8404b6adc97f3433dc7a76f06e41135bd6457f4cb56aa2b7e5dcbbbc9ef669e`; it has 924 lines and 51,793 bytes, within Palomar's limits for a challenge (1,000 lines, 100 KiB).
+
+Statement preservation. Against the challenge at `50c0138` (sha256 `272c7eb9…`): `#check @T` with `pp.all`, `pp.proofs` and `pp.universes` printed identical output for all 41 compared theorems `T`; and a dump of every constant of the module `GeneralizedStaffordChallenge` (kind, universe parameters, type, and the value of each definition, each with its structural `Expr.hash`) is identical for all 182 constants present on both sides. The 15 constants present only at `50c0138` are the auxiliary declarations of the six rewritten proofs (matchers, structural-recursion functionals, `abel` and `omega` lemmas); none is used by a compared statement.
+
 ## Verification record: challenge restricted to the paper
 
 Status: commit `e63321970bcb7cf360a378bf48368f23d9bc1e6a` on branch `paper-scope`, 2 November 2026, with the pins of the record below (AlgebraicAnalysis `22b3946c0cfc13960cd238319acea76ae0d5f168`, Mathlib `c55e6e786f49471c72fbddbec5415808896aec1e`). The challenge was reduced to the numbered results of the paper: `corollaryB_dimension`, `corollaryC3_lower`, `corollaryC3_upper`, `filteredCorollaryB`, `filteredGeneratorBounds`, `envelopingCorollaryB` and `envelopingGeneratorBounds` were removed, with the challenge definitions only they used and the library module `GeneralizedStafford/GeneratorBounds.lean`, and `corollaryC2_omega` (the omega case of C.2, which Corollary C states) and `knownDimension_hAll_of_omega` (McConnell-Robson 6.3.9, the cited input of Corollary B) were added. The 39 other statements are unchanged. Commands, as below, each under a 16 GiB memory cap:

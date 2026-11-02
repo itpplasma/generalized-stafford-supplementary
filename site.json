@@ -3,7 +3,7 @@
   "subtitle": "Affine generation over simple Noetherian rings with infinite centre: the formal proof",
   "formal": {
     "repo": "itpplasma/generalized-stafford-formal",
-    "commit": "e63321970bcb7cf360a378bf48368f23d9bc1e6a",
+    "commit": "dd9447beb20b889a158a74fdb9328f99a774a994",
     "label": "generalized-stafford-formal",
     "pages": "sources/formal",
     "lean_state": [
@@ -33,7 +33,7 @@
     "challenge": {
       "file": "GeneralizedStaffordChallenge.lean",
       "copy": "Challenge.lean",
-      "sha256": "272c7eb9454d5ef02e6d5bb5ea41e0cbc3d112be9d2a5e931a29b7226dfd413f"
+      "sha256": "b8404b6adc97f3433dc7a76f06e41135bd6457f4cb56aa2b7e5dcbbbc9ef669e"
     },
     "solution": {
       "file": "GeneralizedStaffordSolution.lean",
@@ -42,8 +42,8 @@
     "comparator": "comparator.json",
     "verification_record": {
       "path": "docs/verification.md",
-      "commit": "fd58e810ccb3299772caf425bd89cccd704a3190",
-      "section": "Verification record: challenge restricted to the paper",
+      "commit": "56483d3487b5a49f083ba96214ace3494f1fea90",
+      "section": "Verification record: module-system port",
       "note": "The record of the pinned commit is committed in a later commit, which changes no Lean file."
     }
   },
@@ -143,7 +143,7 @@
   },
   "paper": {
     "repo": "itpplasma/generalized-stafford-paper",
-    "commit": "148631ad09edd9bcad8df3b6eaee6f7e60fc56ce",
+    "commit": "1ddc1697376d63035de90fdcfd1c3047ab117847",
     "map": "statement-map.yaml",
     "katex": "0.16.22",
     "attributions": [
