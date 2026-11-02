@@ -1,5 +1,5 @@
 {
-  "about": "Results from the literature that the paper cites without proof and that the Lean proof uses in formalized form (AlgebraicAnalysis). Keys are `BibKey:locator`, with the bibliography keys of the paper. Locators and their status come from the paper's citation ledger (generalized-stafford docs/manuscript/citation-ledger.md, 2 November 2026); `status` repeats its verdict. Which results use each citation is computed from Lean's dependency graph (verification/lean-dag/graph.json). Mathlib facts used only generically are not listed.",
+  "about": "Known results the paper states in full with a reference instead of a proof (numbered environments), and the Lean declarations that formalize them. Keys are `BibKey:item`; `label` is the paper environment label once the statement map gives it (entries with `cite:`), and `statement` is then to be replaced by the paper's wording. References, items, printed pages and `status` come from the paper's citation ledger. Which of our results use each one is computed from Lean's dependency graph. `attributions` are results the paper credits but no Lean declaration formalizes; the proof does not use them. Mathlib facts used only generically are not listed.",
   "ledger": {
     "repo": "itpplasma/generalized-stafford",
     "path": "docs/manuscript/citation-ledger.md",
@@ -7,8 +7,11 @@
   },
   "citations": {
     "GabrielRentschler1967; McConnellRobson2001:6.1.2,6.2.2": {
-      "cite": "Gabriel–Rentschler 1967; McConnell–Robson 2001, 6.1.2, 6.2.2",
-      "claim": "Krull (deviation) dimension: descending chains have all but finitely many factors of smaller dimension",
+      "label": null,
+      "reference": "Gabriel–Rentschler 1967; McConnell–Robson 2001",
+      "item": "6.1.2, 6.2.2",
+      "page": "pp. 186, 192 (McConnell–Robson)",
+      "statement": "The deviation (Krull dimension) of a poset A is defined by induction: dev A ≤ α if in any descending chain of elements of A all but finitely many factors have deviation less than α. The Krull dimension K(M) of a module M is the deviation of its lattice of submodules.",
       "lean": [
         "Module.DevLE",
         "Order.DevLE"
@@ -16,8 +19,11 @@
       "status": "McConnell–Robson locators checked; the 1967 note was not available"
     },
     "McConnellRobson2001:6.2.4": {
-      "cite": "McConnell–Robson 2001, 6.2.4",
-      "claim": "submodules and quotients of M have Kdim ≤ Kdim M (the monotone half of K(M) = sup{K(N), K(M/N)})",
+      "label": null,
+      "reference": "McConnell–Robson 2001",
+      "item": "6.2.4",
+      "page": "p. 193",
+      "statement": "If N is a submodule of M, then K(M) = sup{K(N), K(M/N)}. The Lean proof uses the monotone half: K(N) ≤ K(M) and K(M/N) ≤ K(M).",
       "lean": [
         "Module.DevLE.of_injective",
         "Module.DevLE.of_surjective"
@@ -25,26 +31,35 @@
       "status": "locator checked"
     },
     "McConnellRobson2001:6.2.10": {
-      "cite": "McConnell–Robson 2001, 6.2.10",
-      "claim": "a nonzero module with Krull dimension has a critical submodule; iterated, a Noetherian module of finite Kdim has a critical filtration",
+      "label": null,
+      "reference": "McConnell–Robson 2001",
+      "item": "6.2.10",
+      "page": "p. 195",
+      "statement": "Any nonzero module with Krull dimension has a critical submodule. Iterated in a Noetherian module of finite Krull dimension, this gives a finite filtration with critical factors.",
       "lean": [
         "Module.DevLE.nonempty_criticalFiltration"
       ],
       "status": "locator checked"
     },
     "Goldie1960:Thms4.1,4.4; McConnellRobson2001:2.3.6": {
-      "cite": "Goldie 1960, Thms 4.1, 4.4; McConnell–Robson 2001, 2.3.6",
-      "claim": "Goldie's theorem: in a simple right Noetherian ring the regular elements form a right Ore set, with classical right quotient ring Q; a right ideal containing a regular element has Goldie-torsion quotient",
+      "label": null,
+      "reference": "Goldie 1960; McConnell–Robson 2001",
+      "item": "Thms 4.1, 4.4; 2.3.6",
+      "page": "pp. 201–220 (Goldie); p. 60 (McConnell–Robson)",
+      "statement": "Goldie's theorem: a ring R is semiprime right Goldie if and only if it has a right quotient ring Q that is semisimple Artinian; R is prime if and only if Q is simple. For a simple right Noetherian R the regular elements form a right Ore set, and a right ideal that contains a regular element has a Goldie-torsion quotient.",
       "lean": [
         "AlgebraicAnalysis.Goldie.nonempty_oreSet_oppositeSubmonoid",
         "AlgebraicAnalysis.Goldie.QuotientRing",
         "AlgebraicAnalysis.Goldie.exists_mul_mem_of_mem_nonZeroDivisors"
       ],
-      "status": "locators checked"
+      "status": "locators checked (theorem pages in Goldie 1960 not recorded)"
     },
     "McConnellRobson2001:Ch2§2": {
-      "cite": "McConnell–Robson 2001, Ch. 2 §2",
-      "claim": "uniform (Goldie) dimension, and the Goldie rank length_Q(M ⊗_R Q)",
+      "label": null,
+      "reference": "McConnell–Robson 2001",
+      "item": "Ch. 2, §2",
+      "page": "p. 51",
+      "statement": "Uniform (Goldie) dimension of a module: the supremum of the numbers of nonzero submodules whose sum is direct; with Q the classical quotient ring, the Goldie rank of M is length_Q(M ⊗_R Q).",
       "lean": [
         "AlgebraicAnalysis.Module.UniformDimGE",
         "AlgebraicAnalysis.Goldie.goldieRank"
@@ -52,34 +67,46 @@
       "status": "section checked (definition reference)"
     },
     "McConnellRobson2001:1.6.9": {
-      "cite": "McConnell–Robson 2001, 1.6.9",
-      "claim": "a filtered ring whose associated graded ring is Noetherian is Noetherian",
+      "label": null,
+      "reference": "McConnell–Robson 2001",
+      "item": "1.6.9",
+      "page": "p. 28",
+      "statement": "If S is a filtered ring and gr S is right Noetherian, then S is right Noetherian. The left case follows for the opposite ring with the opposite filtration.",
       "lean": [
         "AlgebraicAnalysis.RingFiltration.GradedSymbol.isNoetherian_right"
       ],
-      "status": "locator checked; the source is one-sided, the other side by the opposite filtration"
+      "status": "locator checked"
     },
     "McConnellRobson2001:6.5.6,6.4.8": {
-      "cite": "McConnell–Robson 2001, 6.5.6 with 6.4.8",
-      "claim": "K(S) ≤ K(gr S), and K = classical Krull dimension for commutative Noetherian rings",
+      "label": null,
+      "reference": "McConnell–Robson 2001",
+      "item": "6.5.6 with 6.4.8",
+      "page": "pp. 212, 206",
+      "statement": "For a filtered ring S, K(S) ≤ K(gr S); for a commutative Noetherian ring R, K(R) = dim R.",
       "lean": [
         "AlgebraicAnalysis.RingFiltration.GradedSymbol.devLE_right"
       ],
       "status": "locators checked (6.4.8 label to confirm)"
     },
     "McConnellRobson2001:1.3.5": {
-      "cite": "McConnell–Robson 2001, 1.3.5",
-      "claim": "A_n(k), char k = 0, is a simple Noetherian domain; its Bernstein filtration bounds Kdim (the exact value n, 6.6.15, is not needed)",
+      "label": null,
+      "reference": "McConnell–Robson 2001",
+      "item": "1.3.5 (with 1.3.4)",
+      "page": "p. 20",
+      "statement": "If char k = 0, the Weyl algebra A_n(k) is a simple Noetherian integral domain; by 1.3.4 its centre is k. Its Bernstein filtration bounds its Krull dimension (the exact value n, 6.6.15, is not needed).",
       "lean": [
         "AlgebraicAnalysis.Weyl.Simplicity.isSimpleRing_weylAlg",
         "AlgebraicAnalysis.Weyl.BernsteinSymbol.isNoetherian_right",
         "AlgebraicAnalysis.Weyl.BernsteinSymbol.devLEOmega_right"
       ],
-      "status": "locator checked; the centre k follows from 1.3.4"
+      "status": "locator checked"
     },
     "McConnellRobson2001:15.4.5,15.4.7; Bavula2005:Thm3.7": {
-      "cite": "McConnell–Robson 2001, 15.4.5, 15.4.7; Bavula 2005, Thm 3.7",
-      "claim": "D(X), X smooth affine in characteristic zero, is simple Noetherian, and gr D(X) ≅ Sym_A Der_k(A) bounds its Krull dimension by 2 dim X",
+      "label": null,
+      "reference": "McConnell–Robson 2001; Bavula 2005",
+      "item": "15.4.5, 15.4.7; Thm 3.7",
+      "page": "pp. 587, 591 (McConnell–Robson); pp. 21–22 (Bavula, arXiv)",
+      "statement": "For a regular affine domain A in characteristic zero, D(A) is a simple Noetherian ring generated by A and Der_k(A), and gr D(A) ≅ Sym_A Der_k(A) is a commutative affine domain of Krull dimension 2 dim A.",
       "lean": [
         "AlgebraicAnalysis.DifferentialOperators.SmoothOperators.isSimpleRing",
         "AlgebraicAnalysis.DifferentialOperators.SmoothOperators.isNoetherian_right",
@@ -89,13 +116,39 @@
       "status": "locators checked; Bavula's journal numbering not rechecked"
     },
     "PBW; McConnellRobson2001:1.6.9,6.5.6": {
-      "cite": "Poincaré–Birkhoff–Witt; McConnell–Robson 2001, 1.6.9, 6.5.6",
-      "claim": "a quotient of U(𝔤), 𝔤 finite-dimensional, is Noetherian with Kdim ≤ dim 𝔤",
+      "label": null,
+      "reference": "Poincaré–Birkhoff–Witt; McConnell–Robson 2001",
+      "item": "PBW; 1.6.9, 6.5.6",
+      "page": "pp. 28, 212 (McConnell–Robson)",
+      "statement": "For a finite-dimensional Lie algebra 𝔤, gr U(𝔤) ≅ Sym(𝔤); hence every quotient of U(𝔤) is Noetherian with Krull dimension at most dim 𝔤.",
       "lean": [
         "AlgebraicAnalysis.Enveloping.isNoetherian_right_of_surjective",
         "AlgebraicAnalysis.Enveloping.devLE_right_of_surjective"
       ],
-      "status": "no locator for PBW in the ledger"
+      "status": "no locator for PBW in the citation ledger"
     }
-  }
+  },
+  "attributions": [
+    {
+      "reference": "Stafford 1978b",
+      "item": "Thm 5.1",
+      "page": "p. 232",
+      "statement": "Let R be a simple left Noetherian ring with Kdim R > r and M a torsion left R-module with Kdim M ≤ r. If Kdim M/(Ra + Rb) < r for some a, b ∈ M, then for any d ≠ 0 there is f with Kdim M/R(a + dfb) < r.",
+      "relation": "Mirrored to right modules, it gives the single-test case of Lemma select; the Lean proof does not use it."
+    },
+    {
+      "reference": "Stafford 1982",
+      "item": "Prop. 1.3",
+      "page": "p. 74",
+      "statement": "Let R be a simple Noetherian non-Artinian ring and M = ⊕ a_i R a finitely generated Artinian right module, f ≠ 0. Then M = (a_1 + Σ_{i≥2} a_i λ_i f)R for some λ_i; in particular M is cyclic.",
+      "relation": "Gives Theorem A when R/dR has finite length (δ(d) = 0), for two-sided Noetherian R; prescribed-tail form that Lemma select generalizes. Not used by the Lean proof."
+    },
+    {
+      "reference": "Robson 1976",
+      "item": "p. 152 and proof of Thm 4.3",
+      "page": "pp. 152, 166",
+      "statement": "For a simple Noetherian ring and the quotient category by modules of Krull dimension < m, the image of a module of Krull dimension m has finite length.",
+      "relation": "Source of the finite-top-strata statement (lem:strata), which the Lean proof does not state; it works with germs and critical filtrations instead."
+    }
+  ]
 }

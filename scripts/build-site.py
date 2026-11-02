@@ -179,7 +179,7 @@ ol.steps{margin:.2rem 0;padding-left:0;list-style:none}ol.steps li{margin:.25rem
 .missing{color:var(--warn)}
 .cited{margin-top:14px;border-left:4px solid var(--citedk);background:color-mix(in srgb,var(--cited) 35%,var(--card))}
 .cited td.cite{font-weight:600;white-space:normal;min-width:10rem}.cited ul.decls{margin:0;padding-left:1rem}
-.cited table{font-size:.88rem}.cited td:nth-child(3){min-width:14rem;overflow-wrap:anywhere}
+.cited table{font-size:.88rem}.attrib{font-size:.88rem;padding-left:1.1rem}.attrib li{margin:.3rem 0}.cited td:nth-child(3){min-width:14rem;overflow-wrap:anywhere}
 .more{margin-top:14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));gap:12px}
 .more ul{margin:.2rem 0;padding-left:1.1rem;font-size:.88rem}
 @media (max-width:900px){.grid{grid-template-columns:1fr}}
@@ -272,10 +272,19 @@ def citation_rows():
         lean = ''.join(f'<li>{decl(n, text=".".join(n.split(".")[-2:]))}</li>' for n in c['lean'])
         used = ', '.join(f'<a href="{anchors[u]}">{esc(titles[u])}</a>' if u in anchors else esc(titles[u])
                          for u in users[key] if u != 'SOL')
-        rows.append(f'<tr id="cite-{re.sub(r"[^A-Za-z0-9]+", "-", key).strip("-")}"><td class="cite">{esc(c["cite"])}</td><td>{esc(c["claim"])}'
-                    f'<div class="small mute">{esc(c["status"])}</div></td>'
+        label = f'<div class="small mute">paper <code>{esc(c["label"])}</code></div>' if c.get('label') else ''
+        rows.append(f'<tr id="cite-{re.sub(r"[^A-Za-z0-9]+", "-", key).strip("-")}">'
+                    f'<td class="cite">{esc(c["reference"])}<div>{esc(c["item"])}</div>'
+                    f'<div class="small mute">{esc(c["page"])}</div>{label}</td>'
+                    f'<td>{esc(c["statement"])}<div class="small mute">{esc(c["status"])}</div></td>'
                     f'<td><ul class="decls">{lean}</ul></td><td class="small">{used}</td></tr>')
     return ''.join(rows)
+
+
+def attribution_rows():
+    return ''.join(f'<li><b>{esc(a["reference"])}, {esc(a["item"])}</b> <span class="mute">({esc(a["page"])})</span>: '
+                   f'{esc(a["statement"])} <span class="small mute">{esc(a["relation"])}</span></li>'
+                   for a in CITATIONS.get('attributions', []))
 
 
 def index():
@@ -321,17 +330,20 @@ def index():
 <h2 id="h-lemmas">Main lemmas and their Lean form</h2>
 <ol class="rows">{lemmas}</ol>
 <p class="small mute">Lemmas marked {esc(CONFIG["library"]["label"])} are proved in that pinned Lean library, which the project imports.
-Results the paper only cites are listed separately under <a href="#citations">cited from the literature</a>.
+Known results the paper cites are listed separately under <a href="#citations">known results</a>.
 The <a href="lean-dag.html">Lean graph</a> shows all dependencies between these declarations.</p>
 </section>
 </div>
 <section class="panel cited" id="citations" aria-labelledby="h-citations">
-<h2 id="h-citations">Cited from the literature, formalized in Lean</h2>
-<p class="small">The paper cites these results without proof. The Lean proof does not assume them: each is proved in the
-pinned {esc(CONFIG["library"]["label"])} library, and the Lean declarations below are the forms it uses.
-“First used by” is computed from the Lean dependency graph.</p>
-<div class="tbl"><table><thead><tr><th>Citation</th><th>Statement used</th><th>Lean ({esc(CONFIG["library"]["label"])})</th><th>First used by</th></tr></thead>
+<h2 id="h-citations">Known results, formalized in Lean</h2>
+<p class="small">The paper states these results with a reference in place of a proof. The Lean proof does not assume them:
+each is proved in the pinned {esc(CONFIG["library"]["label"])} library, in the form given by the Lean declarations below.
+“Used by” lists the first of our results whose Lean proof uses it, computed from the Lean dependency graph.</p>
+<div class="tbl"><table><thead><tr><th>Reference</th><th>Statement</th><th>Lean ({esc(CONFIG["library"]["label"])})</th><th>Used by</th></tr></thead>
 <tbody>{citation_rows()}</tbody></table></div>
+<h3 style="margin-top:.8rem">Attribution, not used by the proof</h3>
+<p class="small mute">Credited in the paper; no Lean declaration formalizes these, and the Lean proof does not depend on them.</p>
+<ul class="attrib">{attribution_rows()}</ul>
 </section>
 <section class="panel placeholder" id="paper" aria-labelledby="h-paper">
 <h2 id="h-paper">Paper and Lean side by side</h2>
@@ -486,6 +498,7 @@ def check_statement_map(path):
     import yaml
     smap = yaml.safe_load(Path(path).read_text())
     envs = {e['label']: e for e in smap['environments']}
+    cited_envs = {lab: e for lab, e in envs.items() if 'cite' in e}
     steps = {s['step']: s for s in smap.get('proof_steps', [])}
     problems, notes = [], []
     if smap.get('pin') != CONFIG['formal']['commit']:
@@ -521,10 +534,22 @@ def check_statement_map(path):
                 problems.append(f'step {s}: not in the statement map')
             elif not {x['name'] for x in steps[s]['library']} <= ours:
                 problems.append(f'step {s}: map names missing from the overview')
-    covered = {r['label'] for r in OVERVIEW['results']} | {m.get('label') for m in OVERVIEW['lemmas']}
+    covered = ({r['label'] for r in OVERVIEW['results']} | {m.get('label') for m in OVERVIEW['lemmas']}
+               | {c.get('label') for c in CITATIONS['citations'].values()} | set(cited_envs))
     for label, e in envs.items():
         if label not in covered:
             notes.append(f'{label}: in the statement map, not shown ({e.get("status", "mapped")})')
+    by_label = {c['label']: k for k, c in CITATIONS['citations'].items() if c.get('label')}
+    for lab, e in cited_envs.items():
+        names = {x['name'] for f in ('library', 'algebraic_analysis', 'mathlib') for x in e.get(f, [])}
+        key = by_label.get(lab) or next((k for k, c in CITATIONS['citations'].items() if names & set(c['lean'])), None)
+        if key is None:
+            notes.append(f'{lab}: cited environment ({e["cite"]}) without an entry in data/citations.json')
+        elif not names <= set(CITATIONS['citations'][key]['lean']):
+            problems.append(f'{lab}: Lean names {sorted(names - set(CITATIONS["citations"][key]["lean"]))} '
+                            f'missing from data/citations.json {key}')
+        elif CITATIONS['citations'][key].get('label') != lab:
+            notes.append(f'{lab}: matches data/citations.json {key}; set its label and paper statement')
     if 'citations' in smap:  # the paper's citation section, once it exists, keyed like data/citations.json
         theirs = smap['citations']
         theirs = set(theirs) if isinstance(theirs, dict) else {c.get('key') for c in theirs}

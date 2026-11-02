@@ -545,7 +545,7 @@
     "nodes": [
       {
         "id": "lit-core",
-        "text": "Cited, formalized",
+        "text": "Known results (Lean)",
         "sub": "Goldie; Krull dimension",
         "cites": [
           "Goldie1960:Thms4.1,4.4; McConnellRobson2001:2.3.6",
@@ -557,7 +557,7 @@
       },
       {
         "id": "lit-apps",
-        "text": "Cited, formalized",
+        "text": "Known results (Lean)",
         "sub": "Weyl algebras, D(X), filtered rings, U(g)",
         "cites": [
           "McConnellRobson2001:1.3.5",

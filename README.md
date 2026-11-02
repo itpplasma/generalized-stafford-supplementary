@@ -10,8 +10,9 @@ at commit 17f84e3bc693b309f40dc5c75a901ec891214bf0, with
 22b3946c0cfc13960cd238319acea76ae0d5f168.
 
 - [index.html](index.html): the main statements, the proof structure and one
-  line per main lemma with its Lean declaration, and, set apart, the cited
-  literature results that the Lean proof formalizes. Rows expand to the full
+  line per main lemma with its Lean declaration, and, set apart, the known
+  results the paper cites, with reference, Lean declaration and the results
+  that use them. Rows expand to the full
   statement, the proof outline and the Lean text. The comparison with the
   paper's printed proofs is a placeholder until the paper draft exists.
 - [lean-dag.html](lean-dag.html): the Lean dependency graph, contracted to the
@@ -36,8 +37,9 @@ need internet access.
 `site.json` holds the pins, the Lean modules to import and the library inputs
 of the graph; `data/overview.json` holds the statements, the main lemmas and
 their Lean names, with the paper's labels; `data/citations.json` holds the
-literature results the paper cites and the Lean declarations that formalize
-them, keyed by citation (which results use them is computed from Lean). With Python 3 and Graphviz:
+known results the paper cites (statement, reference, item, page), the Lean
+declarations that formalize them, and the attributions that no Lean
+declaration formalizes; which results use each one is computed from Lean. With Python 3 and Graphviz:
 
 ```sh
 python3 scripts/rebuild.py                    # render from the recorded data

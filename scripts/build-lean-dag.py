@@ -292,8 +292,8 @@ def page(data):
         if len(k['names']) > 12:
             decls += f' · and {len(k["names"]) - 12} more'
         cites = nodes[nid].get('cites', [])
-        cited = (f'<p class="small cites">Cited from the literature, formalized: '
-                 + '; '.join(f'<a href="index.html#citations">{esc(CITATIONS["citations"][c]["cite"])}</a>' for c in cites)
+        cited = (f'<p class="small cites">Known results used (formalized): '
+                 + '; '.join(f'<a href="index.html#citations">{esc(CITATIONS["citations"][c]["reference"] + ", " + CITATIONS["citations"][c]["item"])}</a>' for c in cites)
                  + '</p>') if cites else ''
         direct = sorted(nodes[nid]['helpers'])
         listing = (f'<details><summary class="small">All {len(direct)} project lemmas used directly</summary>'
