@@ -411,13 +411,25 @@ def main():
         frags[f'step:{step}'] = paper.prepare(text)
         steps[step] = dict(env=loc['env'], part=loc['part'], lines=lines, substeps=sub)
     attributions = []
+    doc = paper.tex.index('\\begin{document}')
     for key in CONFIG['paper'].get('attributions', []):
-        for para in re.split(r'\n\s*\n', paper.tex[paper.tex.index('\\begin{document}'):]):
-            if '{' + key + '}' in para and '\\begin{' not in para:
-                n = len(attributions)
-                frags[f'attr:{n}'] = paper.prepare(para)
-                attributions.append(dict(key=key, lines=[paper.line(paper.tex.index(para)),
-                                                         paper.line(paper.tex.index(para) + len(para))]))
+        # The sentences that cite the work, consecutive ones merged; the source
+        # paragraphs are long, so a whole paragraph would bury them.
+        cuts = [doc] + [doc + m.end() for m in re.finditer(r'(?<=\.)\s+(?=[A-Z])|\n\s*\n', paper.tex[doc:])]
+        spans = []
+        for a, b in zip(cuts, cuts[1:] + [len(paper.tex)]):
+            if '{' + key + '}' in strip_comments(paper.tex[a:b]) or ',' + key + '}' in paper.tex[a:b]:
+                if spans and spans[-1][1] == a:
+                    spans[-1][1] = b
+                else:
+                    spans.append([a, b])
+        for a, b in spans:
+            text = re.sub(r'\\(?:sub)*section\*?\{[^}]*\}(\\label\{[^}]*\})?', '', paper.tex[a:b]).strip()
+            if '\\begin{' in text:
+                continue
+            n = len(attributions)
+            frags[f'attr:{n}'] = paper.prepare(text)
+            attributions.append(dict(bib=key, lines=[paper.line(a), paper.line(b)]))
     for key, b in paper.bib.items():
         frags[f'bib:{key}'] = b['tex']
         inline.add(f'bib:{key}')

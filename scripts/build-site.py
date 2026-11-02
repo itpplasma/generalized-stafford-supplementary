@@ -359,9 +359,9 @@ def attribution_rows():
         if a['html'] in seen:
             continue
         seen.add(a['html'])
-        b = paper['bib'][a['key']]
+        b = paper['bib'][a['bib']]
         out.append(f'<li><p class="small mute">main.tex lines {a["lines"][0]}–{a["lines"][1]}, citing '
-                   f'<a href="#bib-{a["key"]}">[{b["n"]}]</a> {esc(b["author"])} {esc(b["year"])}</p>{a["html"]}</li>')
+                   f'<a href="#bib-{a["bib"]}">[{b["n"]}]</a> {esc(b["author"])} {esc(b["year"])}</p>{a["html"]}</li>')
     return ''.join(out)
 
 
