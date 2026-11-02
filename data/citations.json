@@ -134,7 +134,7 @@
       "item": "Thm 5.1",
       "page": "p. 232",
       "statement": "Let R be a simple left Noetherian ring with Kdim R > r and M a torsion left R-module with Kdim M ≤ r. If Kdim M/(Ra + Rb) < r for some a, b ∈ M, then for any d ≠ 0 there is f with Kdim M/R(a + dfb) < r.",
-      "relation": "Mirrored to right modules, it gives the single-test case of Lemma select; the Lean proof does not use it."
+      "relation": "Its mirror for right modules would give the single-test case of Lemma select (an unaudited reconstruction); the Lean proof does not use it."
     },
     {
       "reference": "Stafford 1982",
