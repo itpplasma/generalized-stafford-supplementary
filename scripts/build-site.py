@@ -317,15 +317,10 @@ def lean_statement(name, rel=None, context=True):
         return f'<div class="stmt-lean ext"><code>{decl(name)}</code> <span class="mute small">(Mathlib)</span></div>'
     end = refs['decls'].get(f'{repo}:{path}', {}).get(name, [line, None])[1]
     first, rows = statement_rows(repo, path, line, end)
-    ctx = ''
-    if context:
-        variables = scope_variables(repo, path, first)
-        if variables:
-            n = sum(len(r) for _, r in variables)
-            blocks = ''.join(pre(repo, path, a, r, ' ctx') for a, r in variables)
-            ctx = (f'<details class="vars"><summary>{n} variable line{"s" if n > 1 else ""} in scope</summary>'
-                   f'{blocks}</details>')
-    return f'<div class="stmt-lean">{src_link(i, first)}{pre(repo, path, first, rows)}{ctx}</div>'
+    # Section variables carry hypotheses of the statement: all those in scope, shown above it.
+    variables = scope_variables(repo, path, first) if context else []
+    ctx = ('<div class="ctxs">' + ''.join(pre(repo, path, a, r, ' ctx') for a, r in variables) + '</div>') if variables else ''
+    return f'<div class="stmt-lean">{src_link(i, first)}{ctx}{pre(repo, path, first, rows)}</div>'
 
 
 def challenge_statement(name):
@@ -560,7 +555,8 @@ a.srclink{float:right;position:relative;z-index:1;margin:7px 9px 0 10px;font-siz
 a.srclink:hover{color:var(--accent)}
 pre.lean-src{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:8px 10px;
 margin:0 0 4px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:12.5px;line-height:1.55;tab-size:2}
-pre.lean-src.ctx{opacity:.8;font-size:12px}
+.ctxs{border-left:2px solid var(--line);margin:0 0 6px;padding:2px 0}
+pre.lean-src.ctx{font-size:11.5px;line-height:1.5;background:none;border:0;border-radius:0;padding:0 8px;margin:0;opacity:.85}
 details.vars>summary,details.proved>summary,details.pproof>summary{font-size:.8rem;color:var(--mute);margin:.15rem 0}
 details.vars[open]>summary,details.proved[open]>summary{margin-bottom:.3rem}
 details.proved{margin-top:.5rem}details.proved code{font-size:.78rem}
@@ -588,7 +584,7 @@ main{padding:0 16px 60px}nav.top{margin:0 -16px;padding:8px 16px;gap:1rem;flex-w
 header.hero{padding-top:22px}header.hero h1{font-size:1.4rem}
 .overview-graph .lr{display:none}.overview-graph .tb{display:block}
 .card>header,.pair>.paper,.pair>.lean{padding-left:12px;padding-right:12px}
-pre.lean-src{font-size:12px;white-space:pre;overflow-wrap:normal;overflow-x:auto}a.srclink{float:none;display:block;text-align:right;margin:0 0 2px}
+pre.lean-src{font-size:12px;white-space:pre;overflow-wrap:normal;overflow-x:auto}pre.lean-src.ctx{white-space:pre-wrap;overflow-wrap:anywhere}a.srclink{float:none;display:block;text-align:right;margin:0 0 2px}
 }
 '''
 

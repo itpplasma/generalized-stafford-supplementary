@@ -59,16 +59,21 @@ PREVIEW_CSS = (
     'pointer-events:none;text-align:left}'
     '.lean-preview .lp-head{font-weight:600;overflow-wrap:anywhere}'
     '.lean-preview .lp-loc{color:var(--mute,#6b6b6b);font-size:11px;overflow-wrap:anywhere}'
+    '.lean-preview .lp-doc{font:13px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;margin:5px 0 0;'
+    'padding-left:8px;border-left:2px solid var(--line,#c9c5bb)}.lean-preview .lp-doc p{margin:.2em 0}'
+    '.lean-preview .lp-doc ul,.lean-preview .lp-doc ol{margin:.2em 0;padding-left:1.2em}'
+    '.lean-preview .lp-doc h3,.lean-preview .lp-doc h4{font-size:1em;margin:.2em 0}'
+    '.lean-preview .lp-doc code{font:12px ui-monospace,Menlo,Consolas,monospace}.lean-preview math{font-size:1.08em}'
     '.lean-preview pre{margin:5px 0 0;white-space:pre-wrap;overflow-wrap:anywhere;max-height:50vh;'
     'overflow:hidden;font:inherit;background:none;border:0;padding:0}')
 PREVIEW_JS = r"""(()=>{
 const data=JSON.parse(document.getElementById('lean-previews').textContent);
 const box=document.createElement('div');box.className='lean-preview';box.setAttribute('role','tooltip');
 document.body.append(box);let timer;
-function add(cls,text){const e=document.createElement(cls==='pre'?'pre':'div');if(cls!=='pre')e.className=cls;e.textContent=text;box.append(e);}
+function add(cls,text){const e=document.createElement(cls==='pre'?'pre':'div');if(cls!=='pre')e.className=cls;e.textContent=text;box.append(e);return e;}
 function show(a){
-  const d=data[a.dataset.p];if(!d)return;const [head,loc,body]=d;
-  box.replaceChildren();add('lp-head',head);add('lp-loc',loc);add('pre',body);
+  const d=data[a.dataset.p];if(!d)return;const [head,loc,body,doc]=d;
+  box.replaceChildren();add('lp-head',head);add('lp-loc',loc);if(doc)add('lp-doc','').innerHTML=doc;add('pre',body);
   box.style.display='block';const r=a.getBoundingClientRect(),w=box.offsetWidth,h=box.offsetHeight;
   box.style.left=Math.max(8,Math.min(r.left,innerWidth-w-8))+'px';
   box.style.top=(r.bottom+6+h<innerHeight?r.bottom+6:Math.max(8,r.top-h-6))+'px';}
@@ -91,7 +96,7 @@ def embed_previews(data, text):
     def location(target):
         name, repo, path, line = data['targets'][target]
         return f'{path}:{line}' + ('' if repo in PAGES else f' · {repo}')
-    payload = json.dumps({i: [data['targets'][int(i)][0], location(int(i)), data['previews'][i]] for i in ids},
+    payload = json.dumps({i: [data['targets'][int(i)][0], location(int(i)), *data['rendered'][i]] for i in ids},
                          ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
     block = (f'{BEGIN}<style>{PREVIEW_CSS}</style><script type="application/json" id="lean-previews">'
              f'{payload}</script><script>{PREVIEW_JS}</script>{END}')
@@ -149,8 +154,20 @@ def link_top(data, by_line, page, stats):
     page.write_text(embed_previews(data, text))
 
 
+def render_previews(data):
+    """Doc comments of the hover previews as Markdown with MathML formulas: {id: [body, doc html]}."""
+    math, ids, docs, bodies = leanhl.Math('mathml'), [], [], []
+    for i, text in data['previews'].items():
+        doc, body = leanhl.split_doc(text)
+        ids.append(i)
+        bodies.append(body)
+        docs.append(leanhl.markdown(doc, math) if doc else '')
+    data['rendered'] = dict(zip(ids, zip(bodies, math.fill(docs))))
+
+
 def main():
     data, by_line = load()
+    render_previews(data)
     stats = dict(linked=0, blocks=0, unmatched=[])
     for name in TOP_PAGES:
         if (ROOT / name).exists():

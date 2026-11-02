@@ -167,10 +167,11 @@ def to_tex(s):
 
 
 class Math:
-    """Collects formulas, renders them with KaTeX in one batch, then fills placeholders."""
+    """Collects formulas, renders them with KaTeX in one batch, then fills placeholders.
+    Output 'mathml' is compact and needs no stylesheet (hover previews)."""
 
-    def __init__(self):
-        self.items = []
+    def __init__(self, output='html'):
+        self.items, self.output = [], output
 
     def add(self, tex, display=False, fallback=None):
         self.items.append(dict(tex=tex, display=display, fallback=fallback))
@@ -180,7 +181,7 @@ class Math:
         if not self.items:
             return texts
         r = subprocess.run(['node', str(ROOT / 'scripts/render-math.mjs'), str(KATEX)], text=True,
-                           input=json.dumps(dict(macros={}, lenient=True,
+                           input=json.dumps(dict(macros={}, lenient=True, output=self.output,
                                                  items=[dict(tex=x['tex'], display=x['display']) for x in self.items])),
                            capture_output=True, check=True)
         rendered = json.loads(r.stdout)['html']
@@ -382,3 +383,12 @@ def page(rel, label, commit, lines, depth, source_url=None):
             f'<p>{esc(label)} at {esc(commit[:12])}{gh} · <a href="{home}">overview</a></p>'
             f'<label for="raw" title="Show doc comments as source text">raw comments</label></header>'
             f'<main>{BEGIN}{code(lines)}{END}</main><script>{PAGE_JS}</script></body></html>\n')
+
+
+def split_doc(preview):
+    """(doc comment text, rest) of a hover preview; empty text without a doc comment."""
+    if not preview.startswith('/--'):
+        return '', preview
+    end = preview.find('-/')
+    doc = preview[3:end].replace('\n  …\n', ' … ')
+    return '\n'.join(x.strip() for x in doc.split('\n')).strip(), preview[end + 2:].lstrip('\n')

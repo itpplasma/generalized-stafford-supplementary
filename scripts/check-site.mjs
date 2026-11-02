@@ -131,7 +131,8 @@ try {
   // An opened lemma: its card is the target, with the variables in scope opened.
   await evaluate(`location.hash = 'paper-lem:central'`);
   await evaluate(`new Promise(r => setTimeout(r, 150))`);
-  await evaluate(`(() => { document.querySelector('[id="paper-lem:central"] details.vars').open = true; })()`);
+  // Section variables in scope stand above the statement, without a click.
+  assert.ok(await evaluate(`!!document.querySelector('[id="paper-lem:central"] .stmt-lean > .ctxs > pre.lean-src.ctx')`));
   await evaluate(`document.querySelector('[id="paper-lem:central"] a[data-p]').focus()`);
   assert.equal(await evaluate(`getComputedStyle(document.querySelector('.lean-preview')).display`), 'block');
   await shot('index-lemma-open.png');
