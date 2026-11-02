@@ -12,17 +12,8 @@ the links and hover previews.
 from pathlib import Path
 import argparse, json, re, shutil
 
-from common import CONFIG, PAGES, REFS, ROOT, TOKENS, all_lean_names, check_formal, comparator_names, \
-    esc, git, lean_run, scratch
-
-STYLE = (TOKENS + 'body{margin:0;background:var(--bg);color:var(--fg);font:13px/1.45 ui-monospace,Menlo,Consolas,monospace}'
-         'header{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);padding:8px 16px;'
-         'font:14px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif}header h1{font-size:15px;margin:0;overflow-wrap:anywhere}'
-         'header p{margin:2px 0 0;color:var(--mute);font-size:12px}a{color:var(--accent)}'
-         'pre{margin:0;padding:8px 16px 48px;white-space:pre-wrap;overflow-wrap:anywhere}pre span{display:block}'
-         'pre span>a:first-child{display:inline-block;min-width:3.2em;color:var(--mute);text-decoration:none;'
-         'user-select:none}pre span:target{background:var(--hl)}')
-
+from common import CONFIG, PAGES, REFS, ROOT, all_lean_names, check_formal, comparator_names, git, lean_run, scratch
+import leanhl
 
 def utf16_to_index(line, col):
     """Convert an LSP UTF-16 column to a code point index."""
@@ -32,17 +23,6 @@ def utf16_to_index(line, col):
             return i
         units += 2 if ord(ch) > 0xFFFF else 1
     return len(line)
-
-
-def page(rel, label, commit, text, depth):
-    lines = '\n'.join(f'<span id="L{i}"><a href="#L{i}">{i}</a> {esc(line)}</span>'
-                      for i, line in enumerate(text.split('\n'), 1))
-    home = '../' * depth + 'index.html'
-    return (f'<!doctype html><html lang="en"><head><meta charset="utf-8">'
-            f'<meta name="viewport" content="width=device-width, initial-scale=1"><title>{esc(rel)}</title>'
-            f'<style>{STYLE}</style></head><body><header><h1>{esc(rel)}</h1>'
-            f'<p>{esc(label)} at {esc(commit[:12])} · <a href="{home}">overview</a></p></header>'
-            f'<pre>{lines}</pre></body></html>\n')
 
 
 PROOF_KEYWORDS = ('theorem', 'lemma', 'instance', 'example')
@@ -211,19 +191,20 @@ def main():
             cache[repo, rel] = path.read_text().split('\n') if path.exists() else None
         if cache[repo, rel]:
             previews[i] = preview(cache[repo, rel], line)
-    decls = {k: v for k, v in local.items() if k.startswith('formal:')}
+    decls = {k: v for k, v in local.items() if k.startswith(('formal:', 'library:'))}
     REFS.parent.mkdir(parents=True, exist_ok=True)
     REFS.write_text(json.dumps(dict(
         schema=1, formal_commit=pin, checkout_commit=head, library_commit=CONFIG['library']['commit'],
         toolchain=toolchain,
         source='Usages from the .ilean files of the built checkout; declaration lines from Lean '
                'findDeclarationRanges?. Columns are code points. decls: line ranges of the '
-               'declarations of each project file, from its .ilean.',
+               'declarations of each project and library file, from its .ilean.',
         urls=urls, targets=targets, previews=previews, unresolved=unresolved, decls=decls, files=files),
         ensure_ascii=False, separators=(',', ':')) + '\n')
 
     labels = {'formal': (CONFIG['formal']['label'], pin),
               'library': (CONFIG['library']['label'], CONFIG['library']['commit'])}
+    repos = {'formal': (CONFIG['formal']['repo'], pin), 'library': (CONFIG['library']['repo'], CONFIG['library']['commit'])}
     written = 0
     for repo, names in linked.items():
         shutil.rmtree(ROOT / PAGES[repo], ignore_errors=True)
@@ -233,7 +214,8 @@ def main():
                 dest = ROOT / PAGES[repo] / (rel + '.html')
                 dest.parent.mkdir(parents=True, exist_ok=True)
                 depth = len(Path(PAGES[repo], rel).parts) - 1
-                dest.write_text(page(rel, *labels[repo], (src / rel).read_text(), depth))
+                gh = f'https://github.com/{repos[repo][0]}/blob/{repos[repo][1]}/{rel}'
+                dest.write_text(leanhl.page(rel, *labels[repo], (src / rel).read_text().split('\n'), depth, gh))
                 written += 1
     print(f'{sum(map(len, files.values()))} references in {len(files)} files to {len(targets)} '
           f'declarations; {len(unresolved)} without a source line; {len(missing)} files without .ilean '

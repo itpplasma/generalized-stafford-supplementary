@@ -3,7 +3,8 @@
 
 Uses verification/lean-references/references.json, which records Lean's own
 .ilean reference data (see extract-lean-references.py); no name is resolved
-lexically. Links are added to every bundled source page and to the Lean blocks
+lexically. Every bundled source page is re-rendered from its own source lines
+with syntax highlighting, links and rendered doc comments (KaTeX); so are the Lean blocks
 `<pre class="lean-src" data-src="formal:FILE" data-line="N">` of the top-level
 pages. Project and library declarations open their bundled page, Mathlib and
 Lean core declarations their pinned GitHub source. Hovering or focusing a link
@@ -13,8 +14,8 @@ works offline. The script is idempotent.
 import html, json, os, re, sys
 
 from common import PAGES, REFS, ROOT
+import leanhl
 
-PAGE_CSS = 'a.ref{color:inherit;text-decoration:underline dotted;text-underline-offset:2px}a.ref:hover{text-decoration-style:solid}'
 TOP_PAGES = ['index.html', 'lean-dag.html', 'verification/index.html']
 
 
@@ -36,8 +37,8 @@ def href(data, target, here):
     return f'{data["urls"][repo]}{path}#L{line}'
 
 
-def link_text(data, text, spans, here, cls):
-    """Escape one line of source text and wrap the recorded references."""
+def link_tags(data, text, spans, here):
+    """(col, length, opening tag) of the recorded references of one line."""
     out, pos = [], 0
     for col, length, target in sorted(spans):
         if col < pos or col + length > len(text):
@@ -46,12 +47,9 @@ def link_text(data, text, spans, here, cls):
         # The preview replaces the native tooltip; without one, keep the name as title.
         hint = (f'data-p="{target}" aria-label="{html.escape(name)}"' if str(target) in data['previews']
                 else f'title="{html.escape(name)}"')
-        out.append(html.escape(text[pos:col], quote=False))
-        out.append(f'<a class="{cls}" href="{html.escape(href(data, target, here))}" '
-                   f'{hint}>{html.escape(text[col:col + length], quote=False)}</a>')
+        out.append((col, length, f'<a class="ref" href="{html.escape(href(data, target, here))}" {hint}>'))
         pos = col + length
-    out.append(html.escape(text[pos:], quote=False))
-    return ''.join(out)
+    return out
 
 
 PREVIEW_CSS = (
@@ -101,59 +99,53 @@ def embed_previews(data, text):
     return head + block + sep + tail if sep else text + block
 
 
-LINE = re.compile(r'<span id="L(\d+)"><a href="#L\1">\1</a> (.*?)</span>(?=\n|</pre>)')
-
-
-def plain(fragment):
-    return html.unescape(re.sub(r'<[^>]+>', '', fragment))
-
-
-def link_page(data, by_line, repo, page):
+def link_page(data, by_line, repo, page, math):
     rel = str(page.relative_to(ROOT / PAGES[repo]))[:-len('.html')]
     spans = by_line.get(f'{repo}:{rel}')
     if spans is None:
-        return 0
+        return 0, None
     text = page.read_text()
-    count = 0
-    def line(m):
-        nonlocal count
-        n, body = int(m[1]), plain(m[2])
-        found = spans.get(n, [])
-        count += len(found)
-        return (f'<span id="L{n}"><a href="#L{n}">{n}</a> '
-                f'{link_text(data, body, found, page.parent, "ref")}</span>')
-    head, sep, rest = text.partition('<pre>')
-    if PAGE_CSS not in head:
-        head = head.replace('</style>', PAGE_CSS + '</style>', 1)
-    page.write_text(embed_previews(data, head + sep + LINE.sub(line, rest)))
-    return count
+    lines = leanhl.parse_page(text)
+    links = {n: link_tags(data, lines[n - 1], found, page.parent) for n, found in spans.items() if n <= len(lines)}
+    head, _, rest = text.partition(leanhl.BEGIN)
+    _, _, tail = rest.partition(leanhl.END)
+    # Style and script follow the current renderer, not the extraction run.
+    head = re.sub(r'<style>.*?</style>', lambda _: f'<style>{leanhl.PAGE_CSS}</style>', head, count=1, flags=re.S)
+    tail = re.sub(r'</main><script>.*?</script>', lambda _: f'</main><script>{leanhl.PAGE_JS}</script>', tail,
+                  count=1, flags=re.S)
+    body = leanhl.code(lines, links, math)
+    return sum(map(len, links.values())), (head, body, tail)
 
 
-BLOCK = re.compile(r'<pre class="lean-src" data-src="([^"]+)" data-line="(\d+)">(.*?)</pre>', re.S)
+BLOCK = re.compile(r'<pre class="(lean-src[^"]*)" data-src="([^"]+)" data-line="(\d+)">(.*?)</pre>', re.S)
 
 
 def link_top(data, by_line, page, stats):
     text = page.read_text()
+    cache = {}
     def block(m):
-        key, start, body = m[1], int(m[2]), plain(m[3])
+        cls, key, start, body = m[1], m[2], int(m[3]), leanhl.plain(m[4])
         spans = by_line.get(key, {})
         repo, rel = key.split(':', 1)
-        source = ROOT / PAGES[repo] / (rel + '.html')
-        lines = [plain(x[2]) for x in LINE.finditer(source.read_text())] if source.exists() else None
+        if key not in cache:
+            source = ROOT / PAGES[repo] / (rel + '.html')
+            cache[key] = leanhl.parse_page(source.read_text()) if source.exists() else None
+        lines = cache[key]
         rows = body.split('\n')
-        if lines is None or lines[start - 1:start - 1 + len(rows)] != rows:
+        # A statement block may stop inside its last line (before `:=`).
+        src = lines[start - 1:start - 1 + len(rows)] if lines else []
+        if len(src) != len(rows) or src[:-1] != rows[:-1] or not src[-1].startswith(rows[-1]):
             stats['unmatched'].append(f'{page.relative_to(ROOT)}: {key}#L{start}')
             return m[0]
         stats['blocks'] += 1
+        colours = leanhl.tokenize(rows)
         out = []
         for i, row in enumerate(rows):
-            found = spans.get(start + i, [])
+            found = link_tags(data, row, spans.get(start + i, []), page.parent)
             stats['linked'] += len(found)
-            out.append(link_text(data, row, found, page.parent, 'ref'))
-        return f'<pre class="lean-src" data-src="{m[1]}" data-line="{start}">' + '\n'.join(out) + '</pre>'
+            out.append(leanhl.render_line(row, colours[i], found))
+        return f'<pre class="{cls}" data-src="{key}" data-line="{start}">' + '\n'.join(out) + '</pre>'
     text = BLOCK.sub(block, text)
-    if 'class="lean-src"' in text and PAGE_CSS not in text:
-        text = text.replace('</style>', PAGE_CSS + '</style>', 1)
     page.write_text(embed_previews(data, text))
 
 
@@ -164,10 +156,18 @@ def main():
         if (ROOT / name).exists():
             link_top(data, by_line, ROOT / name, stats)
     pages = refs = 0
+    math, rendered = leanhl.Math(), []
     for repo, base in PAGES.items():
         for page in sorted((ROOT / base).rglob('*.lean.html')):
-            refs += link_page(data, by_line, repo, page)
+            n, parts = link_page(data, by_line, repo, page, math)
+            if parts:
+                rendered.append((page, parts))
+            refs += n
             pages += 1
+    bodies = math.fill([parts[1] for _, parts in rendered])
+    for (page, (head, _, tail)), body in zip(rendered, bodies):
+        page.write_text(embed_previews(data, head + leanhl.BEGIN + body + leanhl.END + tail))
+    print(f'{len(math.items)} doc-comment formulas rendered with KaTeX.')
     print(f'{stats["linked"]} links in {stats["blocks"]} Lean blocks of the top pages; '
           f'{refs} links in {pages} source pages.')
     if stats['unmatched']:

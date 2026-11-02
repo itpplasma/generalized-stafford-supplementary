@@ -1,6 +1,6 @@
 {
 "schema": 1,
-"formal_commit": "e63321970bcb7cf360a378bf48368f23d9bc1e6a",
+"formal_commit": "dd9447beb20b889a158a74fdb9328f99a774a994",
 "compared": [
 "GeneralizedStaffordChallenge.fixedIdeal",
 "GeneralizedStaffordChallenge.fixedAnchor",
@@ -3345,14 +3345,9 @@
 "module": "GeneralizedStafford.Challenge.DiffOpTransport",
 "kind": "theorem",
 "uses": [
-"GlobalStaffordChallenge.IsOrderLE"
-]
-},
-"GeneralizedStaffordChallenge.isOrderLE_add.match_1_1": {
-"module": "GeneralizedStafford.Challenge.DiffOpTransport",
-"kind": "def",
-"uses": [
-"GlobalStaffordChallenge.IsOrderLE"
+"GeneralizedStaffordChallenge.endCommutator_add",
+"GlobalStaffordChallenge.IsOrderLE",
+"GlobalStaffordChallenge.commutator"
 ]
 },
 "GeneralizedStaffordChallenge.isOrderLE_iff_mem_order": {
@@ -3375,55 +3370,30 @@
 "module": "GeneralizedStafford.Challenge.DiffOpTransport",
 "kind": "theorem",
 "uses": [
-"GlobalStaffordChallenge.IsOrderLE"
-]
-},
-"GeneralizedStaffordChallenge.isOrderLE_mul.match_1_1": {
-"module": "GeneralizedStafford.Challenge.DiffOpTransport",
-"kind": "def",
-"uses": [
-"GlobalStaffordChallenge.IsOrderLE"
-]
-},
-"GeneralizedStaffordChallenge.isOrderLE_mul.match_1_4": {
-"module": "GeneralizedStafford.Challenge.DiffOpTransport",
-"kind": "def",
-"uses": [
-"GlobalStaffordChallenge.IsOrderLE"
-]
-},
-"GeneralizedStaffordChallenge.isOrderLE_mul.match_1_7": {
-"module": "GeneralizedStafford.Challenge.DiffOpTransport",
-"kind": "def",
-"uses": [
-"GlobalStaffordChallenge.IsOrderLE"
+"GeneralizedStaffordChallenge.endCommutator_mul",
+"GeneralizedStaffordChallenge.isOrderLE_add",
+"GeneralizedStaffordChallenge.isOrderLE_zero",
+"GlobalStaffordChallenge.IsOrderLE",
+"GlobalStaffordChallenge.commutator"
 ]
 },
 "GeneralizedStaffordChallenge.isOrderLE_succ": {
 "module": "GeneralizedStafford.Challenge.DiffOpTransport",
 "kind": "theorem",
 "uses": [
-"GlobalStaffordChallenge.IsOrderLE"
-]
-},
-"GeneralizedStaffordChallenge.isOrderLE_succ.match_1_1": {
-"module": "GeneralizedStafford.Challenge.DiffOpTransport",
-"kind": "def",
-"uses": [
-"GlobalStaffordChallenge.IsOrderLE"
+"GeneralizedStaffordChallenge.isOrderLE_zero",
+"GlobalStaffordChallenge.IsOrderLE",
+"GlobalStaffordChallenge.commutator"
 ]
 },
 "GeneralizedStaffordChallenge.isOrderLE_zero": {
 "module": "GeneralizedStafford.Challenge.DiffOpTransport",
 "kind": "theorem",
 "uses": [
-"GlobalStaffordChallenge.IsOrderLE"
+"GeneralizedStaffordChallenge.endCommutator_zero",
+"GlobalStaffordChallenge.IsOrderLE",
+"GlobalStaffordChallenge.commutator"
 ]
-},
-"GeneralizedStaffordChallenge.isOrderLE_zero.match_1_1": {
-"module": "GeneralizedStafford.Challenge.DiffOpTransport",
-"kind": "def",
-"uses": []
 },
 "GeneralizedStaffordChallenge.isRegular_iff": {
 "module": "GeneralizedStafford.Challenge.Transport",
@@ -3462,11 +3432,6 @@
 "uses": [
 "GeneralizedStaffordChallenge.PosetDevLE"
 ]
-},
-"GeneralizedStaffordChallenge.posetDevLE_iff.match_1_1": {
-"module": "GeneralizedStafford.Challenge.Transport",
-"kind": "def",
-"uses": []
 },
 "GeneralizedStaffordChallenge.prescribedCyclicLeft_of_eq": {
 "module": "GeneralizedStafford.Challenge.DiffOpTransport",
@@ -3937,99 +3902,99 @@
 "ranges": {
 "GeneralizedStafford.DiffOp.Dsub": [
 "GeneralizedStafford.DifferentialOperators",
-138
+142
 ],
 "GeneralizedStafford.DiffOp.affineForm_left": [
 "GeneralizedStafford.DifferentialOperators",
-163
+167
 ],
 "GeneralizedStafford.DiffOp.affineForm_right": [
 "GeneralizedStafford.DifferentialOperators",
-143
+147
 ],
 "GeneralizedStafford.DiffOp.conclusions_left": [
 "GeneralizedStafford.DifferentialOperators",
-117
+121
 ],
 "GeneralizedStafford.DiffOp.conclusions_of": [
 "GeneralizedStafford.DifferentialOperators",
-95
+99
 ],
 "GeneralizedStafford.DiffOp.conclusions_right": [
 "GeneralizedStafford.DifferentialOperators",
-106
+110
 ],
 "GeneralizedStafford.DiffOp.globalStafford": [
 "GeneralizedStafford.DifferentialOperators",
-188
+192
 ],
 "GeneralizedStafford.DiffOp.homegaLeft": [
 "GeneralizedStafford.DifferentialOperators",
-76
+80
 ],
 "GeneralizedStafford.DiffOp.homegaRight": [
 "GeneralizedStafford.DifferentialOperators",
-72
+76
 ],
 "GeneralizedStafford.DiffOp.infiniteCenterLeft": [
 "GeneralizedStafford.DifferentialOperators",
-66
+70
 ],
 "GeneralizedStafford.DiffOp.infiniteCenterRight": [
 "GeneralizedStafford.DifferentialOperators",
-62
+66
 ],
 "GeneralizedStafford.DiffOp.isDomain": [
 "GeneralizedStafford.DifferentialOperators",
-49
+53
 ],
 "GeneralizedStafford.DiffOp.isSimpleRing": [
 "GeneralizedStafford.DifferentialOperators",
-45
+49
 ],
 "GeneralizedStafford.DiffOp.leftAsRight": [
 "GeneralizedStafford.DifferentialOperators",
-214
+218
 ],
 "GeneralizedStafford.DiffOp.noetherianLeft": [
 "GeneralizedStafford.DifferentialOperators",
-57
+61
 ],
 "GeneralizedStafford.DiffOp.noetherianRight": [
 "GeneralizedStafford.DifferentialOperators",
-53
+57
 ],
 "GeneralizedStafford.DiffOp.opOpHom": [
 "GeneralizedStafford.DifferentialOperators",
-206
+210
 ],
 "GeneralizedStafford.DiffOp.prescribedCyclicLeft": [
 "GeneralizedStafford.DifferentialOperators",
-328
+332
 ],
 "GeneralizedStafford.DiffOp.prescribedCyclicLeft_of_property": [
 "GeneralizedStafford.DifferentialOperators",
-261
+265
 ],
 "GeneralizedStafford.DiffOp.prescribedCyclicRight": [
 "GeneralizedStafford.DifferentialOperators",
-316
+320
 ],
 "GeneralizedStafford.DiffOp.span_leftAsRight": [
 "GeneralizedStafford.DifferentialOperators",
-219
+223
 ],
 "GeneralizedStafford.DiffOp.twoGeneratedLeft": [
 "GeneralizedStafford.DifferentialOperators",
-310
+314
 ],
 "GeneralizedStafford.DiffOp.twoGeneratedRight": [
 "GeneralizedStafford.DifferentialOperators",
-305
+309
 ],
 "GeneralizedStafford.DiffOp.twoGenerated_left_of_op": [
 "GeneralizedStafford.DifferentialOperators",
-241
+245
 ],
 "GeneralizedStafford.GermTest.Satisfied": [
 "GeneralizedStafford.Germs",
@@ -4117,87 +4082,87 @@
 ],
 "GeneralizedStafford.Weyl.affineForm": [
 "GeneralizedStafford.Weyl",
-168
+172
 ],
 "GeneralizedStafford.Weyl.affine_of_domain": [
 "GeneralizedStafford.Weyl",
-77
+81
 ],
 "GeneralizedStafford.Weyl.conjecture38": [
 "GeneralizedStafford.Weyl",
-158
+162
 ],
 "GeneralizedStafford.Weyl.fixedIdealForm": [
 "GeneralizedStafford.Weyl",
-177
+181
 ],
 "GeneralizedStafford.Weyl.fixedIdeal_of_domain": [
 "GeneralizedStafford.Weyl",
-85
+89
 ],
 "GeneralizedStafford.Weyl.hOmega": [
 "GeneralizedStafford.Weyl",
-46
+50
 ],
 "GeneralizedStafford.Weyl.infinite_center": [
 "GeneralizedStafford.Weyl",
-55
+59
 ],
 "GeneralizedStafford.Weyl.isNoetherian": [
 "GeneralizedStafford.Weyl",
-41
+45
 ],
 "GeneralizedStafford.Weyl.isRegular_of_ne_zero": [
 "GeneralizedStafford.Weyl",
-72
+76
 ],
 "GeneralizedStafford.Weyl.isSimpleRing": [
 "GeneralizedStafford.Weyl",
-36
+40
 ],
 "GeneralizedStafford.Weyl.prescribedCyclicLeft": [
 "GeneralizedStafford.Weyl",
-199
+203
 ],
 "GeneralizedStafford.Weyl.prescribedCyclicRight": [
 "GeneralizedStafford.Weyl",
-187
+191
 ],
 "GeneralizedStafford.Weyl.prescribedCyclic_of_domain": [
 "GeneralizedStafford.Weyl",
-93
+97
 ],
 "GeneralizedStafford.Weyl.prescribedTwoGeneratedLeft": [
 "GeneralizedStafford.Weyl",
-240
+244
 ],
 "GeneralizedStafford.Weyl.prescribedTwoGeneratedRight": [
 "GeneralizedStafford.Weyl",
-229
+233
 ],
 "GeneralizedStafford.Weyl.prescribedTwoGenerated_of_domain": [
 "GeneralizedStafford.Weyl",
-105
+109
 ],
 "GeneralizedStafford.Weyl.torsionCyclicLeft": [
 "GeneralizedStafford.Weyl",
-220
+224
 ],
 "GeneralizedStafford.Weyl.torsionCyclicRight": [
 "GeneralizedStafford.Weyl",
-210
+214
 ],
 "GeneralizedStafford.Weyl.transposeRingEquiv": [
 "GeneralizedStafford.Weyl",
-50
+54
 ],
 "GeneralizedStafford.Weyl.twoGeneratedLeft": [
 "GeneralizedStafford.Weyl",
-140
+144
 ],
 "GeneralizedStafford.Weyl.twoGeneratedRight": [
 "GeneralizedStafford.Weyl",
-132
+136
 ],
 "GeneralizedStafford.affine_update": [
 "GeneralizedStafford.Descent",
@@ -4217,27 +4182,27 @@
 ],
 "GeneralizedStafford.devLE_span_of_torsion": [
 "GeneralizedStafford.Filtered",
-79
+83
 ],
 "GeneralizedStafford.enveloping_fixedIdeal": [
 "GeneralizedStafford.Enveloping",
-78
+82
 ],
 "GeneralizedStafford.enveloping_hypotheses": [
 "GeneralizedStafford.Enveloping",
-38
+42
 ],
 "GeneralizedStafford.enveloping_prescribedCyclic": [
 "GeneralizedStafford.Enveloping",
-97
+101
 ],
 "GeneralizedStafford.enveloping_theoremA": [
 "GeneralizedStafford.Enveloping",
-64
+68
 ],
 "GeneralizedStafford.enveloping_twoGenerated": [
 "GeneralizedStafford.Enveloping",
-128
+132
 ],
 "GeneralizedStafford.eq_top_of_small_zero": [
 "GeneralizedStafford.Basic",
@@ -4261,23 +4226,23 @@
 ],
 "GeneralizedStafford.filtered_fixedIdeal": [
 "GeneralizedStafford.Filtered",
-104
+108
 ],
 "GeneralizedStafford.filtered_hypotheses": [
 "GeneralizedStafford.Filtered",
-53
+57
 ],
 "GeneralizedStafford.filtered_prescribedCyclic": [
 "GeneralizedStafford.Filtered",
-123
+127
 ],
 "GeneralizedStafford.filtered_theoremA": [
 "GeneralizedStafford.Filtered",
-89
+93
 ],
 "GeneralizedStafford.filtered_twoGenerated": [
 "GeneralizedStafford.Filtered",
-155
+159
 ],
 "GeneralizedStafford.fixed_anchor": [
 "GeneralizedStafford.TheoremA",
@@ -4313,19 +4278,19 @@
 ],
 "GeneralizedStafford.leftToRight": [
 "GeneralizedStafford.Opposite",
-29
+33
 ],
 "GeneralizedStafford.leftToRight_injective": [
 "GeneralizedStafford.Opposite",
-75
+79
 ],
 "GeneralizedStafford.leftToRight_span": [
 "GeneralizedStafford.Opposite",
-82
+86
 ],
 "GeneralizedStafford.mem_leftToRight": [
 "GeneralizedStafford.Opposite",
-70
+74
 ],
 "GeneralizedStafford.mul_mem_sup_pencil": [
 "GeneralizedStafford.Descent",
@@ -4337,11 +4302,11 @@
 ],
 "GeneralizedStafford.prescribedCyclicLeft_of_right": [
 "GeneralizedStafford.Opposite",
-153
+157
 ],
 "GeneralizedStafford.prescribedTwoGeneratedLeft_of_right": [
 "GeneralizedStafford.Opposite",
-104
+108
 ],
 "GeneralizedStafford.prescribed_cyclic": [
 "GeneralizedStafford.Modules",
@@ -4389,15 +4354,15 @@
 ],
 "GeneralizedStafford.rightOfLeft": [
 "GeneralizedStafford.Opposite",
-127
+131
 ],
 "GeneralizedStafford.right_side": [
 "GeneralizedStafford.Filtered",
-43
+47
 ],
 "GeneralizedStafford.ringKrullDim_ne_top_of_le": [
 "GeneralizedStafford.Filtered",
-39
+43
 ],
 "GeneralizedStafford.section_central_scalar": [
 "GeneralizedStafford.Germs",
@@ -4413,7 +4378,7 @@
 ],
 "GeneralizedStafford.span_rightOfLeft": [
 "GeneralizedStafford.Opposite",
-132
+136
 ],
 "GeneralizedStafford.test_pencil_identity": [
 "GeneralizedStafford.Germs",
@@ -4421,7 +4386,7 @@
 ],
 "GeneralizedStafford.twoGeneratedLeft_of_right": [
 "GeneralizedStafford.Opposite",
-45
+49
 ],
 "GeneralizedStafford.two_generated": [
 "GeneralizedStafford.Modules",
@@ -4441,823 +4406,823 @@
 ],
 "GeneralizedStaffordChallenge.CorollaryBFixedAnchorStatement": [
 "GeneralizedStafford.Challenge.Transport",
-128
+132
 ],
 "GeneralizedStaffordChallenge.CorollaryBFixedIdealStatement": [
 "GeneralizedStafford.Challenge.Transport",
-137
+141
 ],
 "GeneralizedStaffordChallenge.CorollaryC1HAllStatement": [
 "GeneralizedStafford.Challenge.Transport",
-161
+165
 ],
 "GeneralizedStaffordChallenge.CorollaryC1OmegaStatement": [
 "GeneralizedStafford.Challenge.Transport",
-172
+176
 ],
 "GeneralizedStaffordChallenge.CorollaryC1StableStatement": [
 "GeneralizedStafford.Challenge.Transport",
-183
+187
 ],
 "GeneralizedStaffordChallenge.CorollaryC1Statement": [
 "GeneralizedStafford.Challenge.Transport",
-149
+153
 ],
 "GeneralizedStaffordChallenge.CorollaryC2FullRankStatement": [
 "GeneralizedStafford.Challenge.Transport",
-204
+208
 ],
 "GeneralizedStaffordChallenge.CorollaryC2OmegaStatement": [
 "GeneralizedStafford.Challenge.Transport",
-235
+239
 ],
 "GeneralizedStaffordChallenge.CorollaryC2PrescribedStatement": [
 "GeneralizedStafford.Challenge.Transport",
-215
+219
 ],
 "GeneralizedStaffordChallenge.CorollaryC2Statement": [
 "GeneralizedStafford.Challenge.Transport",
-227
+231
 ],
 "GeneralizedStaffordChallenge.DevDimLE": [
 "GeneralizedStafford.Challenge.Transport",
-59
+63
 ],
 "GeneralizedStaffordChallenge.DevDimLEOmega": [
 "GeneralizedStafford.Challenge.Transport",
-71
+75
 ],
 "GeneralizedStaffordChallenge.DiffOpCyclicLeftStatement": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
-196
+202
 ],
 "GeneralizedStaffordChallenge.DiffOpCyclicRightStatement": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
-183
+189
 ],
 "GeneralizedStaffordChallenge.DiffOpFixedAnchorStatement": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
-153
+159
 ],
 "GeneralizedStaffordChallenge.DiffOpGlobalStaffordStatement": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
-170
+176
 ],
 "GeneralizedStaffordChallenge.DiffOpTwoGeneratedLeftStatement": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
-145
+151
 ],
 "GeneralizedStaffordChallenge.DiffOpTwoGeneratedRightStatement": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
-136
+142
 ],
 "GeneralizedStaffordChallenge.EnvelopingFixedIdealStatement": [
 "GeneralizedStafford.Challenge.EnvelopingTransport",
-49
+53
 ],
 "GeneralizedStaffordChallenge.EnvelopingHypothesesStatement": [
 "GeneralizedStafford.Challenge.EnvelopingTransport",
-27
+31
 ],
 "GeneralizedStaffordChallenge.EnvelopingPrescribedCyclicStatement": [
 "GeneralizedStafford.Challenge.EnvelopingTransport",
-57
+61
 ],
 "GeneralizedStaffordChallenge.EnvelopingTheoremAStatement": [
 "GeneralizedStafford.Challenge.EnvelopingTransport",
-40
+44
 ],
 "GeneralizedStaffordChallenge.EnvelopingTwoGeneratedStatement": [
 "GeneralizedStafford.Challenge.EnvelopingTransport",
-67
+71
 ],
 "GeneralizedStaffordChallenge.FilteredDomainStatement": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-173
+177
 ],
 "GeneralizedStaffordChallenge.FilteredFixedIdealStatement": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-139
+143
 ],
 "GeneralizedStaffordChallenge.FilteredHypothesesStatement": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-163
+167
 ],
 "GeneralizedStaffordChallenge.FilteredPrescribedCyclicStatement": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-146
+150
 ],
 "GeneralizedStaffordChallenge.FilteredTheoremAStatement": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-129
+133
 ],
 "GeneralizedStaffordChallenge.FilteredTwoGeneratedStatement": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-155
+159
 ],
 "GeneralizedStaffordChallenge.FixedAnchorProperty": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-33
+37
 ],
 "GeneralizedStaffordChallenge.FixedAnchorStatement": [
 "GeneralizedStafford.Challenge.Transport",
-108
+112
 ],
 "GeneralizedStaffordChallenge.FixedIdealProperty": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-40
+44
 ],
 "GeneralizedStaffordChallenge.FixedIdealStatement": [
 "GeneralizedStafford.Challenge.Transport",
-96
+100
 ],
 "GeneralizedStaffordChallenge.GradedSymbol.casesOn": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-97
+101
 ],
 "GeneralizedStaffordChallenge.GradedSymbol.gr": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-103
+107
 ],
 "GeneralizedStaffordChallenge.GradedSymbol.gr_eq_zero_iff": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-107
+111
 ],
 "GeneralizedStaffordChallenge.GradedSymbol.gr_mul": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-109
+113
 ],
 "GeneralizedStaffordChallenge.GradedSymbol.gr_surjective": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-105
+109
 ],
 "GeneralizedStaffordChallenge.GradedSymbol.mk.noConfusion": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-100
+104
 ],
 "GeneralizedStaffordChallenge.GradedSymbol.noConfusion": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-97
+101
 ],
 "GeneralizedStaffordChallenge.GradedSymbol.recOn": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-97
+101
 ],
 "GeneralizedStaffordChallenge.HAll": [
 "GeneralizedStafford.Challenge.Transport",
-83
+87
 ],
 "GeneralizedStaffordChallenge.HOmega": [
 "GeneralizedStafford.Challenge.Transport",
-88
+92
 ],
 "GeneralizedStaffordChallenge.HasCommNoetherianDomainGr": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-121
+125
 ],
 "GeneralizedStaffordChallenge.HasCommNoetherianGr": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-113
+117
 ],
 "GeneralizedStaffordChallenge.HasFiniteDevDim": [
 "GeneralizedStafford.Challenge.Transport",
-66
+70
 ],
 "GeneralizedStaffordChallenge.IsGoldieTorsion": [
 "GeneralizedStafford.Challenge.Transport",
-78
+82
 ],
 "GeneralizedStaffordChallenge.IsRegularElement": [
 "GeneralizedStafford.Challenge.Transport",
-41
+45
 ],
 "GeneralizedStaffordChallenge.KnownDimensionStatement": [
 "GeneralizedStafford.Challenge.Transport",
-121
+125
 ],
 "GeneralizedStaffordChallenge.PosetDevLE": [
 "GeneralizedStafford.Challenge.Transport",
-47
+51
 ],
 "GeneralizedStaffordChallenge.PrescribedCyclicProperty": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-47
+51
 ],
 "GeneralizedStaffordChallenge.RingFiltration.F": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-81
+85
 ],
 "GeneralizedStaffordChallenge.RingFiltration.below": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-91
+95
 ],
 "GeneralizedStaffordChallenge.RingFiltration.casesOn": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-77
+81
 ],
 "GeneralizedStaffordChallenge.RingFiltration.exhaustive": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-89
+93
 ],
 "GeneralizedStaffordChallenge.RingFiltration.mk.noConfusion": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-79
+83
 ],
 "GeneralizedStaffordChallenge.RingFiltration.mono": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-83
+87
 ],
 "GeneralizedStaffordChallenge.RingFiltration.mul_mem": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-87
+91
 ],
 "GeneralizedStaffordChallenge.RingFiltration.noConfusion": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-77
+81
 ],
 "GeneralizedStaffordChallenge.RingFiltration.one_mem": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-85
+89
 ],
 "GeneralizedStaffordChallenge.RingFiltration.recOn": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-77
+81
 ],
 "GeneralizedStaffordChallenge.StablyCyclicProperty": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-55
+59
 ],
 "GeneralizedStaffordChallenge.TwoGeneratedProperty": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-64
+68
 ],
 "GeneralizedStaffordChallenge.WeylTwoGeneratedLeftStatement": [
 "GeneralizedStafford.Challenge.WeylTransport",
-209
+213
 ],
 "GeneralizedStaffordChallenge.WeylTwoGeneratedRightStatement": [
 "GeneralizedStafford.Challenge.WeylTransport",
-200
+204
 ],
 "GeneralizedStaffordChallenge.below_toAA": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-197
+201
 ],
 "GeneralizedStaffordChallenge.corollaryB_fixedAnchor": [
 "GeneralizedStaffordSolution",
-42
+46
 ],
 "GeneralizedStaffordChallenge.corollaryB_fixedAnchor_proof": [
 "GeneralizedStafford.Challenge.Transport",
-320
+324
 ],
 "GeneralizedStaffordChallenge.corollaryB_fixedIdeal": [
 "GeneralizedStaffordSolution",
-46
+50
 ],
 "GeneralizedStaffordChallenge.corollaryB_fixedIdeal_proof": [
 "GeneralizedStafford.Challenge.Transport",
-326
+330
 ],
 "GeneralizedStaffordChallenge.corollaryC1": [
 "GeneralizedStaffordSolution",
-50
+54
 ],
 "GeneralizedStaffordChallenge.corollaryC1_hAll": [
 "GeneralizedStaffordSolution",
-54
+58
 ],
 "GeneralizedStaffordChallenge.corollaryC1_hAll_proof": [
 "GeneralizedStafford.Challenge.Transport",
-350
+354
 ],
 "GeneralizedStaffordChallenge.corollaryC1_omega": [
 "GeneralizedStaffordSolution",
-58
+62
 ],
 "GeneralizedStaffordChallenge.corollaryC1_omega_proof": [
 "GeneralizedStafford.Challenge.Transport",
-357
+361
 ],
 "GeneralizedStaffordChallenge.corollaryC1_proof": [
 "GeneralizedStafford.Challenge.Transport",
-343
+347
 ],
 "GeneralizedStaffordChallenge.corollaryC1_stable": [
 "GeneralizedStaffordSolution",
-62
+66
 ],
 "GeneralizedStaffordChallenge.corollaryC1_stable_proof": [
 "GeneralizedStafford.Challenge.Transport",
-365
+369
 ],
 "GeneralizedStaffordChallenge.corollaryC2": [
 "GeneralizedStaffordSolution",
-74
+78
 ],
 "GeneralizedStaffordChallenge.corollaryC2_fullRank": [
 "GeneralizedStaffordSolution",
-66
+70
 ],
 "GeneralizedStaffordChallenge.corollaryC2_fullRank_proof": [
 "GeneralizedStafford.Challenge.Transport",
-372
+376
 ],
 "GeneralizedStaffordChallenge.corollaryC2_omega": [
 "GeneralizedStaffordSolution",
-78
+82
 ],
 "GeneralizedStaffordChallenge.corollaryC2_omega_proof": [
 "GeneralizedStafford.Challenge.Transport",
-396
+400
 ],
 "GeneralizedStaffordChallenge.corollaryC2_prescribed": [
 "GeneralizedStaffordSolution",
-70
+74
 ],
 "GeneralizedStaffordChallenge.corollaryC2_prescribed_proof": [
 "GeneralizedStafford.Challenge.Transport",
-380
+384
 ],
 "GeneralizedStaffordChallenge.corollaryC2_proof": [
 "GeneralizedStafford.Challenge.Transport",
-387
+391
 ],
 "GeneralizedStaffordChallenge.devDimLE_iff": [
 "GeneralizedStafford.Challenge.Transport",
-255
+259
 ],
 "GeneralizedStaffordChallenge.diffOpCyclicLeft": [
 "GeneralizedStaffordSolution",
-194
+198
 ],
 "GeneralizedStaffordChallenge.diffOpCyclicLeft_proof": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
-331
+337
 ],
 "GeneralizedStaffordChallenge.diffOpCyclicRight": [
 "GeneralizedStaffordSolution",
-190
+194
 ],
 "GeneralizedStaffordChallenge.diffOpCyclicRight_proof": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
-326
+332
 ],
 "GeneralizedStaffordChallenge.diffOpFixedAnchor": [
 "GeneralizedStaffordSolution",
-182
+186
 ],
 "GeneralizedStaffordChallenge.diffOpFixedAnchor_proof": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
-304
+310
 ],
 "GeneralizedStaffordChallenge.diffOpGlobalStafford": [
 "GeneralizedStaffordSolution",
-186
+190
 ],
 "GeneralizedStaffordChallenge.diffOpGlobalStafford_proof": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
-318
+324
 ],
 "GeneralizedStaffordChallenge.diffOpTwoGeneratedLeft": [
 "GeneralizedStaffordSolution",
-178
+182
 ],
 "GeneralizedStaffordChallenge.diffOpTwoGeneratedLeft_proof": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
-299
+305
 ],
 "GeneralizedStaffordChallenge.diffOpTwoGeneratedRight": [
 "GeneralizedStaffordSolution",
-174
+178
 ],
 "GeneralizedStaffordChallenge.diffOpTwoGeneratedRight_proof": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
-294
+300
 ],
 "GeneralizedStaffordChallenge.diffOps": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
-119
+125
 ],
 "GeneralizedStaffordChallenge.diffOps_eq_algebra": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
-235
+241
 ],
 "GeneralizedStaffordChallenge.endCommutator_add": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
-70
+74
 ],
 "GeneralizedStaffordChallenge.endCommutator_mul": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
-75
+78
 ],
 "GeneralizedStaffordChallenge.endCommutator_zero": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
-66
+70
 ],
 "GeneralizedStaffordChallenge.envelopingFixedIdeal": [
 "GeneralizedStaffordSolution",
-159
+163
 ],
 "GeneralizedStaffordChallenge.envelopingFixedIdeal_proof": [
 "GeneralizedStafford.Challenge.EnvelopingTransport",
-110
+114
 ],
 "GeneralizedStaffordChallenge.envelopingHypotheses": [
 "GeneralizedStaffordSolution",
-151
+155
 ],
 "GeneralizedStaffordChallenge.envelopingHypotheses_proof": [
 "GeneralizedStafford.Challenge.EnvelopingTransport",
-94
+98
 ],
 "GeneralizedStaffordChallenge.envelopingPrescribedCyclic": [
 "GeneralizedStaffordSolution",
-163
+167
 ],
 "GeneralizedStaffordChallenge.envelopingPrescribedCyclic_proof": [
 "GeneralizedStafford.Challenge.EnvelopingTransport",
-120
+124
 ],
 "GeneralizedStaffordChallenge.envelopingSide": [
 "GeneralizedStafford.Challenge.EnvelopingTransport",
-78
+82
 ],
 "GeneralizedStaffordChallenge.envelopingTheoremA": [
 "GeneralizedStaffordSolution",
-155
+159
 ],
 "GeneralizedStaffordChallenge.envelopingTheoremA_proof": [
 "GeneralizedStafford.Challenge.EnvelopingTransport",
-100
+104
 ],
 "GeneralizedStaffordChallenge.envelopingTwoGenerated": [
 "GeneralizedStaffordSolution",
-167
+171
 ],
 "GeneralizedStaffordChallenge.envelopingTwoGenerated_proof": [
 "GeneralizedStafford.Challenge.EnvelopingTransport",
-132
+136
 ],
 "GeneralizedStaffordChallenge.exists_nat_le_of_lt_top": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-324
+328
 ],
 "GeneralizedStaffordChallenge.filteredDomain": [
 "GeneralizedStaffordSolution",
-146
+150
 ],
 "GeneralizedStaffordChallenge.filteredDomain_proof": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-332
+336
 ],
 "GeneralizedStaffordChallenge.filteredFixedIdeal": [
 "GeneralizedStaffordSolution",
-134
+138
 ],
 "GeneralizedStaffordChallenge.filteredFixedIdeal_proof": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-288
+292
 ],
 "GeneralizedStaffordChallenge.filteredHypotheses": [
 "GeneralizedStaffordSolution",
-126
+130
 ],
 "GeneralizedStaffordChallenge.filteredHypotheses_proof": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-271
+275
 ],
 "GeneralizedStaffordChallenge.filteredPrescribedCyclic": [
 "GeneralizedStaffordSolution",
-138
+142
 ],
 "GeneralizedStaffordChallenge.filteredPrescribedCyclic_proof": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-298
+302
 ],
 "GeneralizedStaffordChallenge.filteredTheoremA": [
 "GeneralizedStaffordSolution",
-130
+134
 ],
 "GeneralizedStaffordChallenge.filteredTheoremA_proof": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-278
+282
 ],
 "GeneralizedStaffordChallenge.filteredTwoGenerated": [
 "GeneralizedStaffordSolution",
-142
+146
 ],
 "GeneralizedStaffordChallenge.filteredTwoGenerated_proof": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-309
+313
 ],
 "GeneralizedStaffordChallenge.filtered_side": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-210
+214
 ],
 "GeneralizedStaffordChallenge.fixedAnchor": [
 "GeneralizedStaffordSolution",
-34
+38
 ],
 "GeneralizedStaffordChallenge.fixedAnchorProperty_of_omega": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-226
+230
 ],
 "GeneralizedStaffordChallenge.fixedAnchor_proof": [
 "GeneralizedStafford.Challenge.Transport",
-312
+316
 ],
 "GeneralizedStaffordChallenge.fixedIdeal": [
 "GeneralizedStaffordSolution",
-30
+34
 ],
 "GeneralizedStaffordChallenge.fixedIdealProperty_of_omega": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-232
+236
 ],
 "GeneralizedStaffordChallenge.fixedIdeal_proof": [
 "GeneralizedStafford.Challenge.Transport",
-304
+308
 ],
 "GeneralizedStaffordChallenge.hAll_iff": [
 "GeneralizedStafford.Challenge.Transport",
-285
+289
 ],
 "GeneralizedStaffordChallenge.hAll_of_omega": [
 "GeneralizedStafford.Challenge.Transport",
-333
+337
 ],
 "GeneralizedStaffordChallenge.hOmega_iff": [
 "GeneralizedStafford.Challenge.Transport",
-260
+264
 ],
 "GeneralizedStaffordChallenge.isDifferentialOperator_iff": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
-225
+231
 ],
 "GeneralizedStaffordChallenge.isGoldieTorsion_iff": [
 "GeneralizedStafford.Challenge.Transport",
-277
+281
 ],
 "GeneralizedStaffordChallenge.isOrderLE_add": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
-84
+87
 ],
 "GeneralizedStaffordChallenge.isOrderLE_iff_mem_order": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
-213
+219
 ],
 "GeneralizedStaffordChallenge.isOrderLE_mono": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
-94
+98
 ],
 "GeneralizedStaffordChallenge.isOrderLE_mul": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
-100
+104
 ],
 "GeneralizedStaffordChallenge.isOrderLE_succ": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
-90
+93
 ],
 "GeneralizedStaffordChallenge.isOrderLE_zero": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
-80
+82
 ],
 "GeneralizedStaffordChallenge.isRegular_iff": [
 "GeneralizedStafford.Challenge.Transport",
-264
+268
 ],
 "GeneralizedStaffordChallenge.isRegular_of_ne_zero'": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-319
+323
 ],
 "GeneralizedStaffordChallenge.knownDimension_hAll_of_omega": [
 "GeneralizedStaffordSolution",
-38
+42
 ],
 "GeneralizedStaffordChallenge.knownDimension_hAll_of_omega_proof": [
 "GeneralizedStafford.Challenge.Transport",
-339
+343
 ],
 "GeneralizedStaffordChallenge.posetDevLE_iff": [
 "GeneralizedStafford.Challenge.Transport",
-248
+252
 ],
 "GeneralizedStaffordChallenge.prescribedCyclicLeft_of_eq": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
-279
+285
 ],
 "GeneralizedStaffordChallenge.prescribedCyclicProperty_of_omega": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-256
+260
 ],
 "GeneralizedStaffordChallenge.prescribedCyclicRight_of_eq": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
-268
+274
 ],
 "GeneralizedStaffordChallenge.span_singleton_eq": [
 "GeneralizedStafford.Challenge.Transport",
-268
+272
 ],
 "GeneralizedStaffordChallenge.stablyCyclic_of_omega": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-238
+242
 ],
 "GeneralizedStaffordChallenge.symbolToAA": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-201
+205
 ],
 "GeneralizedStaffordChallenge.toAA": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-187
+191
 ],
 "GeneralizedStaffordChallenge.twoGeneratedLeft_of_eq": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
-259
+265
 ],
 "GeneralizedStaffordChallenge.twoGeneratedProperty_of_omega": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-262
+266
 ],
 "GeneralizedStaffordChallenge.twoGeneratedRight_of_eq": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
-250
+256
 ],
 "GeneralizedStaffordChallenge.weylAffineForm": [
 "GeneralizedStaffordSolution",
-94
+98
 ],
 "GeneralizedStaffordChallenge.weylAffineForm_proof": [
 "GeneralizedStafford.Challenge.WeylTransport",
-239
+243
 ],
 "GeneralizedStaffordChallenge.weylConjecture38": [
 "GeneralizedStaffordSolution",
-90
+94
 ],
 "GeneralizedStaffordChallenge.weylConjecture38_proof": [
 "GeneralizedStafford.Challenge.WeylTransport",
-234
+238
 ],
 "GeneralizedStaffordChallenge.weylFixedIdeal": [
 "GeneralizedStaffordSolution",
-98
+102
 ],
 "GeneralizedStaffordChallenge.weylFixedIdeal_proof": [
 "GeneralizedStafford.Challenge.WeylTransport",
-244
+248
 ],
 "GeneralizedStaffordChallenge.weylPrescribedCyclicLeft": [
 "GeneralizedStaffordSolution",
-114
+118
 ],
 "GeneralizedStaffordChallenge.weylPrescribedCyclicLeft_proof": [
 "GeneralizedStafford.Challenge.WeylTransport",
-264
+268
 ],
 "GeneralizedStaffordChallenge.weylPrescribedCyclicRight": [
 "GeneralizedStaffordSolution",
-110
+114
 ],
 "GeneralizedStaffordChallenge.weylPrescribedCyclicRight_proof": [
 "GeneralizedStafford.Challenge.WeylTransport",
-259
+263
 ],
 "GeneralizedStaffordChallenge.weylPrescribedTwoGeneratedLeft": [
 "GeneralizedStaffordSolution",
-122
+126
 ],
 "GeneralizedStaffordChallenge.weylPrescribedTwoGeneratedLeft_proof": [
 "GeneralizedStafford.Challenge.WeylTransport",
-274
+278
 ],
 "GeneralizedStaffordChallenge.weylPrescribedTwoGeneratedRight": [
 "GeneralizedStaffordSolution",
-118
+122
 ],
 "GeneralizedStaffordChallenge.weylPrescribedTwoGeneratedRight_proof": [
 "GeneralizedStafford.Challenge.WeylTransport",
-269
+273
 ],
 "GeneralizedStaffordChallenge.weylTorsionCyclicLeft": [
 "GeneralizedStaffordSolution",
-106
+110
 ],
 "GeneralizedStaffordChallenge.weylTorsionCyclicLeft_proof": [
 "GeneralizedStafford.Challenge.WeylTransport",
-254
+258
 ],
 "GeneralizedStaffordChallenge.weylTorsionCyclicRight": [
 "GeneralizedStaffordSolution",
-102
+106
 ],
 "GeneralizedStaffordChallenge.weylTorsionCyclicRight_proof": [
 "GeneralizedStafford.Challenge.WeylTransport",
-249
+253
 ],
 "GeneralizedStaffordChallenge.weylTwoGeneratedLeft": [
 "GeneralizedStaffordSolution",
-86
+90
 ],
 "GeneralizedStaffordChallenge.weylTwoGeneratedLeft_proof": [
 "GeneralizedStafford.Challenge.WeylTransport",
-228
+232
 ],
 "GeneralizedStaffordChallenge.weylTwoGeneratedRight": [
 "GeneralizedStaffordSolution",
-82
+86
 ],
 "GeneralizedStaffordChallenge.weylTwoGeneratedRight_proof": [
 "GeneralizedStafford.Challenge.WeylTransport",
-222
+226
 ],
 "GeneralizedStaffordChallenge.withCentre": [
 "GeneralizedStafford.Challenge.Transport",
-291
+295
 ],
 "GeneralizedStaffordWeylChallenge.AffineFormStatement": [
 "GeneralizedStafford.Challenge.WeylTransport",
-114
+118
 ],
 "GeneralizedStaffordWeylChallenge.Conjecture38Statement": [
 "GeneralizedStafford.Challenge.WeylTransport",
-108
+112
 ],
 "GeneralizedStaffordWeylChallenge.FixedIdealStatement": [
 "GeneralizedStafford.Challenge.WeylTransport",
-121
+125
 ],
 "GeneralizedStaffordWeylChallenge.IsLeftTorsion": [
 "GeneralizedStafford.Challenge.WeylTransport",
-101
+105
 ],
 "GeneralizedStaffordWeylChallenge.PrescribedCyclicLeftStatement": [
 "GeneralizedStafford.Challenge.WeylTransport",
-162
+166
 ],
 "GeneralizedStaffordWeylChallenge.PrescribedCyclicRightStatement": [
 "GeneralizedStafford.Challenge.WeylTransport",
-151
+155
 ],
 "GeneralizedStaffordWeylChallenge.PrescribedTwoGeneratedLeftStatement": [
 "GeneralizedStafford.Challenge.WeylTransport",
-186
+190
 ],
 "GeneralizedStaffordWeylChallenge.PrescribedTwoGeneratedRightStatement": [
 "GeneralizedStafford.Challenge.WeylTransport",
-175
+179
 ],
 "GeneralizedStaffordWeylChallenge.TorsionCyclicLeftStatement": [
 "GeneralizedStafford.Challenge.WeylTransport",
-142
+146
 ],
 "GeneralizedStaffordWeylChallenge.TorsionCyclicRightStatement": [
 "GeneralizedStafford.Challenge.WeylTransport",
-132
+136
 ],
 "GlobalStaffordChallenge.IsDifferentialOperator": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
-42
+46
 ],
 "GlobalStaffordChallenge.IsOrderLE": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
-35
+39
 ],
 "GlobalStaffordChallenge.commutator": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
-30
+34
 ],
 "GlobalStaffordChallenge.multiplication": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
-27
+31
 ],
 "Stafford.FreeWeyl": [
 "GeneralizedStafford.Challenge.WeylTransport",
-49
+53
 ],
 "Stafford.Reduction.Stafford38": [
 "GeneralizedStafford.Challenge.WeylTransport",
-71
+75
 ],
 "Stafford.freeWeylRelation": [
 "GeneralizedStafford.Challenge.WeylTransport",
-41
+45
 ],
 "Stafford38.TorsionCyclicity.IsRightTorsion": [
 "GeneralizedStafford.Challenge.WeylTransport",
-88
+92
 ],
 "Stafford38Challenge.PhaseVar": [
 "GeneralizedStafford.Challenge.WeylTransport",
-57
+61
 ],
 "Stafford38Challenge.UniversalStatement": [
 "GeneralizedStafford.Challenge.WeylTransport",
-79
+83
 ],
 "Stafford38Challenge.WeylAlg": [
 "GeneralizedStafford.Challenge.WeylTransport",
-60
+64
 ]
 }
 }

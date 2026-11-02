@@ -56,7 +56,8 @@ async function evaluate(expression) {
 const loaded = () => evaluate(`new Promise(resolve => { const done = () => setTimeout(resolve, 150); if (document.readyState === 'complete') done(); else addEventListener('load', done, {once:true}); })`);
 async function open(file, width = 1440, height = 1000, mobile = false) {
   await send('Emulation.setDeviceMetricsOverride', {width, height, deviceScaleFactor: 1, mobile}, session);
-  await send('Page.navigate', {url: pathToFileURL(path.join(root, file)).href}, session);
+  const [name, hash] = file.split('#');
+  await send('Page.navigate', {url: pathToFileURL(path.join(root, name)).href + (hash ? '#' + hash : '')}, session);
   await loaded();
 }
 async function shot(name, full = false) {
@@ -96,60 +97,59 @@ try {
 
   await open('index.html');
   receipt.pages['index.html'] = {local_links: await checkLinks('index.html')};
-  // First screen: the structure graph, every result row and every lemma row are visible.
-  const first = await evaluate(`(() => { const vis = e => e.getBoundingClientRect().top < innerHeight;
-    return {graph: vis(document.querySelector('.structure svg')),
-      results: [...document.querySelectorAll('[id^="result-"]')].filter(vis).length,
-      results_total: document.querySelectorAll('[id^="result-"]').length,
-      lemmas: [...document.querySelectorAll('[id^="lemma-"]')].filter(vis).length,
-      lemmas_total: document.querySelectorAll('[id^="lemma-"]').length,
+  // First screen: title, status line and the proof-structure graph; nothing starts open.
+  const first = await evaluate(`(() => { const vis = e => e && e.getBoundingClientRect().bottom <= innerHeight;
+    return {title: vis(document.querySelector('header.hero h1')), status: vis(document.querySelector('.status')),
+      graph: vis(document.querySelector('.overview-graph .lr svg')),
       open_details: document.querySelectorAll('main details[open]').length}; })()`);
   receipt.first_screen = first;
-  assert.equal(first.open_details, 0, 'drill-down sections must start closed');
+  assert.deepEqual(first, {title: true, status: true, graph: true, open_details: 0});
   await shot('index-desktop.png');
-  // Known results: one row per statement-map entry with a citation; one comparison
-  // row per labelled environment of the paper; no math rendering errors.
+  // One card per numbered environment (items of an unmapped environment get their own);
+  // every mapped card shows a Lean statement without a click.
   const map = fs.readFileSync(path.join(root, 'verification/paper/statement-map.yaml'), 'utf8');
+  const mapped = new Set([...map.matchAll(/^  - label: (\S+)/gm)].map(m => m[1]));
   const paper = JSON.parse(fs.readFileSync(path.join(root, 'verification/paper/paper.json'), 'utf8'));
-  receipt.known_rows = await evaluate(`document.querySelectorAll('#citations tbody tr').length`);
-  assert.equal(receipt.known_rows, (map.match(/^    cite:/gm) || []).length);
-  receipt.comparison_rows = await evaluate(`document.querySelectorAll('#paper details.cmp[id^="paper-"]').length`);
-  assert.equal(receipt.comparison_rows, paper.envs.filter(e => e.label).length);
-  receipt.step_rows = await evaluate(`document.querySelectorAll('#paper details.cmp[id^="cmp-step:"]').length`);
+  const cards = paper.envs.filter(e => e.label).flatMap(e => e.items.length && !mapped.has(e.label)
+    ? e.items.map(i => i.label) : [e.label]);
+  const shown = await evaluate(`[...document.querySelectorAll('article.card')].map(c => [c.id.slice(6),
+    !!c.querySelector('.lean > .stmt-lean > pre.lean-src'), c.classList.contains('def')])`);
+  assert.deepEqual(shown.map(x => x[0]).sort(), [...cards].sort());
+  receipt.cards = shown.length;
+  for (const [label, visible, def] of shown) assert.ok(def || !mapped.has(label) || visible, `no visible Lean statement: ${label}`);
+  // Every compared theorem appears with its statement.
+  const record = JSON.parse(fs.readFileSync(path.join(root, 'verification/record.json'), 'utf8'));
+  const leanText = await evaluate(`[...document.querySelectorAll('.lean > .stmt-lean > pre.lean-src')].map(p => p.textContent).join('\\n')`);
+  for (const name of record.comparator.theorem_names) {
+    assert.ok(leanText.includes('theorem ' + name.split('.').pop() + ' '), `compared theorem not shown: ${name}`);
+  }
+  receipt.known_cards = await evaluate(`document.querySelectorAll('#known article.card').length`);
+  assert.equal(receipt.known_cards, (map.match(/^    cite:/gm) || []).length);
+  receipt.step_rows = await evaluate(`document.querySelectorAll('#structure details.step').length`);
   assert.equal(receipt.step_rows, Object.keys(paper.steps).length);
   assert.equal(await evaluate(`document.querySelectorAll('.katex-error').length`), 0);
-  assert.equal(await evaluate(`document.querySelectorAll('#paper details[open]').length`), 0);
-  await evaluate(`document.getElementById('citations').scrollIntoView()`);
-  await shot('index-citations.png');
-  await evaluate(`location.hash = 'paper-thm:Aprime'`);
+  // An opened lemma: its card is the target, with the variables in scope opened.
+  await evaluate(`location.hash = 'paper-lem:central'`);
   await evaluate(`new Promise(r => setTimeout(r, 150))`);
-  assert.equal(await evaluate(`document.getElementById('paper-thm:Aprime').open`), true);
-  await shot('index-compare-theoremAprime.png');
-  await evaluate(`location.hash = 'cmp-step:descent-step'`);
-  await evaluate(`new Promise(r => setTimeout(r, 150))`);
-  await shot('index-compare-descent-steps.png');
-  await evaluate(`location.hash = 'printed-graph'`);
-  await evaluate(`new Promise(r => setTimeout(r, 150))`);
-  await shot('index-printed-graph.png');
-  await evaluate(`document.querySelectorAll('main details').forEach(d => d.open = false); location.hash = ''; window.scrollTo(0, 0)`);
-  await evaluate(`window.scrollTo(0, 0)`);
-  // Drill-down: the descent row opens with its proof steps, and a preview shows on focus.
-  await evaluate(`location.hash = 'lemma-descent'`);
-  await evaluate(`new Promise(r => setTimeout(r, 100))`);
-  assert.equal(await evaluate(`document.querySelector('#lemma-descent details').open`), true);
-  await evaluate(`document.querySelector('#lemma-descent a[data-p]').focus()`);
+  await evaluate(`(() => { document.querySelector('[id="paper-lem:central"] details.vars').open = true; })()`);
+  await evaluate(`document.querySelector('[id="paper-lem:central"] a[data-p]').focus()`);
   assert.equal(await evaluate(`getComputedStyle(document.querySelector('.lean-preview')).display`), 'block');
-  await shot('index-descent-open.png');
-  await evaluate(`document.activeElement.blur(); location.hash = 'result-thm:A'`);
-  await evaluate(`(() => { const d = document.querySelector('[id="result-thm:A"] details details'); d.open = true; d.scrollIntoView(); })()`);
-  await shot('index-theoremA-open.png');
+  await shot('index-lemma-open.png');
+  await evaluate(`document.activeElement.blur(); location.hash = 'step-descent-step'`);
+  await evaluate(`new Promise(r => setTimeout(r, 150))`);
+  assert.equal(await evaluate(`document.getElementById('step-descent-step').open`), true);
+  await shot('index-descent-step.png');
   await send('Emulation.setEmulatedMedia', {features: [{name: 'prefers-color-scheme', value: 'dark'}]}, session);
   await open('index.html');
+  await evaluate(`document.getElementById('results').scrollIntoView()`);
   await shot('index-dark.png');
   await send('Emulation.setEmulatedMedia', {features: [{name: 'prefers-color-scheme', value: 'light'}]}, session);
   await open('index.html', 390, 844, true);
   assert.equal(await evaluate('document.documentElement.scrollWidth > innerWidth + 1'), false, 'index.html overflows at phone width');
   await shot('index-phone.png');
+  await evaluate(`location.hash = 'paper-lem:schur'`);
+  await evaluate(`new Promise(r => setTimeout(r, 150))`);
+  await shot('index-phone-lemma.png');
 
   await open('lean-dag.html');
   receipt.pages['lean-dag.html'] = {local_links: await checkLinks('lean-dag.html'),
@@ -170,11 +170,31 @@ try {
   await open('verification/index.html', 390, 844, true);
   assert.equal(await evaluate('document.documentElement.scrollWidth > innerWidth + 1'), false, 'verification overflows at phone width');
 
-  const source = 'sources/formal/GeneralizedStafford/Descent.lean.html';
-  await open(source);
-  receipt.pages[source] = {local_links: await checkLinks(source)};
+  // Source pages: highlighted Lean, rendered doc comments, single line spacing, marked target line.
+  const source = 'sources/formal/GeneralizedStafford/Germs.lean.html';
+  for (const scheme of ['light', 'dark']) {
+    await send('Emulation.setEmulatedMedia', {features: [{name: 'prefers-color-scheme', value: scheme}]}, session);
+    await open(source + '#L107');
+    const page = await evaluate(`(() => { const rows = [...document.querySelectorAll('.src > .l')].slice(0, 60);
+      const steps = rows.slice(1).filter((r, i) => +r.dataset.n === +rows[i].dataset.n + 1 && !rows[i].classList.contains('raw'))
+        .map(r => r.getBoundingClientRect().top - r.previousElementSibling.getBoundingClientRect().top).sort((a, b) => a - b);
+      const lh = parseFloat(getComputedStyle(rows[0]).lineHeight);
+      const hit = document.querySelector('.hit'), r = hit && hit.getBoundingClientRect();
+      return {keywords: document.querySelectorAll('.src .kw').length, doc_math: document.querySelectorAll('.doc .katex').length,
+        line_step: steps[steps.length >> 1] / lh, marked: !!hit && r.top >= 0 && r.bottom <= innerHeight}; })()`);
+    receipt.pages[source] = page;
+    assert.ok(page.keywords > 50 && page.doc_math > 10, 'source page lacks highlighting or rendered doc math');
+    assert.ok(Math.abs(page.line_step - 1) < 0.05, `source lines are not single-spaced: ${page.line_step}`);
+    assert.ok(page.marked, 'target line is not marked on screen');
+    await shot(`source-germs-L107-${scheme}.png`);
+  }
+  await send('Emulation.setEmulatedMedia', {features: [{name: 'prefers-color-scheme', value: 'light'}]}, session);
+  receipt.pages[source].local_links = await checkLinks(source);
+  await open('sources/formal/GeneralizedStafford/TheoremA.lean.html');
+  await shot('source-theoremA.png');
   await open(source, 390, 844, true);
   assert.equal(await evaluate('document.documentElement.scrollWidth > innerWidth + 1'), false, 'source page overflows at phone width');
+  await shot('source-germs-phone.png');
 
   assert.deepEqual(errors, []);
   assert.deepEqual(external, []);

@@ -53,7 +53,7 @@ def keys(compared):
             continue
         lab = e['label']
         kind = ('goal' if lab in MAIN else 'cited' if 'cite' in e else 'stmt' if e.get('challenge') else 'dep')
-        anchor = ('known-' if 'cite' in e else 'result-' if e.get('challenge') else 'lemma-') + lab
+        anchor = 'paper-' + lab
         out[lab] = dict(names=names, title=pname[lab], short=e['title'], label=lab, kind=kind, anchor=anchor)
     covered = {n for k in out.values() for n in k['names']}
     steps = {s['step']: s for s in smap.get('proof_steps', [])}
@@ -63,7 +63,7 @@ def keys(compared):
         names = [n for x in members for n in project(names_of(steps[x], ('library',))) if n not in covered]
         if names:
             out[sid] = dict(names=names, title=title, short=short, label=None, kind='step',
-                            anchor='lemma-descent' if sid == 'step:descent' else f'cmp-{sid}')
+                            anchor='step-descent-base' if sid == 'step:descent' else f'step-{sid[5:]}')
     out['SOL'] = dict(names=compared, title='Palomar solution', short=f'the {len(compared)} compared statements',
                       label=None, kind='goal', anchor=None)
     return out
@@ -321,7 +321,7 @@ addEventListener('hashchange',open);open();})();'''
 def anchor_of(label):
     from common import statement_map
     e = next(x for x in statement_map()['environments'] if x['label'] == label)
-    return ('known-' if 'cite' in e else 'result-' if e.get('challenge') else 'lemma-') + label
+    return 'paper-' + e['label']
 
 
 def page(data):
@@ -335,7 +335,7 @@ def page(data):
     for nid, k in K.items():
         dot = proof_dot(K, data, nid)
         tag = f'<span class="tag">{esc(k["label"])}</span>' if k['label'] else ''
-        back = f' · <a href="index.html#{k["anchor"]}">overview row</a>' if k['anchor'] else ''
+        back = f' · <a href="index.html#{k["anchor"]}">statement</a>' if k['anchor'] else ''
         decls = ' · '.join(decl_link(ranges, n) for n in k['names'][:12])
         if len(k['names']) > 12:
             decls += f' · and {len(k["names"]) - 12} more'
