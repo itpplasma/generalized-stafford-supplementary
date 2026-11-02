@@ -1,0 +1,155 @@
+{
+ "schema": 1,
+ "formal": {
+  "repo": "itpplasma/generalized-stafford-formal",
+  "commit": "17f84e3bc693b309f40dc5c75a901ec891214bf0",
+  "commit_date": "2026-11-02T14:17:14+01:00",
+  "toolchain": "leanprover/lean4:v4.35.0-rc3",
+  "built_checkout_commit": "b9124425a1bc043e437750b3bcd53e19efde09a7",
+  "built_checkout_note": "Built checkout used for the reference data; its Lean files, lakefile, manifest and toolchain are identical to the pin (git diff)."
+ },
+ "library": {
+  "repo": "itpplasma/algebraic-analysis",
+  "commit": "22b3946c0cfc13960cd238319acea76ae0d5f168"
+ },
+ "packages": {
+  "algebraicAnalysis": {
+   "url": "https://github.com/itpplasma/algebraic-analysis",
+   "rev": "22b3946c0cfc13960cd238319acea76ae0d5f168"
+  },
+  "mathlib": {
+   "url": "https://github.com/leanprover-community/mathlib4",
+   "rev": "c55e6e786f49471c72fbddbec5415808896aec1e"
+  },
+  "plausible": {
+   "url": "https://github.com/leanprover-community/plausible",
+   "rev": "fb13df72ecefd8ddbf9291021d7f33a8673eb57b"
+  },
+  "LeanSearchClient": {
+   "url": "https://github.com/leanprover-community/LeanSearchClient",
+   "rev": "29ff470276c725ae01505d55b17148c18fc7dfd3"
+  },
+  "importGraph": {
+   "url": "https://github.com/leanprover-community/import-graph",
+   "rev": "7e81a29bda33a6b257bd37557a6aa6aebe175d96"
+  },
+  "proofwidgets": {
+   "url": "https://github.com/leanprover-community/ProofWidgets4",
+   "rev": "c643bbb3c24f8a25f9c14e3a6b1ceb13d01f3de1"
+  },
+  "aesop": {
+   "url": "https://github.com/leanprover-community/aesop",
+   "rev": "a90fbf7b02ff06a0deebf74088dff9e5fe02c9ea"
+  },
+  "Qq": {
+   "url": "https://github.com/leanprover-community/quote4",
+   "rev": "37b0ba0b26109cf9f9c541f0f9557e50cfa1a3b9"
+  },
+  "batteries": {
+   "url": "https://github.com/leanprover-community/batteries",
+   "rev": "3b7c8101932390d60e92a3f3d917901d5b5a773b"
+  },
+  "Cli": {
+   "url": "https://github.com/leanprover/lean4-cli",
+   "rev": "843844fa601dd56767b1eb22b7ada5b64d5e567a"
+  }
+ },
+ "challenge": {
+  "file": "GeneralizedStaffordChallenge.lean",
+  "sha256": "2546aae28ceca93fa72326d09bf415fd15a40add94967f8148ab0492c6ef06a5",
+  "matches_expected": true,
+  "identical_copies": {
+   "Challenge.lean": true,
+   "Solution.lean": true
+  }
+ },
+ "comparator": {
+  "file": "comparator.json",
+  "challenge_module": "GeneralizedStaffordChallenge",
+  "solution_module": "GeneralizedStaffordSolution",
+  "theorem_names": [
+   "GeneralizedStaffordChallenge.fixedIdeal",
+   "GeneralizedStaffordChallenge.fixedAnchor",
+   "GeneralizedStaffordChallenge.corollaryB_dimension",
+   "GeneralizedStaffordChallenge.corollaryB_fixedAnchor",
+   "GeneralizedStaffordChallenge.corollaryB_fixedIdeal",
+   "GeneralizedStaffordChallenge.corollaryC1",
+   "GeneralizedStaffordChallenge.corollaryC1_hAll",
+   "GeneralizedStaffordChallenge.corollaryC1_omega",
+   "GeneralizedStaffordChallenge.corollaryC1_stable",
+   "GeneralizedStaffordChallenge.corollaryC2_fullRank",
+   "GeneralizedStaffordChallenge.corollaryC2_prescribed",
+   "GeneralizedStaffordChallenge.corollaryC2",
+   "GeneralizedStaffordChallenge.corollaryC3_lower",
+   "GeneralizedStaffordChallenge.corollaryC3_upper",
+   "GeneralizedStaffordChallenge.weylTwoGeneratedRight",
+   "GeneralizedStaffordChallenge.weylTwoGeneratedLeft",
+   "GeneralizedStaffordChallenge.weylConjecture38",
+   "GeneralizedStaffordChallenge.weylAffineForm",
+   "GeneralizedStaffordChallenge.weylFixedIdeal",
+   "GeneralizedStaffordChallenge.weylTorsionCyclicRight",
+   "GeneralizedStaffordChallenge.weylTorsionCyclicLeft",
+   "GeneralizedStaffordChallenge.weylPrescribedCyclicRight",
+   "GeneralizedStaffordChallenge.weylPrescribedCyclicLeft",
+   "GeneralizedStaffordChallenge.weylPrescribedTwoGeneratedRight",
+   "GeneralizedStaffordChallenge.weylPrescribedTwoGeneratedLeft",
+   "GeneralizedStaffordChallenge.filteredHypotheses",
+   "GeneralizedStaffordChallenge.filteredTheoremA",
+   "GeneralizedStaffordChallenge.filteredFixedIdeal",
+   "GeneralizedStaffordChallenge.filteredCorollaryB",
+   "GeneralizedStaffordChallenge.filteredPrescribedCyclic",
+   "GeneralizedStaffordChallenge.filteredTwoGenerated",
+   "GeneralizedStaffordChallenge.filteredGeneratorBounds",
+   "GeneralizedStaffordChallenge.filteredDomain",
+   "GeneralizedStaffordChallenge.envelopingHypotheses",
+   "GeneralizedStaffordChallenge.envelopingTheoremA",
+   "GeneralizedStaffordChallenge.envelopingFixedIdeal",
+   "GeneralizedStaffordChallenge.envelopingCorollaryB",
+   "GeneralizedStaffordChallenge.envelopingPrescribedCyclic",
+   "GeneralizedStaffordChallenge.envelopingTwoGenerated",
+   "GeneralizedStaffordChallenge.envelopingGeneratorBounds",
+   "GeneralizedStaffordChallenge.diffOpTwoGeneratedRight",
+   "GeneralizedStaffordChallenge.diffOpTwoGeneratedLeft",
+   "GeneralizedStaffordChallenge.diffOpFixedAnchor",
+   "GeneralizedStaffordChallenge.diffOpGlobalStafford",
+   "GeneralizedStaffordChallenge.diffOpCyclicRight",
+   "GeneralizedStaffordChallenge.diffOpCyclicLeft"
+  ],
+  "permitted_axioms": [
+   "propext",
+   "Quot.sound",
+   "Classical.choice"
+  ],
+  "enable_nanoda": true
+ },
+ "endpoints": {
+  "file": "docs/endpoints.txt",
+  "count": 94
+ },
+ "verification_record": {
+  "path": "docs/verification.md",
+  "commit": "b9124425a1bc043e437750b3bcd53e19efde09a7",
+  "note": "The record of the pinned commit is committed in its child commit, which changes no Lean file.",
+  "sha256": "f41ce7746e9b4b1663dc8e5f7767755c9b9269e96009c00c4bd08b97c35d5a9d",
+  "copy": "verification/formal-verification.md",
+  "commands": [
+   "PYTHON=python3 scripts/verify.sh",
+   "scripts/bootstrap-palomar-tools.sh   # CARGO_BUILD_JOBS=2; same tool revisions as below",
+   "scripts/verify-palomar.sh"
+  ],
+  "release_record": "Status: commit `17f84e3bc693b309f40dc5c75a901ec891214bf0`, 2 November 2026, with AlgebraicAnalysis pinned at `22b3946c0cfc13960cd238319acea76ae0d5f168` and Mathlib at `c55e6e786f49471c72fbddbec5415808896aec1e`. Its parent commits move the application-independent Goldie splitting lemmas of `GeneratorBounds.lean` to AlgebraicAnalysis (`AlgebraicAnalysis.RingTheory.Goldie.Splitting`) and re-pins it; the challenge, solution and `comparator.json` bytes are those of `4eca6de8e3ce`. Commands, from the repository root with `~/.elan/bin` on `PATH`:\n\n```sh\nPYTHON=python3 scripts/verify.sh\nscripts/bootstrap-palomar-tools.sh   # CARGO_BUILD_JOBS=2; same tool revisions as below\nscripts/verify-palomar.sh\n```\n\nAll exited 0. `verify.sh`: pins (exact Lean, AlgebraicAnalysis, one shared Mathlib and 8 transitive dependencies); full build of `GeneralizedStafford` and `GeneralizedStaffordSolution`; 94 endpoint axiom reports with `--trust=0`, axioms exactly `propext`, `Classical.choice`, `Quot.sound`. `verify-palomar.sh`: duplicate files byte-identical, exactly 46 `sorry` holes, both import-closure checks passed, and in this local replay of the Palomar check (Comparator with NanoDa and the Lean kernel; Landrun in best-effort mode) all 46 compared theorems were accepted (`nanoda kernel accepts the solution`, `Lean default kernel accepts the solution`, `Your solution is okay!`). The sandbox was not re-probed in this run. The challenge sha256 is `2546aae28ceca93fa72326d09bf415fd15a40add94967f8148ab0492c6ef06a5`.\n\nStatement audits (2 November 2026), unchanged by this run: 14 abstract (audited `4cb2cd5e...9e95`, later name/docstring changes only), 11 Weyl-algebra (`1158aeb9...8fd8c7`), 8 filtered-ring (`cf905b9a...a0ba`), 7 enveloping-algebra (`bf6a8b90...22697`) and 6 differential-operator statements (`2546aae2...ef06a5`, no repair; definitions verbatim from the registered Global Stafford challenge), with docstring-only repairs where requested.\n\nThe previous record, at commit `4eca6de8e3ce8e4d7561cf3d012e9dcf86ceef1d` with AlgebraicAnalysis at `71af6ecc07335b67cad93451f33e26b0412dda6a`, passed the same checks with the same challenge sha256.",
+  "gates": "| Gate | Command or record | What it establishes |\n| --- | --- | --- |\n| Pins | `scripts/check-pins.py` (run by `scripts/verify.sh`) | `lean-toolchain`, `lakefile.toml` and `lake-manifest.json` match `dependency-pins.json`; one shared Mathlib package. |\n| Build | `lake build` | The library and the solution compile at the pins. |\n| Axiom audit | `scripts/verify.sh` | Every name in [endpoints.txt](endpoints.txt) exists and depends only on `propext`, `Classical.choice` and `Quot.sound`, checked with `--trust=0`. |\n| Palomar check (local replay) | `scripts/verify-palomar.sh` | The challenge and solution copies are byte-identical, the challenge has exactly 46 `sorry` holes; the solution proves each theorem of `comparator.json` with the challenge's exact name and type; the challenge imports only Mathlib; the solution does not import the challenge; NanoDa and the Lean kernel accept the solution. |\n| Statement faithfulness | independent statement-faithfulness audit (2 November 2026) passed; audited challenge sha256 `4cb2cd5e7a6043f4c38fecddb78850d6f8012048c91a7de7e188d18598dc9e95`; later changes name/docstring-only, confirmed by the final review | The challenge statements say what the written theorems say. |\n| Human review | none yet | Required before any claim of human verification. |\n\nMachine checks establish that the Lean proofs are correct for the Lean\nstatements. Whether those statements match the intended mathematics is the separate\nstatement-faithfulness question. Neither check is human review, and none of\nthem is publication."
+ },
+ "checked_here": [
+  "challenge sha256 recomputed from the git blob at the pin",
+  "challenge and solution copies byte-identical at the pin",
+  "library pin in lake-manifest.json at the pin",
+  "built checkout has the Lean state of the pin and the pinned library package",
+  "verification record commit descends from the pin and changes no Lean file"
+ ],
+ "not_rerun": [
+  "scripts/verify.sh",
+  "scripts/bootstrap-palomar-tools.sh",
+  "scripts/verify-palomar.sh"
+ ]
+}
