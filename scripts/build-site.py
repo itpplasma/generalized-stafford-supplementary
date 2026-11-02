@@ -298,6 +298,109 @@ def scope_variables(repo, rel, upto):
     return [v for frame in stack for v in frame]
 
 
+IDENT_TOKEN = re.compile(r"[A-Za-z_α-κμ-ωΑ-Ω𝒜-𝖟][A-Za-z0-9_'.α-κμ-ωΑ-Ω₀-₉]*")
+BRACKETS = {'(': ')', '{': '}', '[': ']', '⦃': '⦄'}
+
+
+def source_binders(variables):
+    """Binders of `variable` commands: dicts with names, type, instance flag and
+    (row index in the command list, start, end) of their source text."""
+    out = []
+    for k, (first, rows) in enumerate(variables):
+        for r, text in enumerate(rows):
+            j = 0
+            while j < len(text):
+                if text[j] in BRACKETS:
+                    close, depth, e = BRACKETS[text[j]], 0, j
+                    while e < len(text):
+                        depth += text[e] in '([{⦃⟨'
+                        depth -= text[e] in ')]}⦄⟩'
+                        if depth == 0:
+                            break
+                        e += 1
+                    inner = text[j + 1:e]
+                    m = re.match(r'\s*([^:()\[\]{}]+?)\s*:(?!=)\s*(.*)$', inner, re.S)
+                    names, typ = (m[1].split(), m[2]) if m else ([], inner)
+                    out.append(dict(names=names, type=typ, inst=text[j] == '[', at=(k, r, j, e + 1)))
+                    j = e + 1
+                else:
+                    j += 1
+    return out
+
+
+def same_head(a, b):
+    return a == b or a.endswith('.' + b) or b.endswith('.' + a)
+
+
+def included_binders(name, variables):
+    """Source binders of `variables` that Lean included in `name`: Lean puts the
+    included section variables first, in source order, so its leading binders
+    are matched in order (named ones by name, instances by class and variables)."""
+    lean = refs['binders'].get(name)
+    if lean is None:
+        raise SystemExit(f'no elaborated binders for {name}; re-extract with --formal')
+    src_b = source_binders(variables)
+    var_names = {n for b in src_b for n in b['names']}
+    def sig(t):
+        toks = IDENT_TOKEN.findall(t)
+        return (toks[0] if toks else ''), frozenset(x for x in toks[1:] if x in var_names)
+    keep, j = set(), 0
+    for bname, info, btype in lean:
+        btype = ' '.join(btype.split())
+        hit = None
+        for k in range(j, len(src_b)):
+            b = src_b[k]
+            for n in b['names'] or [None]:
+                if (k, n) in keep:
+                    continue
+                if info == 'inst' and b['inst'] and not b['names']:
+                    (h1, v1), (h2, v2) = sig(b['type']), sig(btype)
+                    ok = same_head(h1, h2) and v1 == v2
+                else:
+                    ok = n == bname
+                if ok:
+                    hit = (k, n)
+                    break
+            if hit:
+                break
+        if not hit:
+            break
+        keep.add(hit)
+        j = hit[0]
+    return src_b, keep
+
+
+def variable_lines(name, repo, rel, variables):
+    """The included variable binders as source lines: whole lines when every binder
+    on them is included (linked like any Lean block), otherwise only the included
+    binders, highlighted without links."""
+    src_b, keep = included_binders(name, variables)
+    out = []
+    for k, (first, rows) in enumerate(variables):
+        for r, text in enumerate(rows):
+            here = [(i, b) for i, b in enumerate(src_b) if b['at'][:2] == (k, r)]
+            used = []
+            for i, b in here:
+                names = [n for n in b['names'] if (i, n) in keep] if b['names'] else ([None] if (i, None) in keep else [])
+                if names:
+                    used.append((b, names))
+            if not used:
+                continue
+            if len(used) == len(here) and all(not b['names'] or len(ns) == len(b['names']) for b, ns in used):
+                out.append(pre(repo, rel, first + r, [text], ' ctx'))
+                continue
+            parts = []
+            for b, ns in used:
+                _, _, a, e = b['at']
+                frag = text[a:e]
+                if b['names'] and len(ns) < len(b['names']):
+                    frag = f'{frag[0]}{" ".join(ns)} : {b["type"]}{frag[-1]}'
+                parts.append(frag)
+            line = ('variable ' if text.lstrip().startswith('variable') else '  ') + ' '.join(parts)
+            out.append(f'<pre class="lean-src ctx frag">{leanhl.render_line(line, leanhl.tokenize([line])[0])}</pre>')
+    return out
+
+
 def pre(repo, rel, first, rows, cls=''):
     return (f'<pre class="lean-src{cls}" data-src="{repo}:{esc(rel)}" data-line="{first}">'
             f'{esc(chr(10).join(rows))}</pre>')
@@ -318,8 +421,9 @@ def lean_statement(name, rel=None, context=True):
     end = refs['decls'].get(f'{repo}:{path}', {}).get(name, [line, None])[1]
     first, rows = statement_rows(repo, path, line, end)
     # Section variables carry hypotheses of the statement: all those in scope, shown above it.
-    variables = scope_variables(repo, path, first) if context else []
-    ctx = ('<div class="ctxs">' + ''.join(pre(repo, path, a, r, ' ctx') for a, r in variables) + '</div>') if variables else ''
+    # Section variables that Lean included carry hypotheses of the statement: show them above it.
+    shown = variable_lines(name, repo, path, scope_variables(repo, path, first)) if context else []
+    ctx = '<div class="ctxs">' + ''.join(shown) + '</div>' if shown else ''
     return f'<div class="stmt-lean">{src_link(i, first)}{ctx}{pre(repo, path, first, rows)}</div>'
 
 

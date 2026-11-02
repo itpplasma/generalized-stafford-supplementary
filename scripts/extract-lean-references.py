@@ -114,6 +114,22 @@ def lean_ranges(checkout, groups, names):
     return ranges
 
 
+def lean_binders(checkout, groups, names):
+    """Elaborated leading binders of each name, from Lean, importing `groups` in turn."""
+    found = {}
+    with scratch() as tmp:
+        work, mods, out = Path(tmp) / 'names.txt', Path(tmp) / 'modules.txt', Path(tmp) / 'binders.json'
+        for group in groups:
+            todo = [n for n in names if n not in found]
+            if not todo:
+                break
+            work.write_text('\n'.join(todo) + '\n')
+            mods.write_text('\n'.join(group) + '\n')
+            lean_run(checkout, 'LeanBinders.lean', mods, work, out)
+            found.update(json.loads(out.read_text()))
+    return found
+
+
 def locate(roots, module):
     for key, src, ilean, url in roots:
         if (ilean / (module.replace('.', '/') + '.ilean')).exists():
@@ -192,14 +208,18 @@ def main():
         if cache[repo, rel]:
             previews[i] = preview(cache[repo, rel], line)
     decls = {k: v for k, v in local.items() if k.startswith(('formal:', 'library:'))}
+    # Which section variables each statement-map declaration really takes.
+    binders = lean_binders(formal, CONFIG['formal']['import_groups'] + [built_lib], sorted(wanted))
     REFS.parent.mkdir(parents=True, exist_ok=True)
     REFS.write_text(json.dumps(dict(
         schema=1, formal_commit=pin, checkout_commit=head, library_commit=CONFIG['library']['commit'],
         toolchain=toolchain,
         source='Usages from the .ilean files of the built checkout; declaration lines from Lean '
                'findDeclarationRanges?. Columns are code points. decls: line ranges of the '
-               'declarations of each project and library file, from its .ilean.',
-        urls=urls, targets=targets, previews=previews, unresolved=unresolved, decls=decls, files=files),
+               'declarations of each project and library file, from its .ilean. binders: the elaborated '
+               'leading binders of the statement-map declarations (scripts/LeanBinders.lean).',
+        urls=urls, targets=targets, previews=previews, unresolved=unresolved, decls=decls, binders=binders,
+        files=files),
         ensure_ascii=False, separators=(',', ':')) + '\n')
 
     labels = {'formal': (CONFIG['formal']['label'], pin),
