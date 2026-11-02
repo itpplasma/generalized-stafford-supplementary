@@ -1,0 +1,17 @@
+Theorem A in Lean: supplementary material.
+
+Copyright 2026 Christopher Albert.
+
+The generator scripts, the curated overview data and the generated pages are
+distributed under the Apache License, Version 2.0; see LICENSES/Apache-2.0.txt.
+scripts/LeanDeclRanges.lean, scripts/LeanDag.lean and the reference, graph and
+check scripts are adapted from itpplasma/stafford38-supplementary (Apache-2.0,
+same author).
+
+The bundled source pages under sources/formal reproduce Lean files of
+itpplasma/generalized-stafford-formal, and those under sources/library Lean
+files of itpplasma/algebraic-analysis, both under Apache-2.0 with their own
+NOTICE files. verification/formal-verification.md is an unmodified copy of
+docs/verification.md of itpplasma/generalized-stafford-formal. Linked Mathlib
+and Lean sources retain their respective licences. The exact revisions are in
+site.json and verification/record.json.

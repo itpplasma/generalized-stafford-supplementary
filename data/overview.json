@@ -1,0 +1,710 @@
+{
+  "labels_from": {
+    "file": "statement-map.yaml",
+    "repo": "itpplasma/generalized-stafford-paper",
+    "commit": "a94763adf9d9b6842742c753aeb9d3eb6ea688ee",
+    "note": "Labels are the paper's \\label names; `map_steps` are its neutral proof-step labels. scripts/build-site.py --statement-map checks the Lean names against that file."
+  },
+  "conventions": "Rings are associative and unital; modules are right modules; products are read in the written order. An element is regular if it is a left and right non-zero-divisor. Kdim is the right deviation (Gabriel-Rentschler) dimension. A module is Goldie-torsion if every element is killed by a regular element.",
+  "hypotheses": [
+    [
+      "(S)",
+      "R is simple"
+    ],
+    [
+      "(N)",
+      "R is right Noetherian"
+    ],
+    [
+      "(Z)",
+      "the centre of R is infinite"
+    ],
+    [
+      "(H_all)",
+      "Kdim(R/dR) is finite for every regular d"
+    ],
+    [
+      "(H_ω)",
+      "Kdim R ≤ ω"
+    ]
+  ],
+  "results": [
+    {
+      "id": "AP",
+      "label": "thm:Aprime",
+      "title": "Theorem A′",
+      "name": "fixed ideal",
+      "short": "(S)(N)(Z); I ∋ regular, Kdim(R/I) < ∞ ⇒ ∀x, ∀t ≠ 0 ∃H: I + (x + Ht)R = R",
+      "statement": "Assume (S), (N), (Z). Let I be a right ideal that contains a regular element and has Kdim(R/I) finite. For every x and every nonzero t in R there is H with I + (x + Ht)R = R.",
+      "challenge": [
+        "GeneralizedStaffordChallenge.fixedIdeal"
+      ],
+      "library": [
+        "GeneralizedStafford.fixed_ideal"
+      ],
+      "steps": [
+        {
+          "text": "Theorem A′ is the last stage P(N+1) of the two-call descent, run with no tests: Kdim R/(I + fR) < 0, that is, I + fR = R.",
+          "decl": "GeneralizedStafford.fixed_ideal"
+        }
+      ]
+    },
+    {
+      "id": "A",
+      "label": "thm:A",
+      "title": "Theorem A",
+      "name": "fixed anchor",
+      "short": "(S)(N)(Z); d regular, Kdim(R/dR) < ∞ ⇒ ∀a ≠ 0, ∀B ∃H, U, V: 1 = dU + (B + Ha)dV",
+      "statement": "Assume (S), (N), (Z). Let d be regular with Kdim(R/dR) finite. For every nonzero a (possibly a zero-divisor) and every B there are H, U, V with 1 = dU + (B + Ha)dV. For a = 1, B = 0 this is Stafford's identity R = dR + HdR.",
+      "challenge": [
+        "GeneralizedStaffordChallenge.fixedAnchor"
+      ],
+      "library": [
+        "GeneralizedStafford.fixed_anchor"
+      ],
+      "steps": [
+        {
+          "text": "Apply Theorem A′ to I = dR, x = Bd and t = ad, which is nonzero because d is regular.",
+          "decl": "GeneralizedStafford.fixed_anchor"
+        },
+        {
+          "text": "Then I + (x + Ht)R = dR + (B + Ha)dR = R, which is 1 = dU + (B + Ha)dV.",
+          "decl": "GeneralizedStafford.fixed_anchor"
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "cor:B",
+      "title": "Corollary B",
+      "name": "Kdim R ≤ ω",
+      "short": "(N), Kdim R ≤ ω ⇒ Kdim(R/I) < ∞ for every I ∋ regular; so A and A′ hold for all such d, I",
+      "statement": "If R is right Noetherian with Kdim R ≤ ω, then Kdim(R/I) is finite for every right ideal I containing a regular element. Hence, under (S), (N), (Z), Theorem A holds for every regular d and Theorem A′ for every such I. (The ordinal refinement δ(d) < Kdim R is not formalized.)",
+      "challenge": [
+        "GeneralizedStaffordChallenge.corollaryB_dimension",
+        "GeneralizedStaffordChallenge.corollaryB_fixedAnchor",
+        "GeneralizedStaffordChallenge.corollaryB_fixedIdeal"
+      ],
+      "library": [
+        "GeneralizedStafford.fixed_anchor_of_devLE_omega",
+        "GeneralizedStafford.fixed_ideal_of_devLE_omega"
+      ],
+      "steps": [
+        {
+          "text": "For regular d the chain R ⊇ dR ⊇ d²R ⊇ ⋯ has every factor isomorphic to R/dR, so Kdim R ≤ ω forces Kdim(R/dR) finite (lemma Hall).",
+          "decl": "GeneralizedStafford.principal_quotient_finite_of_omega"
+        },
+        {
+          "text": "A right ideal containing a regular s contains sR, so R/I is a quotient of R/sR.",
+          "decl": "GeneralizedStafford.quotient_finite_of_omega"
+        },
+        {
+          "text": "Theorems A and A′ then apply with this finite bound.",
+          "decl": "GeneralizedStafford.fixed_anchor_of_devLE_omega"
+        }
+      ]
+    },
+    {
+      "id": "C1",
+      "label": "prop:C1",
+      "title": "Corollary C.1",
+      "name": "cyclicity",
+      "short": "M finite Goldie-torsion, Kdim M < ∞ ⇒ ∀x ∈ M, ∀t ≠ 0 ∃h: M = (x + ht)R",
+      "statement": "Assume (S), (N), (Z). If M is a finite Goldie-torsion module with Kdim M finite, then for every x in M and nonzero t in R there is h in M with M = (x + ht)R. Under (H_all), in particular under (H_ω), the dimension hypothesis holds for every finite Goldie-torsion M. Stable form: if c, u are Goldie-torsion and Kdim(uR) is finite, then cR + uR = (c + uHt)R for some H.",
+      "challenge": [
+        "GeneralizedStaffordChallenge.corollaryC1",
+        "GeneralizedStaffordChallenge.corollaryC1_hAll",
+        "GeneralizedStaffordChallenge.corollaryC1_omega",
+        "GeneralizedStaffordChallenge.corollaryC1_stable"
+      ],
+      "library": [
+        "GeneralizedStafford.prescribed_cyclic",
+        "GeneralizedStafford.prescribed_cyclic_of_hAll",
+        "GeneralizedStafford.prescribed_cyclic_of_devLE_omega",
+        "GeneralizedStafford.span_pair_eq_span_affine"
+      ],
+      "steps": [
+        {
+          "text": "Stable form: choose a regular b with cb = 0; Theorem A′ for the annihilator of u, with offset 0 and tail tb, gives 1 = i + Htbr with ui = 0. For z = c + uHt this gives z(br) = u, so u and c lie in zR.",
+          "decl": "GeneralizedStafford.span_pair_eq_span_affine"
+        },
+        {
+          "text": "Prescribed generator: induction on a finite generating set; each new generator is absorbed into the current affine generator x + yt by the stable form.",
+          "decl": "GeneralizedStafford.prescribed_cyclic_aux"
+        },
+        {
+          "text": "Under (H_all) each cyclic submodule uR ≅ R/ann(u) is a quotient of R/sR for a regular s, so its dimension is finite.",
+          "decl": "GeneralizedStafford.prescribed_cyclic_of_hAll"
+        }
+      ]
+    },
+    {
+      "id": "C2",
+      "label": "prop:C2",
+      "title": "Corollary C.2",
+      "name": "two generators",
+      "short": "(H_all) ⇒ every right ideal I = aR + (y + ht)R, for any a with aQ = IQ, y ∈ I, t ≠ 0",
+      "statement": "Assume (S), (N), (Z), (H_all). Every right ideal I is generated by two elements. More precisely, if a in I satisfies aQ = IQ (Q the classical right quotient ring), then for every y in I and nonzero t there is h in I with I = aR + (y + ht)R.",
+      "challenge": [
+        "GeneralizedStaffordChallenge.corollaryC2_fullRank",
+        "GeneralizedStaffordChallenge.corollaryC2_prescribed",
+        "GeneralizedStaffordChallenge.corollaryC2"
+      ],
+      "library": [
+        "GeneralizedStaffordChallenge.corollaryC2_fullRank_proof",
+        "GeneralizedStafford.two_generated_prescribed",
+        "GeneralizedStafford.two_generated"
+      ],
+      "steps": [
+        {
+          "text": "An element a ∈ I with aQ = IQ exists by Goldie's theorem.",
+          "decl": "GeneralizedStaffordChallenge.corollaryC2_fullRank_proof"
+        },
+        {
+          "text": "For such a, I/aR is finite and Goldie-torsion, and C.1 applied to y + aR gives h ∈ I with I = aR + (y + ht)R.",
+          "decl": "GeneralizedStafford.two_generated_prescribed"
+        }
+      ]
+    },
+    {
+      "id": "C3",
+      "label": "prop:C3",
+      "title": "Corollary C.3",
+      "name": "generator bounds",
+      "short": "(H_all) ⇒ ⌈ρ(M)⌉ ≤ μ(M) ≤ ⌊ρ(M)⌋ + 1 for finite M (ρ normalized Goldie rank)",
+      "statement": "Assume (S), (N), (Z), (H_all). For every finite module M, ⌈ρ(M)⌉ ≤ μ(M) ≤ ⌊ρ(M)⌋ + 1, where μ is the minimal number of generators and ρ(M) = length_Q(M ⊗_R Q)/s for Q = M_s(D). The lower bound needs only (S), (N). The Lean statement encodes ρ through uniform dimensions: s = udim(R_R) and length_Q(M ⊗_R Q) = udim(M/t(M)).",
+      "challenge": [
+        "GeneralizedStaffordChallenge.corollaryC3_lower",
+        "GeneralizedStaffordChallenge.corollaryC3_upper"
+      ],
+      "library": [
+        "GeneralizedStafford.le_mul_of_span_eq_top",
+        "GeneralizedStafford.exists_span_eq_top_of_lt_mul"
+      ],
+      "steps": [
+        {
+          "text": "Lower bound: if m elements generate M, then M ⊗ Q is a quotient of Q^m, so l ≤ ms.",
+          "decl": "GeneralizedStafford.le_mul_of_span_eq_top"
+        },
+        {
+          "text": "Upper bound, base case l < s: choose fractions spanning M ⊗ Q one simple summand at a time; the rest is Goldie-torsion and C.1 with an unused idempotent index gives one generator.",
+          "decl": "GeneralizedStafford.cyclic_of_goldieRank_lt"
+        },
+        {
+          "text": "Upper bound, step l ≥ s: an element p with pR ≅ R_R exists, M/pR has rank l − s, and induction on q gives q generators when l < qs. No matrix-ring transfer is used.",
+          "decl": "GeneralizedStafford.spanRank_le_of_goldieRank_lt"
+        }
+      ]
+    },
+    {
+      "id": "APa",
+      "label": "thm:apps-a",
+      "title": "Applications (a)",
+      "name": "filtered rings",
+      "short": "simple k-algebra, k infinite, gr commutative Noetherian of finite Krull dimension: A, A′, B, C on both sides",
+      "statement": "Let k be an infinite field and R a simple k-algebra with an exhaustive filtration whose associated graded ring is commutative Noetherian of Krull dimension at most m. Then R and its opposite ring satisfy (N), (Z) and Kdim ≤ m, and Theorem A, Theorem A′, Corollary B and Corollaries C.1-C.3 hold on both sides.",
+      "challenge": [
+        "GeneralizedStaffordChallenge.filteredHypotheses",
+        "GeneralizedStaffordChallenge.filteredTheoremA",
+        "GeneralizedStaffordChallenge.filteredFixedIdeal",
+        "GeneralizedStaffordChallenge.filteredCorollaryB",
+        "GeneralizedStaffordChallenge.filteredPrescribedCyclic",
+        "GeneralizedStaffordChallenge.filteredTwoGenerated",
+        "GeneralizedStaffordChallenge.filteredGeneratorBounds"
+      ],
+      "library": [
+        "GeneralizedStafford.filtered_hypotheses",
+        "GeneralizedStafford.filtered_theoremA",
+        "GeneralizedStafford.filtered_fixedIdeal",
+        "GeneralizedStafford.filtered_corollaryB",
+        "GeneralizedStafford.filtered_prescribedCyclic",
+        "GeneralizedStafford.filtered_twoGenerated",
+        "GeneralizedStafford.filtered_generatorBounds"
+      ]
+    },
+    {
+      "id": "APb",
+      "label": "thm:apps-b",
+      "title": "Applications (b)",
+      "name": "Weyl algebras",
+      "short": "A_n(k), char k = 0: 1 = dR + HdR (Stafford's Conjecture 3.8); A, A′, C.1, C.2 on both sides",
+      "statement": "For the Weyl algebra A_n(k) over a field of characteristic zero: for every nonzero d there are F, R, S with 1 = dR + FdS (Stafford's Conjecture 3.8); Theorem A and Theorem A′ in affine form; finitely generated torsion modules are cyclic with a prescribed generator; right and left ideals are two-generated, with a prescribed first generator.",
+      "challenge": [
+        "GeneralizedStaffordChallenge.weylConjecture38",
+        "GeneralizedStaffordChallenge.weylAffineForm",
+        "GeneralizedStaffordChallenge.weylFixedIdeal",
+        "GeneralizedStaffordChallenge.weylTorsionCyclicRight",
+        "GeneralizedStaffordChallenge.weylTorsionCyclicLeft",
+        "GeneralizedStaffordChallenge.weylPrescribedCyclicRight",
+        "GeneralizedStaffordChallenge.weylPrescribedCyclicLeft",
+        "GeneralizedStaffordChallenge.weylTwoGeneratedRight",
+        "GeneralizedStaffordChallenge.weylTwoGeneratedLeft",
+        "GeneralizedStaffordChallenge.weylPrescribedTwoGeneratedRight",
+        "GeneralizedStaffordChallenge.weylPrescribedTwoGeneratedLeft"
+      ],
+      "library": [
+        "GeneralizedStafford.Weyl.conjecture38",
+        "GeneralizedStafford.Weyl.affineForm",
+        "GeneralizedStafford.Weyl.fixedIdealForm",
+        "GeneralizedStafford.Weyl.torsionCyclicRight",
+        "GeneralizedStafford.Weyl.torsionCyclicLeft",
+        "GeneralizedStafford.Weyl.prescribedCyclicRight",
+        "GeneralizedStafford.Weyl.prescribedCyclicLeft",
+        "GeneralizedStafford.Weyl.twoGeneratedRight",
+        "GeneralizedStafford.Weyl.twoGeneratedLeft",
+        "GeneralizedStafford.Weyl.prescribedTwoGeneratedRight",
+        "GeneralizedStafford.Weyl.prescribedTwoGeneratedLeft"
+      ]
+    },
+    {
+      "id": "APc",
+      "label": "thm:apps-c",
+      "title": "Applications (c)",
+      "name": "differential operators",
+      "short": "D_k(A), A smooth affine domain, char k = 0: 1 = dR + FdS; A, C.1, C.2 on both sides",
+      "statement": "Let k be a field of characteristic zero and A a smooth domain of finite type over k, with D_k(A) its ring of differential operators. Right and left ideals of D_k(A) are two-generated; Theorem A holds in right and left form; for every nonzero d there are F, R, S with 1 = dR + FdS; finitely generated torsion right and left modules are cyclic with a prescribed generator.",
+      "challenge": [
+        "GeneralizedStaffordChallenge.diffOpTwoGeneratedRight",
+        "GeneralizedStaffordChallenge.diffOpTwoGeneratedLeft",
+        "GeneralizedStaffordChallenge.diffOpFixedAnchor",
+        "GeneralizedStaffordChallenge.diffOpGlobalStafford",
+        "GeneralizedStaffordChallenge.diffOpCyclicRight",
+        "GeneralizedStaffordChallenge.diffOpCyclicLeft"
+      ],
+      "library": [
+        "GeneralizedStafford.DiffOp.twoGeneratedRight",
+        "GeneralizedStafford.DiffOp.twoGeneratedLeft",
+        "GeneralizedStafford.DiffOp.affineForm_right",
+        "GeneralizedStafford.DiffOp.affineForm_left",
+        "GeneralizedStafford.DiffOp.globalStafford",
+        "GeneralizedStafford.DiffOp.prescribedCyclicRight",
+        "GeneralizedStafford.DiffOp.prescribedCyclicLeft"
+      ]
+    },
+    {
+      "id": "APd",
+      "label": "thm:apps-d",
+      "title": "Applications (d)",
+      "name": "enveloping algebras",
+      "short": "simple quotients of U(𝔤), 𝔤 finite-dimensional, k infinite: (N), (Z), Kdim ≤ dim 𝔤; A, A′, B, C on both sides",
+      "statement": "For a finite-dimensional Lie algebra 𝔤 over an infinite field k and a simple quotient R of U(𝔤): R and its opposite ring are Noetherian, have infinite centre and Kdim ≤ dim 𝔤, and Theorem A, Theorem A′, Corollary B and Corollaries C.1-C.3 hold on both sides.",
+      "challenge": [
+        "GeneralizedStaffordChallenge.envelopingHypotheses",
+        "GeneralizedStaffordChallenge.envelopingTheoremA",
+        "GeneralizedStaffordChallenge.envelopingFixedIdeal",
+        "GeneralizedStaffordChallenge.envelopingCorollaryB",
+        "GeneralizedStaffordChallenge.envelopingPrescribedCyclic",
+        "GeneralizedStaffordChallenge.envelopingTwoGenerated",
+        "GeneralizedStaffordChallenge.envelopingGeneratorBounds"
+      ],
+      "library": [
+        "GeneralizedStafford.enveloping_hypotheses",
+        "GeneralizedStafford.enveloping_theoremA",
+        "GeneralizedStafford.enveloping_fixedIdeal",
+        "GeneralizedStafford.enveloping_corollaryB",
+        "GeneralizedStafford.enveloping_prescribedCyclic",
+        "GeneralizedStafford.enveloping_twoGenerated",
+        "GeneralizedStafford.enveloping_generatorBounds"
+      ]
+    },
+    {
+      "id": "APe",
+      "label": "thm:apps-e",
+      "title": "Applications (e)",
+      "name": "simple quantizations",
+      "short": "simple filtered k-algebra, gr a commutative Noetherian domain of finite Krull dimension: Theorem A for all nonzero d, both sides",
+      "statement": "If R is a simple algebra over an infinite field k with an exhaustive filtration whose associated graded ring is a commutative Noetherian domain of finite Krull dimension (for instance gr R ≅ ℂ[X] for an irreducible affine variety X), then for every nonzero d and a and every B there are H, U, V with 1 = dU + (B + Ha)dV, and 1 = Ud + Vd(B + aH).",
+      "challenge": [
+        "GeneralizedStaffordChallenge.filteredDomain"
+      ],
+      "library": [
+        "GeneralizedStaffordChallenge.filteredDomain_proof"
+      ]
+    }
+  ],
+  "lemmas": [
+    {
+      "id": "UNIT",
+      "label": "lem:unit",
+      "title": "Unit germs",
+      "short": "q_K r is epic ⇔ Kdim R/(K + rR) < e",
+      "lean": [
+        "GeneralizedStafford.smul_mkQ_epic_iff",
+        "GeneralizedStafford.quotient_section_epic_iff"
+      ]
+    },
+    {
+      "id": "EPIC",
+      "label": "lem:epic",
+      "title": "Epic criterion",
+      "short": "a germ is epic ⇔ P_w is injective on every simple top factor",
+      "lean": [],
+      "library": [
+        "Module.Germ.Hom.epic_iff_injective_comp_topFactors"
+      ]
+    },
+    {
+      "id": "STRATA",
+      "label": "lem:strata",
+      "title": "Finite top strata",
+      "short": "Kdim X ≤ e ⇒ the top stratum of X has finite length; it vanishes ⇔ Kdim X < e",
+      "lean": [],
+      "library": [],
+      "missing": "Not stated in Lean: the formal proof has no quotient functor F_e; it works with germs and critical filtrations instead."
+    },
+    {
+      "id": "PEN",
+      "label": "lem:pencil",
+      "title": "Pencils",
+      "short": "P + φ_λP′ injective for all but finitely many central λ; so an epic germ v stays epic along v + uλ",
+      "lean": [
+        "GeneralizedStafford.germ_pencil_finite"
+      ],
+      "library": [
+        "AlgebraicAnalysis.TorsionEscape.centralPencil_injective_finite",
+        "AlgebraicAnalysis.TorsionEscape.reversed_centralPencil_injective_finite"
+      ],
+      "map_steps": [
+        "pencil-stability"
+      ]
+    },
+    {
+      "id": "ESC",
+      "label": "lem:escape",
+      "title": "Escape",
+      "short": "g ≠ 0, t′ ≠ 0 ⇒ gRt′ lies in no finite-dimensional E-subspace",
+      "lean": [],
+      "library": [
+        "AlgebraicAnalysis.Goldie.IsGoldieTorsion.exists_smul_mul_not_mem"
+      ]
+    },
+    {
+      "id": "RANK",
+      "label": "lem:rank",
+      "title": "Maximal rank",
+      "short": "P injective, t′ ≠ 0 ⇒ some H makes h ↦ P(h)Ht′ injective",
+      "lean": [],
+      "library": [
+        "AlgebraicAnalysis.Goldie.IsGoldieTorsion.exists_injective_right_mul",
+        "AlgebraicAnalysis.TorsionEscape.exists_injective_of_escape"
+      ]
+    },
+    {
+      "id": "SEL",
+      "label": "lem:select",
+      "title": "Source selection",
+      "short": "some f = x + Ht satisfies any finite list of germ tests; tests survive f + λg for almost all λ",
+      "lean": [
+        "GeneralizedStafford.GermTest.exists_affine_satisfied",
+        "GeneralizedStafford.exists_affine_epic_tests",
+        "GeneralizedStafford.GermTest.pencil_finite"
+      ],
+      "map_steps": [
+        "select"
+      ],
+      "steps": [
+        {
+          "text": "Step 1: by induction on the pairs (test, simple top factor), maximal rank and ordinary pencils give H₀ making every map h ↦ P_i(h)H₀tc_i injective.",
+          "decl": "GeneralizedStafford.exists_affine_direction_of_goldie"
+        },
+        {
+          "text": "Step 2: the offset maps form reversed pencils in a central λ; a good λ gives H = λH₀.",
+          "decl": "GeneralizedStafford.exists_affine_source_of_goldie"
+        },
+        {
+          "text": "Pencil stability: z + q(f + λg)c = (z + qfc) + (qgc)λ because λ is central.",
+          "decl": "GeneralizedStafford.GermTest.pencil_finite"
+        }
+      ]
+    },
+    {
+      "id": "DESC",
+      "label": null,
+      "title": "Two-call descent",
+      "short": "P(h) ⇒ P(h+1): two calls of P(h) and a central scalar lower Kdim R/(I + fR) by one",
+      "lean": [
+        "GeneralizedStafford.idealBound_initial",
+        "GeneralizedStafford.idealBound_step",
+        "GeneralizedStafford.idealBound_zero"
+      ],
+      "map_steps": [
+        "descent-base",
+        "descent-step",
+        "descent-termination"
+      ],
+      "steps": [
+        {
+          "text": "Base P(0): source selection gives f = x + Ht satisfying the tests; R/(I + fR) is a quotient of R/I.",
+          "decl": "GeneralizedStafford.idealBound_initial"
+        },
+        {
+          "text": "1. First call: f = x + Ht satisfies the tests and J = I + fR has Kdim R/J ≤ e.",
+          "decl": "GeneralizedStafford.idealBound_step",
+          "marker": "-- Step 1"
+        },
+        {
+          "text": "2. Torsion equation: a regular b with fb ∈ I (Goldie's theorem).",
+          "decl": "GeneralizedStafford.idealBound_step",
+          "marker": "-- Step 2"
+        },
+        {
+          "text": "3. Second call, same I: offset 0, tail tb and the single unit test of R/J give gb with Q = I + gbR.",
+          "decl": "GeneralizedStafford.idealBound_step",
+          "marker": "-- Step 3"
+        },
+        {
+          "text": "4. Vanishing of the joint top: J + gbR = Q + fR, so v = q_Q f is epic.",
+          "decl": "GeneralizedStafford.idealBound_step",
+          "marker": "-- Step 4"
+        },
+        {
+          "text": "5. Good central scalar: a nonzero λ ∈ k outside the finitely many exceptions.",
+          "decl": "GeneralizedStafford.idealBound_step",
+          "marker": "-- Step 5"
+        },
+        {
+          "text": "6. Pencil inclusion: gbλ = (f + λg)b − fb, so Q ⊆ J′ = I + (f + λg)R.",
+          "decl": "GeneralizedStafford.idealBound_step",
+          "marker": "-- Step 6"
+        },
+        {
+          "text": "7. Drop: q_Q(f + λg) = v + uλ is epic, so Kdim R/J′ < e.",
+          "decl": "GeneralizedStafford.idealBound_step",
+          "marker": "-- Step 7"
+        },
+        {
+          "text": "8. Affine form: f + λg = x + (H + λH₂)t.",
+          "decl": "GeneralizedStafford.idealBound_step",
+          "marker": "-- Step 8"
+        },
+        {
+          "text": "Termination: N + 1 steps reach Kdim R/(I + fR) < 0, with N = Kdim(R/I).",
+          "decl": "GeneralizedStafford.idealBound_zero"
+        }
+      ]
+    },
+    {
+      "id": "HALL",
+      "label": "lem:Hall",
+      "title": "Lemma Kdim ≤ ω",
+      "short": "Kdim R ≤ ω ⇒ Kdim(R/dR) < ∞ for regular d, and Kdim(R/I) < ∞ for I ∋ regular",
+      "lean": [
+        "GeneralizedStafford.principalQuotientsFinite_of_devLE_omega",
+        "GeneralizedStafford.quotient_finite_of_omega"
+      ]
+    },
+    {
+      "id": "C3R",
+      "label": null,
+      "title": "C.3 rank induction",
+      "short": "Goldie rank l < qs ⇒ q generators; base case l < s gives a cyclic module",
+      "lean": [
+        "GeneralizedStafford.cyclic_of_goldieRank_lt",
+        "GeneralizedStafford.spanRank_le_of_goldieRank_lt"
+      ],
+      "map_steps": [
+        "C3-base",
+        "C3-induction"
+      ]
+    }
+  ],
+  "formal_only": [
+    {
+      "id": "CENT",
+      "title": "Central scalars",
+      "short": "a central λ acts through the centre of the Schur division ring",
+      "lean": [
+        "GeneralizedStafford.section_central_scalar"
+      ]
+    },
+    {
+      "id": "SRC",
+      "title": "Selection in Goldie-torsion bimodules",
+      "short": "finite affine selection: some H makes all maps injective",
+      "lean": [
+        "GeneralizedStafford.exists_affine_source_of_goldie",
+        "GeneralizedStafford.exists_affine_direction_of_goldie"
+      ]
+    },
+    {
+      "id": "INCL",
+      "title": "Pencil inclusion",
+      "short": "fb ∈ I, λ central unit ⇒ gb ∈ I + (f + λg)R",
+      "lean": [
+        "GeneralizedStafford.mul_mem_sup_pencil"
+      ]
+    },
+    {
+      "id": "SOL",
+      "title": "Palomar solution",
+      "short": "the 46 compared statements, proved by transport from the library",
+      "lean": "comparator"
+    }
+  ],
+  "structure": {
+    "nodes": [
+      {
+        "id": "lit-core",
+        "text": "Cited, formalized",
+        "sub": "Goldie; Krull dimension",
+        "cites": [
+          "Goldie1960:Thms4.1,4.4; McConnellRobson2001:2.3.6",
+          "McConnellRobson2001:6.2.10",
+          "McConnellRobson2001:6.2.4",
+          "McConnellRobson2001:Ch2§2"
+        ],
+        "href": "#citations"
+      },
+      {
+        "id": "lit-apps",
+        "text": "Cited, formalized",
+        "sub": "Weyl algebras, D(X), filtered rings, U(g)",
+        "cites": [
+          "McConnellRobson2001:1.3.5",
+          "McConnellRobson2001:1.6.9",
+          "McConnellRobson2001:6.5.6,6.4.8",
+          "McConnellRobson2001:15.4.5,15.4.7; Bavula2005:Thm3.7",
+          "PBW; McConnellRobson2001:1.6.9,6.5.6"
+        ],
+        "href": "#citations"
+      },
+      {
+        "id": "germ",
+        "text": "Germ lemmas",
+        "sub": "unit germs, pencils",
+        "keys": [
+          "UNIT",
+          "PEN"
+        ],
+        "href": "#lemma-UNIT"
+      },
+      {
+        "id": "sel",
+        "text": "Source selection",
+        "sub": "germ tests",
+        "keys": [
+          "SEL"
+        ],
+        "href": "#lemma-SEL"
+      },
+      {
+        "id": "desc",
+        "text": "Two-call descent",
+        "sub": "Kdim drops by one",
+        "keys": [
+          "DESC"
+        ],
+        "href": "#lemma-DESC"
+      },
+      {
+        "id": "ap",
+        "text": "Theorem A′",
+        "sub": "fixed ideal",
+        "keys": [
+          "AP"
+        ],
+        "href": "#result-AP"
+      },
+      {
+        "id": "a",
+        "text": "Theorem A",
+        "sub": "fixed anchor",
+        "keys": [
+          "A"
+        ],
+        "href": "#result-A"
+      },
+      {
+        "id": "b",
+        "text": "Corollary B",
+        "sub": "Kdim R ≤ ω",
+        "keys": [
+          "B"
+        ],
+        "href": "#result-B"
+      },
+      {
+        "id": "c",
+        "text": "Corollaries C",
+        "sub": "C.1-C.3, modules",
+        "keys": [
+          "C1",
+          "C2",
+          "C3"
+        ],
+        "href": "#result-C1"
+      },
+      {
+        "id": "apps",
+        "text": "Applications",
+        "sub": "(a)-(e)",
+        "keys": [
+          "APa",
+          "APb",
+          "APc",
+          "APd",
+          "APe"
+        ],
+        "href": "#result-APa"
+      }
+    ],
+    "edges": [
+      [
+        "germ",
+        "sel"
+      ],
+      [
+        "germ",
+        "desc"
+      ],
+      [
+        "sel",
+        "desc"
+      ],
+      [
+        "desc",
+        "ap"
+      ],
+      [
+        "ap",
+        "a"
+      ],
+      [
+        "a",
+        "b"
+      ],
+      [
+        "ap",
+        "b"
+      ],
+      [
+        "ap",
+        "c"
+      ],
+      [
+        "b",
+        "apps"
+      ],
+      [
+        "c",
+        "apps"
+      ],
+      [
+        "lit-core",
+        "sel"
+      ],
+      [
+        "lit-core",
+        "desc"
+      ],
+      [
+        "lit-core",
+        "c"
+      ],
+      [
+        "lit-apps",
+        "apps"
+      ]
+    ]
+  }
+}

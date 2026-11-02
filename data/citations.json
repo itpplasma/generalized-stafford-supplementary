@@ -1,0 +1,101 @@
+{
+  "about": "Results from the literature that the paper cites without proof and that the Lean proof uses in formalized form (AlgebraicAnalysis). Keys are `BibKey:locator`, with the bibliography keys of the paper. Locators and their status come from the paper's citation ledger (generalized-stafford docs/manuscript/citation-ledger.md, 2 November 2026); `status` repeats its verdict. Which results use each citation is computed from Lean's dependency graph (verification/lean-dag/graph.json). Mathlib facts used only generically are not listed.",
+  "ledger": {
+    "repo": "itpplasma/generalized-stafford",
+    "path": "docs/manuscript/citation-ledger.md",
+    "commit": "45070ec786bf9d7198ba36efd44bc99f03113896"
+  },
+  "citations": {
+    "GabrielRentschler1967; McConnellRobson2001:6.1.2,6.2.2": {
+      "cite": "Gabriel–Rentschler 1967; McConnell–Robson 2001, 6.1.2, 6.2.2",
+      "claim": "Krull (deviation) dimension: descending chains have all but finitely many factors of smaller dimension",
+      "lean": [
+        "Module.DevLE",
+        "Order.DevLE"
+      ],
+      "status": "McConnell–Robson locators checked; the 1967 note was not available"
+    },
+    "McConnellRobson2001:6.2.4": {
+      "cite": "McConnell–Robson 2001, 6.2.4",
+      "claim": "submodules and quotients of M have Kdim ≤ Kdim M (the monotone half of K(M) = sup{K(N), K(M/N)})",
+      "lean": [
+        "Module.DevLE.of_injective",
+        "Module.DevLE.of_surjective"
+      ],
+      "status": "locator checked"
+    },
+    "McConnellRobson2001:6.2.10": {
+      "cite": "McConnell–Robson 2001, 6.2.10",
+      "claim": "a nonzero module with Krull dimension has a critical submodule; iterated, a Noetherian module of finite Kdim has a critical filtration",
+      "lean": [
+        "Module.DevLE.nonempty_criticalFiltration"
+      ],
+      "status": "locator checked"
+    },
+    "Goldie1960:Thms4.1,4.4; McConnellRobson2001:2.3.6": {
+      "cite": "Goldie 1960, Thms 4.1, 4.4; McConnell–Robson 2001, 2.3.6",
+      "claim": "Goldie's theorem: in a simple right Noetherian ring the regular elements form a right Ore set, with classical right quotient ring Q; a right ideal containing a regular element has Goldie-torsion quotient",
+      "lean": [
+        "AlgebraicAnalysis.Goldie.nonempty_oreSet_oppositeSubmonoid",
+        "AlgebraicAnalysis.Goldie.QuotientRing",
+        "AlgebraicAnalysis.Goldie.exists_mul_mem_of_mem_nonZeroDivisors"
+      ],
+      "status": "locators checked"
+    },
+    "McConnellRobson2001:Ch2§2": {
+      "cite": "McConnell–Robson 2001, Ch. 2 §2",
+      "claim": "uniform (Goldie) dimension, and the Goldie rank length_Q(M ⊗_R Q)",
+      "lean": [
+        "AlgebraicAnalysis.Module.UniformDimGE",
+        "AlgebraicAnalysis.Goldie.goldieRank"
+      ],
+      "status": "section checked (definition reference)"
+    },
+    "McConnellRobson2001:1.6.9": {
+      "cite": "McConnell–Robson 2001, 1.6.9",
+      "claim": "a filtered ring whose associated graded ring is Noetherian is Noetherian",
+      "lean": [
+        "AlgebraicAnalysis.RingFiltration.GradedSymbol.isNoetherian_right"
+      ],
+      "status": "locator checked; the source is one-sided, the other side by the opposite filtration"
+    },
+    "McConnellRobson2001:6.5.6,6.4.8": {
+      "cite": "McConnell–Robson 2001, 6.5.6 with 6.4.8",
+      "claim": "K(S) ≤ K(gr S), and K = classical Krull dimension for commutative Noetherian rings",
+      "lean": [
+        "AlgebraicAnalysis.RingFiltration.GradedSymbol.devLE_right"
+      ],
+      "status": "locators checked (6.4.8 label to confirm)"
+    },
+    "McConnellRobson2001:1.3.5": {
+      "cite": "McConnell–Robson 2001, 1.3.5",
+      "claim": "A_n(k), char k = 0, is a simple Noetherian domain; its Bernstein filtration bounds Kdim (the exact value n, 6.6.15, is not needed)",
+      "lean": [
+        "AlgebraicAnalysis.Weyl.Simplicity.isSimpleRing_weylAlg",
+        "AlgebraicAnalysis.Weyl.BernsteinSymbol.isNoetherian_right",
+        "AlgebraicAnalysis.Weyl.BernsteinSymbol.devLEOmega_right"
+      ],
+      "status": "locator checked; the centre k follows from 1.3.4"
+    },
+    "McConnellRobson2001:15.4.5,15.4.7; Bavula2005:Thm3.7": {
+      "cite": "McConnell–Robson 2001, 15.4.5, 15.4.7; Bavula 2005, Thm 3.7",
+      "claim": "D(X), X smooth affine in characteristic zero, is simple Noetherian, and gr D(X) ≅ Sym_A Der_k(A) bounds its Krull dimension by 2 dim X",
+      "lean": [
+        "AlgebraicAnalysis.DifferentialOperators.SmoothOperators.isSimpleRing",
+        "AlgebraicAnalysis.DifferentialOperators.SmoothOperators.isNoetherian_right",
+        "AlgebraicAnalysis.DifferentialOperators.SmoothOperators.devLE_left",
+        "AlgebraicAnalysis.DifferentialOperators.SmoothOperators.devLEOmega_right"
+      ],
+      "status": "locators checked; Bavula's journal numbering not rechecked"
+    },
+    "PBW; McConnellRobson2001:1.6.9,6.5.6": {
+      "cite": "Poincaré–Birkhoff–Witt; McConnell–Robson 2001, 1.6.9, 6.5.6",
+      "claim": "a quotient of U(𝔤), 𝔤 finite-dimensional, is Noetherian with Kdim ≤ dim 𝔤",
+      "lean": [
+        "AlgebraicAnalysis.Enveloping.isNoetherian_right_of_surjective",
+        "AlgebraicAnalysis.Enveloping.devLE_right_of_surjective"
+      ],
+      "status": "no locator for PBW in the ledger"
+    }
+  }
+}
