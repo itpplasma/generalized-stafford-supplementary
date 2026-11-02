@@ -1,10 +1,10 @@
 {
 "schema": 1,
-"formal_commit": "17f84e3bc693b309f40dc5c75a901ec891214bf0",
+"formal_commit": "e63321970bcb7cf360a378bf48368f23d9bc1e6a",
 "compared": [
 "GeneralizedStaffordChallenge.fixedIdeal",
 "GeneralizedStaffordChallenge.fixedAnchor",
-"GeneralizedStaffordChallenge.corollaryB_dimension",
+"GeneralizedStaffordChallenge.knownDimension_hAll_of_omega",
 "GeneralizedStaffordChallenge.corollaryB_fixedAnchor",
 "GeneralizedStaffordChallenge.corollaryB_fixedIdeal",
 "GeneralizedStaffordChallenge.corollaryC1",
@@ -14,8 +14,7 @@
 "GeneralizedStaffordChallenge.corollaryC2_fullRank",
 "GeneralizedStaffordChallenge.corollaryC2_prescribed",
 "GeneralizedStaffordChallenge.corollaryC2",
-"GeneralizedStaffordChallenge.corollaryC3_lower",
-"GeneralizedStaffordChallenge.corollaryC3_upper",
+"GeneralizedStaffordChallenge.corollaryC2_omega",
 "GeneralizedStaffordChallenge.weylTwoGeneratedRight",
 "GeneralizedStaffordChallenge.weylTwoGeneratedLeft",
 "GeneralizedStaffordChallenge.weylConjecture38",
@@ -30,18 +29,14 @@
 "GeneralizedStaffordChallenge.filteredHypotheses",
 "GeneralizedStaffordChallenge.filteredTheoremA",
 "GeneralizedStaffordChallenge.filteredFixedIdeal",
-"GeneralizedStaffordChallenge.filteredCorollaryB",
 "GeneralizedStaffordChallenge.filteredPrescribedCyclic",
 "GeneralizedStaffordChallenge.filteredTwoGenerated",
-"GeneralizedStaffordChallenge.filteredGeneratorBounds",
 "GeneralizedStaffordChallenge.filteredDomain",
 "GeneralizedStaffordChallenge.envelopingHypotheses",
 "GeneralizedStaffordChallenge.envelopingTheoremA",
 "GeneralizedStaffordChallenge.envelopingFixedIdeal",
-"GeneralizedStaffordChallenge.envelopingCorollaryB",
 "GeneralizedStaffordChallenge.envelopingPrescribedCyclic",
 "GeneralizedStaffordChallenge.envelopingTwoGenerated",
-"GeneralizedStaffordChallenge.envelopingGeneratorBounds",
 "GeneralizedStaffordChallenge.diffOpTwoGeneratedRight",
 "GeneralizedStaffordChallenge.diffOpTwoGeneratedLeft",
 "GeneralizedStaffordChallenge.diffOpFixedAnchor",
@@ -51,7 +46,127 @@
 ],
 "source": "Constants used by types and proofs (scripts/LeanDag.lean); lines from findDeclarationRanges?. `nodes` is the graph contracted to the key declarations; `full` lists every visible project theorem and definition with the project constants it uses.",
 "nodes": {
-"UNIT": {
+"thm:Aprime": {
+"keys": [
+"step:descent"
+],
+"leaves": [],
+"cites": [],
+"helpers": {
+"GeneralizedStafford.eq_top_of_small_zero": {
+"keys": [],
+"leaves": []
+}
+}
+},
+"thm:A": {
+"keys": [
+"thm:Aprime"
+],
+"leaves": [],
+"cites": [],
+"helpers": {}
+},
+"cor:B": {
+"keys": [
+"lem:omega",
+"thm:A",
+"thm:Aprime"
+],
+"leaves": [
+"deviation"
+],
+"cites": [],
+"helpers": {
+"GeneralizedStafford.principal_quotient_finite_of_omega": {
+"keys": [],
+"leaves": [
+"deviation"
+]
+}
+}
+},
+"cor:C": {
+"keys": [
+"lem:omega",
+"prop:C1"
+],
+"leaves": [
+"deviation",
+"goldie"
+],
+"cites": [
+"thm:goldie"
+],
+"helpers": {
+"GeneralizedStaffordChallenge.corollaryC2_proof": {
+"keys": [],
+"leaves": [
+"deviation"
+]
+},
+"GeneralizedStafford.prescribed_cyclic_of_cyclic": {
+"keys": [
+"prop:C1"
+],
+"leaves": []
+},
+"GeneralizedStafford.principalRightIdeal_le": {
+"keys": [],
+"leaves": []
+},
+"GeneralizedStafford.devLE_quotient_ker_cyclicMap_iff": {
+"keys": [],
+"leaves": [
+"deviation"
+]
+},
+"GeneralizedStafford.devLE_quotient_of_le": {
+"keys": [],
+"leaves": [
+"deviation"
+]
+}
+}
+},
+"lem:omega": {
+"keys": [],
+"leaves": [
+"deviation"
+],
+"cites": [],
+"helpers": {
+"GeneralizedStaffordChallenge.hAll_iff": {
+"keys": [],
+"leaves": [
+"deviation"
+]
+},
+"GeneralizedStaffordChallenge.hOmega_iff": {
+"keys": [],
+"leaves": [
+"deviation"
+]
+},
+"GeneralizedStafford.principal_quotient_finite_of_omega": {
+"keys": [],
+"leaves": [
+"deviation"
+]
+},
+"GeneralizedStafford.principalRightIdeal_le": {
+"keys": [],
+"leaves": []
+},
+"GeneralizedStafford.devLE_quotient_of_le": {
+"keys": [],
+"leaves": [
+"deviation"
+]
+}
+}
+},
+"lem:unit": {
 "keys": [],
 "leaves": [
 "deviation",
@@ -60,32 +175,62 @@
 "cites": [],
 "helpers": {}
 },
-"PEN": {
+"lem:central": {
+"keys": [],
+"leaves": [
+"germ"
+],
+"cites": [],
+"helpers": {}
+},
+"lem:stability": {
 "keys": [
-"CENT"
+"lem:central"
 ],
 "leaves": [
 "germ",
 "pencil"
 ],
 "cites": [
-"GabrielRentschler1967; McConnellRobson2001:6.1.2,6.2.2"
+"lem:central",
+"lem:epic",
+"lem:pencil",
+"lem:schur",
+"prop:critical"
 ],
-"helpers": {}
+"helpers": {
+"GeneralizedStafford.GermTest.noetherian": {
+"keys": [],
+"leaves": []
 },
-"SEL": {
+"GeneralizedStafford.GermTest.bounded": {
+"keys": [],
+"leaves": []
+},
+"GeneralizedStafford.test_pencil_identity": {
+"keys": [],
+"leaves": [
+"germ"
+]
+}
+}
+},
+"lem:select": {
 "keys": [
-"CENT",
-"PEN",
-"SRC"
+"lem:central",
+"step:select-steps-1-2"
 ],
 "leaves": [
 "germ",
 "goldie"
 ],
 "cites": [
-"GabrielRentschler1967; McConnellRobson2001:6.1.2,6.2.2",
-"McConnellRobson2001:6.2.10"
+"lem:central",
+"lem:epic",
+"lem:schur",
+"lem:sectiontorsion",
+"prop:critical",
+"thm:goldie"
 ],
 "helpers": {
 "GeneralizedStafford.GermTest.epic": {
@@ -110,28 +255,342 @@
 },
 "GeneralizedStafford.exists_affine_germ_tests": {
 "keys": [
-"CENT",
-"SRC"
+"lem:central",
+"step:select-steps-1-2"
 ],
 "leaves": [
 "germ",
 "goldie"
 ]
+}
+}
 },
-"GeneralizedStafford.test_pencil_identity": {
+"prop:C1": {
+"keys": [
+"thm:Aprime"
+],
+"leaves": [
+"deviation"
+],
+"cites": [],
+"helpers": {
+"GeneralizedStafford.prescribed_cyclic_of_cyclic": {
+"keys": [],
+"leaves": []
+},
+"GeneralizedStafford.devLE_quotient_ker_cyclicMap_iff": {
 "keys": [],
 "leaves": [
-"germ"
+"deviation"
 ]
 }
 }
 },
-"DESC": {
+"prop:C2": {
 "keys": [
-"INCL",
-"PEN",
-"SEL",
-"UNIT"
+"cor:C"
+],
+"leaves": [
+"goldie"
+],
+"cites": [
+"thm:goldie"
+],
+"helpers": {
+"GeneralizedStaffordChallenge.span_singleton_eq": {
+"keys": [],
+"leaves": []
+},
+"GeneralizedStafford.principalRightIdeal_le": {
+"keys": [],
+"leaves": []
+}
+}
+},
+"thm:filtered-facts": {
+"keys": [],
+"leaves": [
+"filtered"
+],
+"cites": [],
+"helpers": {
+"GeneralizedStafford.ringKrullDim_ne_top_of_le": {
+"keys": [],
+"leaves": []
+}
+}
+},
+"thm:weyl-facts": {
+"keys": [],
+"leaves": [
+"deviation",
+"weyl"
+],
+"cites": [],
+"helpers": {
+"GeneralizedStaffordChallenge.hOmega_iff": {
+"keys": [],
+"leaves": [
+"deviation"
+]
+}
+}
+},
+"thm:DX-facts": {
+"keys": [],
+"leaves": [
+"deviation",
+"diffop",
+"filtered"
+],
+"cites": [],
+"helpers": {
+"GeneralizedStaffordChallenge.hOmega_iff": {
+"keys": [],
+"leaves": [
+"deviation"
+]
+}
+}
+},
+"thm:apps-a": {
+"keys": [
+"cor:B",
+"cor:C",
+"lem:omega",
+"prop:C1",
+"prop:C2",
+"thm:filtered-facts"
+],
+"leaves": [
+"deviation",
+"filtered"
+],
+"cites": [],
+"helpers": {
+"GeneralizedStafford.devLE_span_of_torsion": {
+"keys": [],
+"leaves": [
+"deviation"
+]
+}
+}
+},
+"thm:apps-b": {
+"keys": [
+"cor:B",
+"cor:C",
+"lem:omega",
+"prop:C2",
+"thm:weyl-facts"
+],
+"leaves": [
+"deviation",
+"goldie",
+"weyl"
+],
+"cites": [
+"thm:weyl-facts"
+],
+"helpers": {
+"GeneralizedStafford.Weyl.affine_of_domain": {
+"keys": [
+"cor:B"
+],
+"leaves": [
+"deviation"
+]
+},
+"GeneralizedStafford.Weyl.fixedIdeal_of_domain": {
+"keys": [
+"cor:B"
+],
+"leaves": [
+"deviation"
+]
+},
+"GeneralizedStafford.Weyl.prescribedCyclic_of_domain": {
+"keys": [
+"cor:C"
+],
+"leaves": [
+"deviation"
+]
+},
+"GeneralizedStafford.prescribedCyclicLeft_of_right": {
+"keys": [],
+"leaves": []
+},
+"GeneralizedStaffordChallenge.corollaryC2_proof": {
+"keys": [
+"cor:C",
+"prop:C2"
+],
+"leaves": [
+"deviation"
+]
+},
+"GeneralizedStafford.twoGeneratedLeft_of_right": {
+"keys": [],
+"leaves": []
+},
+"GeneralizedStafford.Weyl.prescribedTwoGenerated_of_domain": {
+"keys": [
+"cor:C",
+"lem:omega",
+"prop:C2"
+],
+"leaves": [
+"deviation",
+"goldie"
+]
+},
+"GeneralizedStafford.prescribedTwoGeneratedLeft_of_right": {
+"keys": [],
+"leaves": []
+}
+}
+},
+"thm:apps-c": {
+"keys": [
+"cor:B",
+"cor:C",
+"lem:omega",
+"prop:C1",
+"prop:C2",
+"thm:DX-facts"
+],
+"leaves": [
+"deviation",
+"diffop",
+"filtered"
+],
+"cites": [],
+"helpers": {
+"GeneralizedStafford.DiffOp.conclusions_right": {
+"keys": [
+"cor:B",
+"cor:C",
+"lem:omega",
+"prop:C1",
+"prop:C2",
+"thm:DX-facts"
+],
+"leaves": [
+"deviation",
+"diffop"
+]
+},
+"GeneralizedStafford.DiffOp.twoGenerated_left_of_op": {
+"keys": [],
+"leaves": []
+},
+"GeneralizedStafford.DiffOp.conclusions_left": {
+"keys": [
+"cor:B",
+"cor:C",
+"lem:omega",
+"prop:C1",
+"prop:C2",
+"thm:DX-facts"
+],
+"leaves": [
+"deviation",
+"diffop",
+"filtered"
+]
+},
+"GeneralizedStaffordChallenge.fixedAnchorProperty_of_omega": {
+"keys": [
+"cor:B"
+],
+"leaves": [
+"deviation"
+]
+},
+"GeneralizedStafford.Weyl.isRegular_of_ne_zero": {
+"keys": [],
+"leaves": []
+},
+"GeneralizedStafford.DiffOp.infiniteCenterLeft": {
+"keys": [
+"thm:DX-facts"
+],
+"leaves": [
+"filtered"
+]
+},
+"GeneralizedStafford.DiffOp.prescribedCyclicLeft_of_property": {
+"keys": [],
+"leaves": []
+}
+}
+},
+"thm:apps-d": {
+"keys": [
+"cor:B",
+"cor:C",
+"lem:omega",
+"prop:C1",
+"prop:C2"
+],
+"leaves": [
+"deviation",
+"enveloping",
+"filtered"
+],
+"cites": [],
+"helpers": {
+"GeneralizedStafford.devLE_span_of_torsion": {
+"keys": [],
+"leaves": [
+"deviation"
+]
+}
+}
+},
+"thm:apps-e": {
+"keys": [
+"cor:B",
+"thm:apps-a"
+],
+"leaves": [
+"deviation",
+"filtered"
+],
+"cites": [],
+"helpers": {
+"GeneralizedStaffordChallenge.filtered_side": {
+"keys": [
+"thm:apps-a"
+],
+"leaves": [
+"deviation"
+]
+},
+"GeneralizedStaffordChallenge.fixedAnchorProperty_of_omega": {
+"keys": [
+"cor:B"
+],
+"leaves": [
+"deviation"
+]
+},
+"GeneralizedStaffordChallenge.isRegular_of_ne_zero'": {
+"keys": [],
+"leaves": []
+},
+"GeneralizedStaffordChallenge.exists_nat_le_of_lt_top": {
+"keys": [],
+"leaves": []
+}
+}
+},
+"step:descent": {
+"keys": [
+"lem:select",
+"lem:stability",
+"lem:unit"
 ],
 "leaves": [
 "deviation",
@@ -139,19 +598,21 @@
 "goldie"
 ],
 "cites": [
-"GabrielRentschler1967; McConnellRobson2001:6.1.2,6.2.2",
-"Goldie1960:Thms4.1,4.4; McConnellRobson2001:2.3.6",
-"McConnellRobson2001:6.2.10",
-"McConnellRobson2001:6.2.4"
+"prop:critical",
+"thm:goldie"
 ],
 "helpers": {
 "GeneralizedStafford.unitTest_satisfied_iff": {
 "keys": [
-"UNIT"
+"lem:unit"
 ],
 "leaves": [
 "germ"
 ]
+},
+"GeneralizedStafford.mul_mem_sup_pencil": {
+"keys": [],
+"leaves": []
 },
 "GeneralizedStafford.affine_update": {
 "keys": [],
@@ -165,98 +626,44 @@
 }
 }
 },
-"HALL": {
-"keys": [],
-"leaves": [
-"deviation"
-],
-"cites": [
-"GabrielRentschler1967; McConnellRobson2001:6.1.2,6.2.2",
-"McConnellRobson2001:6.2.4"
-],
-"helpers": {
-"GeneralizedStafford.principal_quotient_finite_of_omega": {
-"keys": [],
-"leaves": [
-"deviation"
-]
-},
-"GeneralizedStafford.principalRightIdeal_le": {
-"keys": [],
-"leaves": []
-},
-"GeneralizedStafford.devLE_quotient_of_le": {
-"keys": [],
-"leaves": [
-"deviation"
-]
-}
-}
-},
-"C3R": {
-"keys": [
-"C1"
-],
-"leaves": [
-"goldie"
-],
-"cites": [
-"GabrielRentschler1967; McConnellRobson2001:6.1.2,6.2.2",
-"Goldie1960:Thms4.1,4.4; McConnellRobson2001:2.3.6",
-"McConnellRobson2001:Ch2§2"
-],
-"helpers": {}
-},
-"CENT": {
-"keys": [],
-"leaves": [
-"germ"
-],
-"cites": [],
-"helpers": {}
-},
-"SRC": {
+"step:select-steps-1-2": {
 "keys": [],
 "leaves": [
 "goldie",
 "pencil"
 ],
-"cites": [],
-"helpers": {}
-},
-"INCL": {
-"keys": [],
-"leaves": [],
-"cites": [],
+"cites": [
+"lem:escape",
+"lem:pencil",
+"lem:rank",
+"thm:goldie"
+],
 "helpers": {}
 },
 "SOL": {
 "keys": [
-"A",
-"AP",
-"APa",
-"APb",
-"APc",
-"APd",
-"APe",
-"B",
-"C1",
-"C2",
-"C3",
-"HALL"
+"cor:B",
+"cor:C",
+"lem:omega",
+"prop:C1",
+"prop:C2",
+"thm:A",
+"thm:Aprime",
+"thm:apps-a",
+"thm:apps-b",
+"thm:apps-c",
+"thm:apps-d",
+"thm:apps-e"
 ],
 "leaves": [
 "deviation",
 "diffop"
 ],
-"cites": [
-"GabrielRentschler1967; McConnellRobson2001:6.1.2,6.2.2",
-"McConnellRobson2001:6.2.4"
-],
+"cites": [],
 "helpers": {
 "GeneralizedStaffordChallenge.fixedIdeal_proof": {
 "keys": [
-"AP"
+"thm:Aprime"
 ],
 "leaves": [
 "deviation"
@@ -264,15 +671,7 @@
 },
 "GeneralizedStaffordChallenge.fixedAnchor_proof": {
 "keys": [
-"A"
-],
-"leaves": [
-"deviation"
-]
-},
-"GeneralizedStaffordChallenge.corollaryB_dimension_proof": {
-"keys": [
-"HALL"
+"thm:A"
 ],
 "leaves": [
 "deviation"
@@ -280,7 +679,7 @@
 },
 "GeneralizedStaffordChallenge.corollaryB_fixedAnchor_proof": {
 "keys": [
-"B"
+"cor:B"
 ],
 "leaves": [
 "deviation"
@@ -288,7 +687,7 @@
 },
 "GeneralizedStaffordChallenge.corollaryB_fixedIdeal_proof": {
 "keys": [
-"B"
+"cor:B"
 ],
 "leaves": [
 "deviation"
@@ -296,7 +695,7 @@
 },
 "GeneralizedStaffordChallenge.corollaryC1_proof": {
 "keys": [
-"C1"
+"prop:C1"
 ],
 "leaves": [
 "deviation"
@@ -304,7 +703,7 @@
 },
 "GeneralizedStaffordChallenge.corollaryC1_hAll_proof": {
 "keys": [
-"C1"
+"cor:C"
 ],
 "leaves": [
 "deviation"
@@ -312,7 +711,7 @@
 },
 "GeneralizedStaffordChallenge.corollaryC1_omega_proof": {
 "keys": [
-"C1"
+"cor:C"
 ],
 "leaves": [
 "deviation"
@@ -320,7 +719,7 @@
 },
 "GeneralizedStaffordChallenge.corollaryC1_stable_proof": {
 "keys": [
-"C1"
+"prop:C1"
 ],
 "leaves": [
 "deviation"
@@ -328,7 +727,8 @@
 },
 "GeneralizedStaffordChallenge.corollaryC2_prescribed_proof": {
 "keys": [
-"C2"
+"cor:C",
+"prop:C2"
 ],
 "leaves": [
 "deviation"
@@ -336,21 +736,8 @@
 },
 "GeneralizedStaffordChallenge.corollaryC2_proof": {
 "keys": [
-"C2"
-],
-"leaves": [
-"deviation"
-]
-},
-"GeneralizedStaffordChallenge.corollaryC3_lower_proof": {
-"keys": [
-"C3"
-],
-"leaves": []
-},
-"GeneralizedStaffordChallenge.corollaryC3_upper_proof": {
-"keys": [
-"C3"
+"cor:C",
+"prop:C2"
 ],
 "leaves": [
 "deviation"
@@ -358,73 +745,73 @@
 },
 "GeneralizedStaffordChallenge.weylTwoGeneratedRight_proof": {
 "keys": [
-"APb"
+"thm:apps-b"
 ],
 "leaves": []
 },
 "GeneralizedStaffordChallenge.weylTwoGeneratedLeft_proof": {
 "keys": [
-"APb"
+"thm:apps-b"
 ],
 "leaves": []
 },
 "GeneralizedStaffordChallenge.weylConjecture38_proof": {
 "keys": [
-"APb"
+"thm:apps-b"
 ],
 "leaves": []
 },
 "GeneralizedStaffordChallenge.weylAffineForm_proof": {
 "keys": [
-"APb"
+"thm:apps-b"
 ],
 "leaves": []
 },
 "GeneralizedStaffordChallenge.weylFixedIdeal_proof": {
 "keys": [
-"APb"
+"thm:apps-b"
 ],
 "leaves": []
 },
 "GeneralizedStaffordChallenge.weylTorsionCyclicRight_proof": {
 "keys": [
-"APb"
+"thm:apps-b"
 ],
 "leaves": []
 },
 "GeneralizedStaffordChallenge.weylTorsionCyclicLeft_proof": {
 "keys": [
-"APb"
+"thm:apps-b"
 ],
 "leaves": []
 },
 "GeneralizedStaffordChallenge.weylPrescribedCyclicRight_proof": {
 "keys": [
-"APb"
+"thm:apps-b"
 ],
 "leaves": []
 },
 "GeneralizedStaffordChallenge.weylPrescribedCyclicLeft_proof": {
 "keys": [
-"APb"
+"thm:apps-b"
 ],
 "leaves": []
 },
 "GeneralizedStaffordChallenge.weylPrescribedTwoGeneratedRight_proof": {
 "keys": [
-"APb"
+"thm:apps-b"
 ],
 "leaves": []
 },
 "GeneralizedStaffordChallenge.weylPrescribedTwoGeneratedLeft_proof": {
 "keys": [
-"APb"
+"thm:apps-b"
 ],
 "leaves": []
 },
 "GeneralizedStaffordChallenge.filteredHypotheses_proof": {
 "keys": [
-"APa"
+"thm:apps-a"
 ],
 "leaves": [
 "deviation"
@@ -432,8 +819,8 @@
 },
 "GeneralizedStaffordChallenge.filteredTheoremA_proof": {
 "keys": [
-"APa",
-"B"
+"cor:B",
+"thm:apps-a"
 ],
 "leaves": [
 "deviation"
@@ -441,17 +828,8 @@
 },
 "GeneralizedStaffordChallenge.filteredFixedIdeal_proof": {
 "keys": [
-"APa",
-"B"
-],
-"leaves": [
-"deviation"
-]
-},
-"GeneralizedStaffordChallenge.filteredCorollaryB_proof": {
-"keys": [
-"APa",
-"HALL"
+"cor:B",
+"thm:apps-a"
 ],
 "leaves": [
 "deviation"
@@ -459,9 +837,10 @@
 },
 "GeneralizedStaffordChallenge.filteredPrescribedCyclic_proof": {
 "keys": [
-"APa",
-"C1",
-"HALL"
+"cor:C",
+"lem:omega",
+"prop:C1",
+"thm:apps-a"
 ],
 "leaves": [
 "deviation"
@@ -469,19 +848,10 @@
 },
 "GeneralizedStaffordChallenge.filteredTwoGenerated_proof": {
 "keys": [
-"APa",
-"C2",
-"HALL"
-],
-"leaves": [
-"deviation"
-]
-},
-"GeneralizedStaffordChallenge.filteredGeneratorBounds_proof": {
-"keys": [
-"APa",
-"C3",
-"HALL"
+"cor:C",
+"lem:omega",
+"prop:C2",
+"thm:apps-a"
 ],
 "leaves": [
 "deviation"
@@ -489,7 +859,7 @@
 },
 "GeneralizedStaffordChallenge.envelopingHypotheses_proof": {
 "keys": [
-"APd"
+"thm:apps-d"
 ],
 "leaves": [
 "deviation"
@@ -497,8 +867,8 @@
 },
 "GeneralizedStaffordChallenge.envelopingTheoremA_proof": {
 "keys": [
-"APd",
-"B"
+"cor:B",
+"thm:apps-d"
 ],
 "leaves": [
 "deviation"
@@ -506,17 +876,8 @@
 },
 "GeneralizedStaffordChallenge.envelopingFixedIdeal_proof": {
 "keys": [
-"APd",
-"B"
-],
-"leaves": [
-"deviation"
-]
-},
-"GeneralizedStaffordChallenge.envelopingCorollaryB_proof": {
-"keys": [
-"APd",
-"HALL"
+"cor:B",
+"thm:apps-d"
 ],
 "leaves": [
 "deviation"
@@ -524,9 +885,10 @@
 },
 "GeneralizedStaffordChallenge.envelopingPrescribedCyclic_proof": {
 "keys": [
-"APd",
-"C1",
-"HALL"
+"cor:C",
+"lem:omega",
+"prop:C1",
+"thm:apps-d"
 ],
 "leaves": [
 "deviation"
@@ -534,19 +896,10 @@
 },
 "GeneralizedStaffordChallenge.envelopingTwoGenerated_proof": {
 "keys": [
-"APd",
-"C2",
-"HALL"
-],
-"leaves": [
-"deviation"
-]
-},
-"GeneralizedStaffordChallenge.envelopingGeneratorBounds_proof": {
-"keys": [
-"APd",
-"C3",
-"HALL"
+"cor:C",
+"lem:omega",
+"prop:C2",
+"thm:apps-d"
 ],
 "leaves": [
 "deviation"
@@ -554,7 +907,7 @@
 },
 "GeneralizedStaffordChallenge.diffOpTwoGeneratedRight_proof": {
 "keys": [
-"APc"
+"thm:apps-c"
 ],
 "leaves": [
 "diffop"
@@ -562,7 +915,7 @@
 },
 "GeneralizedStaffordChallenge.diffOpTwoGeneratedLeft_proof": {
 "keys": [
-"APc"
+"thm:apps-c"
 ],
 "leaves": [
 "diffop"
@@ -570,7 +923,7 @@
 },
 "GeneralizedStaffordChallenge.diffOpFixedAnchor_proof": {
 "keys": [
-"APc"
+"thm:apps-c"
 ],
 "leaves": [
 "diffop"
@@ -578,7 +931,7 @@
 },
 "GeneralizedStaffordChallenge.diffOpGlobalStafford_proof": {
 "keys": [
-"APc"
+"thm:apps-c"
 ],
 "leaves": [
 "diffop"
@@ -586,7 +939,7 @@
 },
 "GeneralizedStaffordChallenge.diffOpCyclicRight_proof": {
 "keys": [
-"APc"
+"thm:apps-c"
 ],
 "leaves": [
 "diffop"
@@ -594,455 +947,11 @@
 },
 "GeneralizedStaffordChallenge.diffOpCyclicLeft_proof": {
 "keys": [
-"APc"
+"thm:apps-c"
 ],
 "leaves": [
 "diffop"
 ]
-}
-}
-},
-"AP": {
-"keys": [
-"DESC"
-],
-"leaves": [],
-"cites": [
-"GabrielRentschler1967; McConnellRobson2001:6.1.2,6.2.2"
-],
-"helpers": {
-"GeneralizedStafford.eq_top_of_small_zero": {
-"keys": [],
-"leaves": []
-}
-}
-},
-"A": {
-"keys": [
-"AP"
-],
-"leaves": [],
-"cites": [
-"GabrielRentschler1967; McConnellRobson2001:6.1.2,6.2.2"
-],
-"helpers": {}
-},
-"B": {
-"keys": [
-"A",
-"AP",
-"HALL"
-],
-"leaves": [
-"deviation"
-],
-"cites": [
-"GabrielRentschler1967; McConnellRobson2001:6.1.2,6.2.2"
-],
-"helpers": {
-"GeneralizedStafford.principal_quotient_finite_of_omega": {
-"keys": [],
-"leaves": [
-"deviation"
-]
-}
-}
-},
-"C1": {
-"keys": [
-"AP",
-"HALL"
-],
-"leaves": [
-"deviation"
-],
-"cites": [
-"GabrielRentschler1967; McConnellRobson2001:6.1.2,6.2.2",
-"McConnellRobson2001:6.2.4"
-],
-"helpers": {
-"GeneralizedStafford.prescribed_cyclic_of_cyclic": {
-"keys": [],
-"leaves": []
-},
-"GeneralizedStafford.principalRightIdeal_le": {
-"keys": [],
-"leaves": []
-},
-"GeneralizedStafford.devLE_quotient_ker_cyclicMap_iff": {
-"keys": [],
-"leaves": [
-"deviation"
-]
-},
-"GeneralizedStafford.devLE_quotient_of_le": {
-"keys": [],
-"leaves": [
-"deviation"
-]
-}
-}
-},
-"C2": {
-"keys": [
-"C1"
-],
-"leaves": [
-"goldie"
-],
-"cites": [
-"GabrielRentschler1967; McConnellRobson2001:6.1.2,6.2.2"
-],
-"helpers": {
-"GeneralizedStaffordChallenge.span_singleton_eq": {
-"keys": [],
-"leaves": []
-},
-"GeneralizedStafford.principalRightIdeal_le": {
-"keys": [],
-"leaves": []
-}
-}
-},
-"C3": {
-"keys": [
-"C3R"
-],
-"leaves": [
-"goldie"
-],
-"cites": [
-"GabrielRentschler1967; McConnellRobson2001:6.1.2,6.2.2",
-"Goldie1960:Thms4.1,4.4; McConnellRobson2001:2.3.6",
-"McConnellRobson2001:Ch2§2"
-],
-"helpers": {}
-},
-"APa": {
-"keys": [
-"B",
-"C1",
-"C2",
-"C3",
-"HALL"
-],
-"leaves": [
-"deviation",
-"filtered"
-],
-"cites": [
-"GabrielRentschler1967; McConnellRobson2001:6.1.2,6.2.2",
-"McConnellRobson2001:1.6.9",
-"McConnellRobson2001:6.2.4",
-"McConnellRobson2001:6.5.6,6.4.8",
-"McConnellRobson2001:Ch2§2"
-],
-"helpers": {
-"GeneralizedStafford.right_side": {
-"keys": [],
-"leaves": [
-"filtered"
-]
-},
-"GeneralizedStafford.devLE_span_of_torsion": {
-"keys": [],
-"leaves": [
-"deviation"
-]
-}
-}
-},
-"APb": {
-"keys": [
-"B",
-"C1",
-"C2",
-"HALL"
-],
-"leaves": [
-"deviation",
-"goldie",
-"weyl"
-],
-"cites": [
-"GabrielRentschler1967; McConnellRobson2001:6.1.2,6.2.2",
-"McConnellRobson2001:1.3.5"
-],
-"helpers": {
-"GeneralizedStafford.Weyl.isSimpleRing": {
-"keys": [],
-"leaves": [
-"weyl"
-]
-},
-"GeneralizedStafford.Weyl.isNoetherian": {
-"keys": [],
-"leaves": [
-"weyl"
-]
-},
-"GeneralizedStafford.Weyl.infinite_center": {
-"keys": [],
-"leaves": [
-"weyl"
-]
-},
-"GeneralizedStafford.Weyl.hOmega": {
-"keys": [],
-"leaves": [
-"deviation",
-"weyl"
-]
-},
-"GeneralizedStafford.Weyl.affine_of_domain": {
-"keys": [
-"B"
-],
-"leaves": [
-"deviation"
-]
-},
-"GeneralizedStafford.Weyl.fixedIdeal_of_domain": {
-"keys": [
-"B"
-],
-"leaves": [
-"deviation"
-]
-},
-"GeneralizedStafford.Weyl.prescribedCyclic_of_domain": {
-"keys": [
-"C1"
-],
-"leaves": [
-"deviation"
-]
-},
-"GeneralizedStafford.prescribedCyclicLeft_of_right": {
-"keys": [],
-"leaves": []
-},
-"GeneralizedStaffordChallenge.corollaryB_dimension_proof": {
-"keys": [
-"HALL"
-],
-"leaves": [
-"deviation"
-]
-},
-"GeneralizedStaffordChallenge.corollaryC2_proof": {
-"keys": [
-"C2"
-],
-"leaves": [
-"deviation"
-]
-},
-"GeneralizedStafford.twoGeneratedLeft_of_right": {
-"keys": [],
-"leaves": []
-},
-"GeneralizedStafford.Weyl.prescribedTwoGenerated_of_domain": {
-"keys": [
-"C2",
-"HALL"
-],
-"leaves": [
-"deviation",
-"goldie"
-]
-},
-"GeneralizedStafford.prescribedTwoGeneratedLeft_of_right": {
-"keys": [],
-"leaves": []
-}
-}
-},
-"APc": {
-"keys": [
-"B",
-"C1",
-"C2",
-"C3",
-"HALL"
-],
-"leaves": [
-"deviation",
-"diffop",
-"filtered"
-],
-"cites": [
-"GabrielRentschler1967; McConnellRobson2001:6.1.2,6.2.2",
-"McConnellRobson2001:15.4.5,15.4.7; Bavula2005:Thm3.7",
-"McConnellRobson2001:6.2.4"
-],
-"helpers": {
-"GeneralizedStafford.DiffOp.conclusions_right": {
-"keys": [
-"B",
-"C1",
-"C2",
-"C3",
-"HALL"
-],
-"leaves": [
-"deviation",
-"diffop"
-]
-},
-"GeneralizedStafford.DiffOp.twoGenerated_left_of_op": {
-"keys": [],
-"leaves": []
-},
-"GeneralizedStafford.DiffOp.conclusions_left": {
-"keys": [
-"B",
-"C1",
-"C2",
-"C3",
-"HALL"
-],
-"leaves": [
-"deviation",
-"diffop",
-"filtered"
-]
-},
-"GeneralizedStafford.DiffOp.isSimpleRing": {
-"keys": [],
-"leaves": [
-"diffop"
-]
-},
-"GeneralizedStafford.DiffOp.isDomain": {
-"keys": [],
-"leaves": [
-"diffop"
-]
-},
-"GeneralizedStaffordChallenge.fixedAnchorProperty_of_omega": {
-"keys": [
-"B"
-],
-"leaves": [
-"deviation"
-]
-},
-"GeneralizedStafford.Weyl.isRegular_of_ne_zero": {
-"keys": [],
-"leaves": []
-},
-"GeneralizedStafford.DiffOp.infiniteCenterRight": {
-"keys": [],
-"leaves": [
-"diffop"
-]
-},
-"GeneralizedStafford.DiffOp.noetherianRight": {
-"keys": [],
-"leaves": [
-"diffop"
-]
-},
-"GeneralizedStafford.DiffOp.homegaRight": {
-"keys": [],
-"leaves": [
-"deviation",
-"diffop"
-]
-},
-"GeneralizedStafford.DiffOp.homegaLeft": {
-"keys": [],
-"leaves": [
-"deviation",
-"diffop",
-"filtered"
-]
-},
-"GeneralizedStafford.DiffOp.infiniteCenterLeft": {
-"keys": [],
-"leaves": [
-"diffop",
-"filtered"
-]
-},
-"GeneralizedStafford.DiffOp.noetherianLeft": {
-"keys": [],
-"leaves": [
-"diffop",
-"filtered"
-]
-},
-"GeneralizedStafford.DiffOp.prescribedCyclicLeft_of_property": {
-"keys": [],
-"leaves": []
-}
-}
-},
-"APd": {
-"keys": [
-"B",
-"C1",
-"C2",
-"C3",
-"HALL"
-],
-"leaves": [
-"deviation",
-"enveloping",
-"filtered"
-],
-"cites": [
-"GabrielRentschler1967; McConnellRobson2001:6.1.2,6.2.2",
-"McConnellRobson2001:6.2.4",
-"McConnellRobson2001:Ch2§2",
-"PBW; McConnellRobson2001:1.6.9,6.5.6"
-],
-"helpers": {
-"GeneralizedStafford.devLE_span_of_torsion": {
-"keys": [],
-"leaves": [
-"deviation"
-]
-}
-}
-},
-"APe": {
-"keys": [
-"APa",
-"B"
-],
-"leaves": [
-"deviation",
-"filtered"
-],
-"cites": [
-"GabrielRentschler1967; McConnellRobson2001:6.1.2,6.2.2"
-],
-"helpers": {
-"GeneralizedStaffordChallenge.filtered_side": {
-"keys": [
-"APa"
-],
-"leaves": [
-"deviation"
-]
-},
-"GeneralizedStaffordChallenge.fixedAnchorProperty_of_omega": {
-"keys": [
-"B"
-],
-"leaves": [
-"deviation"
-]
-},
-"GeneralizedStaffordChallenge.isRegular_of_ne_zero'": {
-"keys": [],
-"leaves": []
-},
-"GeneralizedStaffordChallenge.exists_nat_le_of_lt_top": {
-"keys": [],
-"leaves": []
 }
 }
 }
@@ -1092,10 +1001,8 @@
 "GeneralizedStafford.DiffOp.infiniteCenterLeft",
 "GeneralizedStafford.DiffOp.isSimpleRing",
 "GeneralizedStafford.DiffOp.noetherianLeft",
-"GeneralizedStaffordChallenge.CorollaryBProperty",
 "GeneralizedStaffordChallenge.FixedAnchorProperty",
 "GeneralizedStaffordChallenge.FixedIdealProperty",
-"GeneralizedStaffordChallenge.GeneratorBoundsProperty",
 "GeneralizedStaffordChallenge.PrescribedCyclicProperty",
 "GeneralizedStaffordChallenge.StablyCyclicProperty",
 "GeneralizedStaffordChallenge.TwoGeneratedProperty"
@@ -1105,18 +1012,14 @@
 "module": "GeneralizedStafford.DifferentialOperators",
 "kind": "theorem",
 "uses": [
-"GeneralizedStaffordChallenge.CorollaryBProperty",
 "GeneralizedStaffordChallenge.FixedAnchorProperty",
 "GeneralizedStaffordChallenge.FixedIdealProperty",
-"GeneralizedStaffordChallenge.GeneratorBoundsProperty",
 "GeneralizedStaffordChallenge.HOmega",
 "GeneralizedStaffordChallenge.PrescribedCyclicProperty",
 "GeneralizedStaffordChallenge.StablyCyclicProperty",
 "GeneralizedStaffordChallenge.TwoGeneratedProperty",
-"GeneralizedStaffordChallenge.corollaryBProperty_of_omega",
 "GeneralizedStaffordChallenge.fixedAnchorProperty_of_omega",
 "GeneralizedStaffordChallenge.fixedIdealProperty_of_omega",
-"GeneralizedStaffordChallenge.generatorBoundsProperty_of_omega",
 "GeneralizedStaffordChallenge.prescribedCyclicProperty_of_omega",
 "GeneralizedStaffordChallenge.stablyCyclic_of_omega",
 "GeneralizedStaffordChallenge.twoGeneratedProperty_of_omega"
@@ -1131,10 +1034,8 @@
 "GeneralizedStafford.DiffOp.infiniteCenterRight",
 "GeneralizedStafford.DiffOp.isSimpleRing",
 "GeneralizedStafford.DiffOp.noetherianRight",
-"GeneralizedStaffordChallenge.CorollaryBProperty",
 "GeneralizedStaffordChallenge.FixedAnchorProperty",
 "GeneralizedStaffordChallenge.FixedIdealProperty",
-"GeneralizedStaffordChallenge.GeneratorBoundsProperty",
 "GeneralizedStaffordChallenge.PrescribedCyclicProperty",
 "GeneralizedStaffordChallenge.StablyCyclicProperty",
 "GeneralizedStaffordChallenge.TwoGeneratedProperty"
@@ -1215,10 +1116,8 @@
 "GeneralizedStafford.DiffOp.conclusions_left",
 "GeneralizedStafford.DiffOp.isDomain",
 "GeneralizedStafford.DiffOp.prescribedCyclicLeft_of_property",
-"GeneralizedStaffordChallenge.CorollaryBProperty",
 "GeneralizedStaffordChallenge.FixedAnchorProperty",
 "GeneralizedStaffordChallenge.FixedIdealProperty",
-"GeneralizedStaffordChallenge.GeneratorBoundsProperty",
 "GeneralizedStaffordChallenge.PrescribedCyclicProperty",
 "GeneralizedStaffordChallenge.StablyCyclicProperty",
 "GeneralizedStaffordChallenge.TwoGeneratedProperty"
@@ -1243,10 +1142,8 @@
 "GeneralizedStafford.DiffOp.conclusions_right",
 "GeneralizedStafford.DiffOp.isDomain",
 "GeneralizedStafford.Weyl.isRegular_of_ne_zero",
-"GeneralizedStaffordChallenge.CorollaryBProperty",
 "GeneralizedStaffordChallenge.FixedAnchorProperty",
 "GeneralizedStaffordChallenge.FixedIdealProperty",
-"GeneralizedStaffordChallenge.GeneratorBoundsProperty",
 "GeneralizedStaffordChallenge.IsGoldieTorsion",
 "GeneralizedStaffordChallenge.IsRegularElement",
 "GeneralizedStaffordChallenge.PrescribedCyclicProperty",
@@ -1268,10 +1165,8 @@
 "uses": [
 "GeneralizedStafford.DiffOp.conclusions_left",
 "GeneralizedStafford.DiffOp.twoGenerated_left_of_op",
-"GeneralizedStaffordChallenge.CorollaryBProperty",
 "GeneralizedStaffordChallenge.FixedAnchorProperty",
 "GeneralizedStaffordChallenge.FixedIdealProperty",
-"GeneralizedStaffordChallenge.GeneratorBoundsProperty",
 "GeneralizedStaffordChallenge.IsRegularElement",
 "GeneralizedStaffordChallenge.PrescribedCyclicProperty",
 "GeneralizedStaffordChallenge.StablyCyclicProperty",
@@ -1283,10 +1178,8 @@
 "kind": "theorem",
 "uses": [
 "GeneralizedStafford.DiffOp.conclusions_right",
-"GeneralizedStaffordChallenge.CorollaryBProperty",
 "GeneralizedStaffordChallenge.FixedAnchorProperty",
 "GeneralizedStaffordChallenge.FixedIdealProperty",
-"GeneralizedStaffordChallenge.GeneratorBoundsProperty",
 "GeneralizedStaffordChallenge.IsRegularElement",
 "GeneralizedStaffordChallenge.PrescribedCyclicProperty",
 "GeneralizedStaffordChallenge.StablyCyclicProperty",
@@ -1652,12 +1545,10 @@
 "kind": "theorem",
 "uses": [
 "GeneralizedStafford.Weyl.isRegular_of_ne_zero",
-"GeneralizedStaffordChallenge.HAll",
 "GeneralizedStaffordChallenge.HOmega",
-"GeneralizedStaffordChallenge.HasFiniteDevDim",
 "GeneralizedStaffordChallenge.IsRegularElement",
-"GeneralizedStaffordChallenge.corollaryB_dimension_proof",
-"GeneralizedStaffordChallenge.corollaryC2_prescribed_proof"
+"GeneralizedStaffordChallenge.corollaryC2_prescribed_proof",
+"GeneralizedStaffordChallenge.hAll_of_omega"
 ]
 },
 "GeneralizedStafford.Weyl.torsionCyclicLeft": {
@@ -1698,11 +1589,8 @@
 "GeneralizedStafford.Weyl.infinite_center",
 "GeneralizedStafford.Weyl.isNoetherian",
 "GeneralizedStafford.Weyl.isSimpleRing",
-"GeneralizedStaffordChallenge.HAll",
-"GeneralizedStaffordChallenge.HasFiniteDevDim",
-"GeneralizedStaffordChallenge.IsRegularElement",
-"GeneralizedStaffordChallenge.corollaryB_dimension_proof",
-"GeneralizedStaffordChallenge.corollaryC2_proof"
+"GeneralizedStaffordChallenge.corollaryC2_proof",
+"GeneralizedStaffordChallenge.hAll_of_omega"
 ]
 },
 "GeneralizedStafford.affine_update": {
@@ -1714,14 +1602,6 @@
 "module": "GeneralizedStafford.Basic",
 "kind": "def",
 "uses": []
-},
-"GeneralizedStafford.cyclic_of_goldieRank_lt": {
-"module": "GeneralizedStafford.GeneratorBounds",
-"kind": "theorem",
-"uses": [
-"GeneralizedStafford.PrincipalQuotientsFinite",
-"GeneralizedStafford.prescribed_cyclic_of_hAll"
-]
 },
 "GeneralizedStafford.devLE_quotient_ker_cyclicMap_iff": {
 "module": "GeneralizedStafford.Basic",
@@ -1747,16 +1627,6 @@
 "GeneralizedStafford.principalRightIdeal_le"
 ]
 },
-"GeneralizedStafford.enveloping_corollaryB": {
-"module": "GeneralizedStafford.Enveloping",
-"kind": "theorem",
-"uses": [
-"GeneralizedStafford.PrincipalQuotientsFinite",
-"GeneralizedStafford.enveloping_hypotheses",
-"GeneralizedStafford.principalQuotientsFinite_of_devLE_omega",
-"GeneralizedStafford.quotient_finite_of_omega"
-]
-},
 "GeneralizedStafford.enveloping_fixedIdeal": {
 "module": "GeneralizedStafford.Enveloping",
 "kind": "theorem",
@@ -1764,28 +1634,6 @@
 "GeneralizedStafford.enveloping_hypotheses",
 "GeneralizedStafford.fixed_ideal_of_devLE_omega"
 ]
-},
-"GeneralizedStafford.enveloping_generatorBounds": {
-"module": "GeneralizedStafford.Enveloping",
-"kind": "theorem",
-"uses": [
-"GeneralizedStafford.enveloping_generatorBounds.match_1_1",
-"GeneralizedStafford.enveloping_generatorBounds.match_1_3",
-"GeneralizedStafford.enveloping_hypotheses",
-"GeneralizedStafford.exists_span_eq_top_of_lt_mul",
-"GeneralizedStafford.le_mul_of_span_eq_top",
-"GeneralizedStafford.principalQuotientsFinite_of_devLE_omega"
-]
-},
-"GeneralizedStafford.enveloping_generatorBounds.match_1_1": {
-"module": "GeneralizedStafford.Enveloping",
-"kind": "def",
-"uses": []
-},
-"GeneralizedStafford.enveloping_generatorBounds.match_1_3": {
-"module": "GeneralizedStafford.Enveloping",
-"kind": "def",
-"uses": []
 },
 "GeneralizedStafford.enveloping_hypotheses": {
 "module": "GeneralizedStafford.Enveloping",
@@ -1854,24 +1702,6 @@
 "GeneralizedStafford.exists_affine_direction_of_goldie"
 ]
 },
-"GeneralizedStafford.exists_span_eq_top_of_lt_mul": {
-"module": "GeneralizedStafford.GeneratorBounds",
-"kind": "theorem",
-"uses": [
-"GeneralizedStafford.PrincipalQuotientsFinite",
-"GeneralizedStafford.spanRank_le_of_goldieRank_lt"
-]
-},
-"GeneralizedStafford.filtered_corollaryB": {
-"module": "GeneralizedStafford.Filtered",
-"kind": "theorem",
-"uses": [
-"GeneralizedStafford.PrincipalQuotientsFinite",
-"GeneralizedStafford.filtered_hypotheses",
-"GeneralizedStafford.principalQuotientsFinite_of_devLE_omega",
-"GeneralizedStafford.quotient_finite_of_omega"
-]
-},
 "GeneralizedStafford.filtered_fixedIdeal": {
 "module": "GeneralizedStafford.Filtered",
 "kind": "theorem",
@@ -1879,28 +1709,6 @@
 "GeneralizedStafford.filtered_hypotheses",
 "GeneralizedStafford.fixed_ideal_of_devLE_omega"
 ]
-},
-"GeneralizedStafford.filtered_generatorBounds": {
-"module": "GeneralizedStafford.Filtered",
-"kind": "theorem",
-"uses": [
-"GeneralizedStafford.exists_span_eq_top_of_lt_mul",
-"GeneralizedStafford.filtered_generatorBounds.match_1_1",
-"GeneralizedStafford.filtered_generatorBounds.match_1_3",
-"GeneralizedStafford.filtered_hypotheses",
-"GeneralizedStafford.le_mul_of_span_eq_top",
-"GeneralizedStafford.principalQuotientsFinite_of_devLE_omega"
-]
-},
-"GeneralizedStafford.filtered_generatorBounds.match_1_1": {
-"module": "GeneralizedStafford.Filtered",
-"kind": "def",
-"uses": []
-},
-"GeneralizedStafford.filtered_generatorBounds.match_1_3": {
-"module": "GeneralizedStafford.Filtered",
-"kind": "def",
-"uses": []
 },
 "GeneralizedStafford.filtered_hypotheses": {
 "module": "GeneralizedStafford.Filtered",
@@ -2011,11 +1819,6 @@
 "GeneralizedStafford.idealBound_initial",
 "GeneralizedStafford.idealBound_step"
 ]
-},
-"GeneralizedStafford.le_mul_of_span_eq_top": {
-"module": "GeneralizedStafford.GeneratorBounds",
-"kind": "theorem",
-"uses": []
 },
 "GeneralizedStafford.leftToRight": {
 "module": "GeneralizedStafford.Opposite",
@@ -2182,14 +1985,6 @@
 "GeneralizedStafford.quotient_section_epic_iff"
 ]
 },
-"GeneralizedStafford.spanRank_le_of_goldieRank_lt": {
-"module": "GeneralizedStafford.GeneratorBounds",
-"kind": "theorem",
-"uses": [
-"GeneralizedStafford.PrincipalQuotientsFinite",
-"GeneralizedStafford.cyclic_of_goldieRank_lt"
-]
-},
 "GeneralizedStafford.span_pair_eq_span_affine": {
 "module": "GeneralizedStafford.Modules",
 "kind": "theorem",
@@ -2249,16 +2044,6 @@
 "GeneralizedStafford.unitTest"
 ]
 },
-"GeneralizedStaffordChallenge.CorollaryBDimensionStatement": {
-"module": "GeneralizedStafford.Challenge.Transport",
-"kind": "def",
-"uses": [
-"GeneralizedStaffordChallenge.HAll",
-"GeneralizedStaffordChallenge.HOmega",
-"GeneralizedStaffordChallenge.HasFiniteDevDim",
-"GeneralizedStaffordChallenge.IsRegularElement"
-]
-},
 "GeneralizedStaffordChallenge.CorollaryBFixedAnchorStatement": {
 "module": "GeneralizedStafford.Challenge.Transport",
 "kind": "def",
@@ -2272,15 +2057,6 @@
 "kind": "def",
 "uses": [
 "GeneralizedStaffordChallenge.HOmega",
-"GeneralizedStaffordChallenge.IsRegularElement"
-]
-},
-"GeneralizedStaffordChallenge.CorollaryBProperty": {
-"module": "GeneralizedStafford.Challenge.FilteredTransport",
-"kind": "def",
-"uses": [
-"GeneralizedStaffordChallenge.HAll",
-"GeneralizedStaffordChallenge.HasFiniteDevDim",
 "GeneralizedStaffordChallenge.IsRegularElement"
 ]
 },
@@ -2323,6 +2099,13 @@
 "GeneralizedStaffordChallenge.IsRegularElement"
 ]
 },
+"GeneralizedStaffordChallenge.CorollaryC2OmegaStatement": {
+"module": "GeneralizedStafford.Challenge.Transport",
+"kind": "def",
+"uses": [
+"GeneralizedStaffordChallenge.HOmega"
+]
+},
 "GeneralizedStaffordChallenge.CorollaryC2PrescribedStatement": {
 "module": "GeneralizedStafford.Challenge.Transport",
 "kind": "def",
@@ -2336,27 +2119,6 @@
 "kind": "def",
 "uses": [
 "GeneralizedStaffordChallenge.HAll"
-]
-},
-"GeneralizedStaffordChallenge.CorollaryC3LowerStatement": {
-"module": "GeneralizedStafford.Challenge.Transport",
-"kind": "def",
-"uses": [
-"GeneralizedStaffordChallenge.SpanRankLE",
-"GeneralizedStaffordChallenge.UDimGE",
-"GeneralizedStaffordChallenge.UDimLE",
-"GeneralizedStaffordChallenge.goldieTorsionPart"
-]
-},
-"GeneralizedStaffordChallenge.CorollaryC3UpperStatement": {
-"module": "GeneralizedStafford.Challenge.Transport",
-"kind": "def",
-"uses": [
-"GeneralizedStaffordChallenge.HAll",
-"GeneralizedStaffordChallenge.SpanRankLE",
-"GeneralizedStaffordChallenge.UDimGE",
-"GeneralizedStaffordChallenge.UDimLE",
-"GeneralizedStaffordChallenge.goldieTorsionPart"
 ]
 },
 "GeneralizedStaffordChallenge.DevDimLE": {
@@ -2415,25 +2177,11 @@
 "GeneralizedStaffordChallenge.diffOps"
 ]
 },
-"GeneralizedStaffordChallenge.EnvelopingCorollaryBStatement": {
-"module": "GeneralizedStafford.Challenge.EnvelopingTransport",
-"kind": "def",
-"uses": [
-"GeneralizedStaffordChallenge.CorollaryBProperty"
-]
-},
 "GeneralizedStaffordChallenge.EnvelopingFixedIdealStatement": {
 "module": "GeneralizedStafford.Challenge.EnvelopingTransport",
 "kind": "def",
 "uses": [
 "GeneralizedStaffordChallenge.FixedIdealProperty"
-]
-},
-"GeneralizedStaffordChallenge.EnvelopingGeneratorBoundsStatement": {
-"module": "GeneralizedStafford.Challenge.EnvelopingTransport",
-"kind": "def",
-"uses": [
-"GeneralizedStaffordChallenge.GeneratorBoundsProperty"
 ]
 },
 "GeneralizedStaffordChallenge.EnvelopingHypothesesStatement": {
@@ -2465,14 +2213,6 @@
 "GeneralizedStaffordChallenge.TwoGeneratedProperty"
 ]
 },
-"GeneralizedStaffordChallenge.FilteredCorollaryBStatement": {
-"module": "GeneralizedStafford.Challenge.FilteredTransport",
-"kind": "def",
-"uses": [
-"GeneralizedStaffordChallenge.CorollaryBProperty",
-"GeneralizedStaffordChallenge.HasCommNoetherianGr"
-]
-},
 "GeneralizedStaffordChallenge.FilteredDomainStatement": {
 "module": "GeneralizedStafford.Challenge.FilteredTransport",
 "kind": "def",
@@ -2485,14 +2225,6 @@
 "kind": "def",
 "uses": [
 "GeneralizedStaffordChallenge.FixedIdealProperty",
-"GeneralizedStaffordChallenge.HasCommNoetherianGr"
-]
-},
-"GeneralizedStaffordChallenge.FilteredGeneratorBoundsStatement": {
-"module": "GeneralizedStafford.Challenge.FilteredTransport",
-"kind": "def",
-"uses": [
-"GeneralizedStaffordChallenge.GeneratorBoundsProperty",
 "GeneralizedStaffordChallenge.HasCommNoetherianGr"
 ]
 },
@@ -2557,16 +2289,6 @@
 "uses": [
 "GeneralizedStaffordChallenge.HasFiniteDevDim",
 "GeneralizedStaffordChallenge.IsRegularElement"
-]
-},
-"GeneralizedStaffordChallenge.GeneratorBoundsProperty": {
-"module": "GeneralizedStafford.Challenge.FilteredTransport",
-"kind": "def",
-"uses": [
-"GeneralizedStaffordChallenge.SpanRankLE",
-"GeneralizedStaffordChallenge.UDimGE",
-"GeneralizedStaffordChallenge.UDimLE",
-"GeneralizedStaffordChallenge.goldieTorsionPart"
 ]
 },
 "GeneralizedStaffordChallenge.GradedSymbol.casesOn": {
@@ -2729,6 +2451,14 @@
 "kind": "def",
 "uses": []
 },
+"GeneralizedStaffordChallenge.KnownDimensionStatement": {
+"module": "GeneralizedStafford.Challenge.Transport",
+"kind": "def",
+"uses": [
+"GeneralizedStaffordChallenge.HAll",
+"GeneralizedStaffordChallenge.HOmega"
+]
+},
 "GeneralizedStaffordChallenge.PosetDevLE": {
 "module": "GeneralizedStafford.Challenge.Transport",
 "kind": "def",
@@ -2837,11 +2567,6 @@
 "kind": "def",
 "uses": []
 },
-"GeneralizedStaffordChallenge.SpanRankLE": {
-"module": "GeneralizedStafford.Challenge.Transport",
-"kind": "def",
-"uses": []
-},
 "GeneralizedStaffordChallenge.StablyCyclicProperty": {
 "module": "GeneralizedStafford.Challenge.FilteredTransport",
 "kind": "def",
@@ -2854,18 +2579,6 @@
 "kind": "def",
 "uses": [
 "GeneralizedStaffordChallenge.IsRegularElement"
-]
-},
-"GeneralizedStaffordChallenge.UDimGE": {
-"module": "GeneralizedStafford.Challenge.Transport",
-"kind": "def",
-"uses": []
-},
-"GeneralizedStaffordChallenge.UDimLE": {
-"module": "GeneralizedStafford.Challenge.Transport",
-"kind": "def",
-"uses": [
-"GeneralizedStaffordChallenge.UDimGE"
 ]
 },
 "GeneralizedStaffordChallenge.WeylTwoGeneratedLeftStatement": {
@@ -2892,41 +2605,6 @@
 "uses": [
 "GeneralizedStaffordChallenge.RingFiltration.below",
 "GeneralizedStaffordChallenge.toAA"
-]
-},
-"GeneralizedStaffordChallenge.corollaryBProperty_of_omega": {
-"module": "GeneralizedStafford.Challenge.FilteredTransport",
-"kind": "theorem",
-"uses": [
-"GeneralizedStaffordChallenge.CorollaryBProperty",
-"GeneralizedStaffordChallenge.HOmega",
-"GeneralizedStaffordChallenge.corollaryB_dimension_proof"
-]
-},
-"GeneralizedStaffordChallenge.corollaryB_dimension": {
-"module": "GeneralizedStaffordSolution",
-"kind": "theorem",
-"uses": [
-"GeneralizedStaffordChallenge.CorollaryBDimensionStatement",
-"GeneralizedStaffordChallenge.corollaryB_dimension_proof"
-]
-},
-"GeneralizedStaffordChallenge.corollaryB_dimension_proof": {
-"module": "GeneralizedStafford.Challenge.Transport",
-"kind": "theorem",
-"uses": [
-"GeneralizedStafford.PrincipalQuotientsFinite",
-"GeneralizedStafford.principalQuotientsFinite_of_devLE_omega",
-"GeneralizedStafford.quotient_finite_of_omega",
-"GeneralizedStaffordChallenge.CorollaryBDimensionStatement",
-"GeneralizedStaffordChallenge.DevDimLE",
-"GeneralizedStaffordChallenge.HAll",
-"GeneralizedStaffordChallenge.HOmega",
-"GeneralizedStaffordChallenge.HasFiniteDevDim",
-"GeneralizedStaffordChallenge.IsRegularElement",
-"GeneralizedStaffordChallenge.devDimLE_iff",
-"GeneralizedStaffordChallenge.hAll_iff",
-"GeneralizedStaffordChallenge.hOmega_iff"
 ]
 },
 "GeneralizedStaffordChallenge.corollaryB_fixedAnchor": {
@@ -3081,6 +2759,24 @@
 "GeneralizedStaffordChallenge.span_singleton_eq"
 ]
 },
+"GeneralizedStaffordChallenge.corollaryC2_omega": {
+"module": "GeneralizedStaffordSolution",
+"kind": "theorem",
+"uses": [
+"GeneralizedStaffordChallenge.CorollaryC2OmegaStatement",
+"GeneralizedStaffordChallenge.corollaryC2_omega_proof"
+]
+},
+"GeneralizedStaffordChallenge.corollaryC2_omega_proof": {
+"module": "GeneralizedStafford.Challenge.Transport",
+"kind": "theorem",
+"uses": [
+"GeneralizedStaffordChallenge.CorollaryC2OmegaStatement",
+"GeneralizedStaffordChallenge.HOmega",
+"GeneralizedStaffordChallenge.corollaryC2_proof",
+"GeneralizedStaffordChallenge.hAll_of_omega"
+]
+},
 "GeneralizedStaffordChallenge.corollaryC2_prescribed": {
 "module": "GeneralizedStaffordSolution",
 "kind": "theorem",
@@ -3113,58 +2809,6 @@
 "GeneralizedStaffordChallenge.HAll",
 "GeneralizedStaffordChallenge.hAll_iff",
 "GeneralizedStaffordChallenge.span_singleton_eq",
-"GeneralizedStaffordChallenge.withCentre"
-]
-},
-"GeneralizedStaffordChallenge.corollaryC3_lower": {
-"module": "GeneralizedStaffordSolution",
-"kind": "theorem",
-"uses": [
-"GeneralizedStaffordChallenge.CorollaryC3LowerStatement",
-"GeneralizedStaffordChallenge.corollaryC3_lower_proof"
-]
-},
-"GeneralizedStaffordChallenge.corollaryC3_lower_proof": {
-"module": "GeneralizedStafford.Challenge.Transport",
-"kind": "theorem",
-"uses": [
-"GeneralizedStafford.le_mul_of_span_eq_top",
-"GeneralizedStaffordChallenge.CorollaryC3LowerStatement",
-"GeneralizedStaffordChallenge.SpanRankLE",
-"GeneralizedStaffordChallenge.UDimGE",
-"GeneralizedStaffordChallenge.UDimLE",
-"GeneralizedStaffordChallenge.corollaryC3_lower_proof.match_1_1",
-"GeneralizedStaffordChallenge.goldieTorsionPart"
-]
-},
-"GeneralizedStaffordChallenge.corollaryC3_lower_proof.match_1_1": {
-"module": "GeneralizedStafford.Challenge.Transport",
-"kind": "def",
-"uses": [
-"GeneralizedStaffordChallenge.SpanRankLE"
-]
-},
-"GeneralizedStaffordChallenge.corollaryC3_upper": {
-"module": "GeneralizedStaffordSolution",
-"kind": "theorem",
-"uses": [
-"GeneralizedStaffordChallenge.CorollaryC3UpperStatement",
-"GeneralizedStaffordChallenge.corollaryC3_upper_proof"
-]
-},
-"GeneralizedStaffordChallenge.corollaryC3_upper_proof": {
-"module": "GeneralizedStafford.Challenge.Transport",
-"kind": "theorem",
-"uses": [
-"GeneralizedStafford.PrincipalQuotientsFinite",
-"GeneralizedStafford.exists_span_eq_top_of_lt_mul",
-"GeneralizedStaffordChallenge.CorollaryC3UpperStatement",
-"GeneralizedStaffordChallenge.HAll",
-"GeneralizedStaffordChallenge.SpanRankLE",
-"GeneralizedStaffordChallenge.UDimGE",
-"GeneralizedStaffordChallenge.UDimLE",
-"GeneralizedStaffordChallenge.goldieTorsionPart",
-"GeneralizedStaffordChallenge.hAll_iff",
 "GeneralizedStaffordChallenge.withCentre"
 ]
 },
@@ -3326,26 +2970,6 @@
 "GlobalStaffordChallenge.multiplication"
 ]
 },
-"GeneralizedStaffordChallenge.envelopingCorollaryB": {
-"module": "GeneralizedStaffordSolution",
-"kind": "theorem",
-"uses": [
-"GeneralizedStaffordChallenge.EnvelopingCorollaryBStatement",
-"GeneralizedStaffordChallenge.envelopingCorollaryB_proof"
-]
-},
-"GeneralizedStaffordChallenge.envelopingCorollaryB_proof": {
-"module": "GeneralizedStafford.Challenge.EnvelopingTransport",
-"kind": "theorem",
-"uses": [
-"GeneralizedStaffordChallenge.CorollaryBProperty",
-"GeneralizedStaffordChallenge.DevDimLE",
-"GeneralizedStaffordChallenge.EnvelopingCorollaryBStatement",
-"GeneralizedStaffordChallenge.HOmega",
-"GeneralizedStaffordChallenge.corollaryBProperty_of_omega",
-"GeneralizedStaffordChallenge.envelopingSide"
-]
-},
 "GeneralizedStaffordChallenge.envelopingFixedIdeal": {
 "module": "GeneralizedStaffordSolution",
 "kind": "theorem",
@@ -3364,26 +2988,6 @@
 "GeneralizedStaffordChallenge.HOmega",
 "GeneralizedStaffordChallenge.envelopingSide",
 "GeneralizedStaffordChallenge.fixedIdealProperty_of_omega"
-]
-},
-"GeneralizedStaffordChallenge.envelopingGeneratorBounds": {
-"module": "GeneralizedStaffordSolution",
-"kind": "theorem",
-"uses": [
-"GeneralizedStaffordChallenge.EnvelopingGeneratorBoundsStatement",
-"GeneralizedStaffordChallenge.envelopingGeneratorBounds_proof"
-]
-},
-"GeneralizedStaffordChallenge.envelopingGeneratorBounds_proof": {
-"module": "GeneralizedStafford.Challenge.EnvelopingTransport",
-"kind": "theorem",
-"uses": [
-"GeneralizedStaffordChallenge.DevDimLE",
-"GeneralizedStaffordChallenge.EnvelopingGeneratorBoundsStatement",
-"GeneralizedStaffordChallenge.GeneratorBoundsProperty",
-"GeneralizedStaffordChallenge.HOmega",
-"GeneralizedStaffordChallenge.envelopingSide",
-"GeneralizedStaffordChallenge.generatorBoundsProperty_of_omega"
 ]
 },
 "GeneralizedStaffordChallenge.envelopingHypotheses": {
@@ -3482,27 +3086,6 @@
 "kind": "theorem",
 "uses": []
 },
-"GeneralizedStaffordChallenge.filteredCorollaryB": {
-"module": "GeneralizedStaffordSolution",
-"kind": "theorem",
-"uses": [
-"GeneralizedStaffordChallenge.FilteredCorollaryBStatement",
-"GeneralizedStaffordChallenge.filteredCorollaryB_proof"
-]
-},
-"GeneralizedStaffordChallenge.filteredCorollaryB_proof": {
-"module": "GeneralizedStafford.Challenge.FilteredTransport",
-"kind": "theorem",
-"uses": [
-"GeneralizedStaffordChallenge.CorollaryBProperty",
-"GeneralizedStaffordChallenge.DevDimLE",
-"GeneralizedStaffordChallenge.FilteredCorollaryBStatement",
-"GeneralizedStaffordChallenge.HOmega",
-"GeneralizedStaffordChallenge.HasCommNoetherianGr",
-"GeneralizedStaffordChallenge.corollaryBProperty_of_omega",
-"GeneralizedStaffordChallenge.filtered_side"
-]
-},
 "GeneralizedStaffordChallenge.filteredDomain": {
 "module": "GeneralizedStaffordSolution",
 "kind": "theorem",
@@ -3548,27 +3131,6 @@
 "GeneralizedStaffordChallenge.HasCommNoetherianGr",
 "GeneralizedStaffordChallenge.filtered_side",
 "GeneralizedStaffordChallenge.fixedIdealProperty_of_omega"
-]
-},
-"GeneralizedStaffordChallenge.filteredGeneratorBounds": {
-"module": "GeneralizedStaffordSolution",
-"kind": "theorem",
-"uses": [
-"GeneralizedStaffordChallenge.FilteredGeneratorBoundsStatement",
-"GeneralizedStaffordChallenge.filteredGeneratorBounds_proof"
-]
-},
-"GeneralizedStaffordChallenge.filteredGeneratorBounds_proof": {
-"module": "GeneralizedStafford.Challenge.FilteredTransport",
-"kind": "theorem",
-"uses": [
-"GeneralizedStaffordChallenge.DevDimLE",
-"GeneralizedStaffordChallenge.FilteredGeneratorBoundsStatement",
-"GeneralizedStaffordChallenge.GeneratorBoundsProperty",
-"GeneralizedStaffordChallenge.HOmega",
-"GeneralizedStaffordChallenge.HasCommNoetherianGr",
-"GeneralizedStaffordChallenge.filtered_side",
-"GeneralizedStaffordChallenge.generatorBoundsProperty_of_omega"
 ]
 },
 "GeneralizedStaffordChallenge.filteredHypotheses": {
@@ -3731,35 +3293,6 @@
 "GeneralizedStaffordChallenge.withCentre"
 ]
 },
-"GeneralizedStaffordChallenge.generatorBoundsProperty_of_omega": {
-"module": "GeneralizedStafford.Challenge.FilteredTransport",
-"kind": "theorem",
-"uses": [
-"GeneralizedStaffordChallenge.GeneratorBoundsProperty",
-"GeneralizedStaffordChallenge.HOmega",
-"GeneralizedStaffordChallenge.SpanRankLE",
-"GeneralizedStaffordChallenge.UDimGE",
-"GeneralizedStaffordChallenge.UDimLE",
-"GeneralizedStaffordChallenge.corollaryC3_lower_proof",
-"GeneralizedStaffordChallenge.corollaryC3_upper_proof",
-"GeneralizedStaffordChallenge.goldieTorsionPart",
-"GeneralizedStaffordChallenge.hAll_of_omega"
-]
-},
-"GeneralizedStaffordChallenge.goldieTorsionPart": {
-"module": "GeneralizedStafford.Challenge.Transport",
-"kind": "def",
-"uses": [
-"GeneralizedStaffordChallenge.IsRegularElement"
-]
-},
-"GeneralizedStaffordChallenge.goldieTorsionPart_eq": {
-"module": "GeneralizedStafford.Challenge.Transport",
-"kind": "theorem",
-"uses": [
-"GeneralizedStaffordChallenge.goldieTorsionPart"
-]
-},
 "GeneralizedStaffordChallenge.hAll_iff": {
 "module": "GeneralizedStafford.Challenge.Transport",
 "kind": "theorem",
@@ -3772,14 +3305,15 @@
 ]
 },
 "GeneralizedStaffordChallenge.hAll_of_omega": {
-"module": "GeneralizedStafford.Challenge.FilteredTransport",
+"module": "GeneralizedStafford.Challenge.Transport",
 "kind": "theorem",
 "uses": [
+"GeneralizedStafford.PrincipalQuotientsFinite",
+"GeneralizedStafford.principalQuotientsFinite_of_devLE_omega",
 "GeneralizedStaffordChallenge.HAll",
 "GeneralizedStaffordChallenge.HOmega",
-"GeneralizedStaffordChallenge.HasFiniteDevDim",
-"GeneralizedStaffordChallenge.IsRegularElement",
-"GeneralizedStaffordChallenge.corollaryBProperty_of_omega"
+"GeneralizedStaffordChallenge.hAll_iff",
+"GeneralizedStaffordChallenge.hOmega_iff"
 ]
 },
 "GeneralizedStaffordChallenge.hOmega_iff": {
@@ -3905,6 +3439,23 @@
 "GeneralizedStaffordChallenge.IsRegularElement"
 ]
 },
+"GeneralizedStaffordChallenge.knownDimension_hAll_of_omega": {
+"module": "GeneralizedStaffordSolution",
+"kind": "theorem",
+"uses": [
+"GeneralizedStaffordChallenge.KnownDimensionStatement",
+"GeneralizedStaffordChallenge.knownDimension_hAll_of_omega_proof"
+]
+},
+"GeneralizedStaffordChallenge.knownDimension_hAll_of_omega_proof": {
+"module": "GeneralizedStafford.Challenge.Transport",
+"kind": "theorem",
+"uses": [
+"GeneralizedStaffordChallenge.HOmega",
+"GeneralizedStaffordChallenge.KnownDimensionStatement",
+"GeneralizedStaffordChallenge.hAll_of_omega"
+]
+},
 "GeneralizedStaffordChallenge.posetDevLE_iff": {
 "module": "GeneralizedStafford.Challenge.Transport",
 "kind": "theorem",
@@ -4005,20 +3556,6 @@
 "kind": "theorem",
 "uses": [
 "GeneralizedStafford.DiffOp.twoGeneratedRight"
-]
-},
-"GeneralizedStaffordChallenge.uDimGE_iff": {
-"module": "GeneralizedStafford.Challenge.Transport",
-"kind": "theorem",
-"uses": [
-"GeneralizedStaffordChallenge.UDimGE"
-]
-},
-"GeneralizedStaffordChallenge.uDimLE_iff": {
-"module": "GeneralizedStafford.Challenge.Transport",
-"kind": "theorem",
-"uses": [
-"GeneralizedStaffordChallenge.UDimLE"
 ]
 },
 "GeneralizedStaffordChallenge.weylAffineForm": {
@@ -4400,19 +3937,19 @@
 "ranges": {
 "GeneralizedStafford.DiffOp.Dsub": [
 "GeneralizedStafford.DifferentialOperators",
-141
+138
 ],
 "GeneralizedStafford.DiffOp.affineForm_left": [
 "GeneralizedStafford.DifferentialOperators",
-166
+163
 ],
 "GeneralizedStafford.DiffOp.affineForm_right": [
 "GeneralizedStafford.DifferentialOperators",
-146
+143
 ],
 "GeneralizedStafford.DiffOp.conclusions_left": [
 "GeneralizedStafford.DifferentialOperators",
-119
+117
 ],
 "GeneralizedStafford.DiffOp.conclusions_of": [
 "GeneralizedStafford.DifferentialOperators",
@@ -4420,11 +3957,11 @@
 ],
 "GeneralizedStafford.DiffOp.conclusions_right": [
 "GeneralizedStafford.DifferentialOperators",
-107
+106
 ],
 "GeneralizedStafford.DiffOp.globalStafford": [
 "GeneralizedStafford.DifferentialOperators",
-191
+188
 ],
 "GeneralizedStafford.DiffOp.homegaLeft": [
 "GeneralizedStafford.DifferentialOperators",
@@ -4452,7 +3989,7 @@
 ],
 "GeneralizedStafford.DiffOp.leftAsRight": [
 "GeneralizedStafford.DifferentialOperators",
-217
+214
 ],
 "GeneralizedStafford.DiffOp.noetherianLeft": [
 "GeneralizedStafford.DifferentialOperators",
@@ -4464,35 +4001,35 @@
 ],
 "GeneralizedStafford.DiffOp.opOpHom": [
 "GeneralizedStafford.DifferentialOperators",
-209
+206
 ],
 "GeneralizedStafford.DiffOp.prescribedCyclicLeft": [
 "GeneralizedStafford.DifferentialOperators",
-331
+328
 ],
 "GeneralizedStafford.DiffOp.prescribedCyclicLeft_of_property": [
 "GeneralizedStafford.DifferentialOperators",
-264
+261
 ],
 "GeneralizedStafford.DiffOp.prescribedCyclicRight": [
 "GeneralizedStafford.DifferentialOperators",
-319
+316
 ],
 "GeneralizedStafford.DiffOp.span_leftAsRight": [
 "GeneralizedStafford.DifferentialOperators",
-222
+219
 ],
 "GeneralizedStafford.DiffOp.twoGeneratedLeft": [
 "GeneralizedStafford.DifferentialOperators",
-313
+310
 ],
 "GeneralizedStafford.DiffOp.twoGeneratedRight": [
 "GeneralizedStafford.DifferentialOperators",
-308
+305
 ],
 "GeneralizedStafford.DiffOp.twoGenerated_left_of_op": [
 "GeneralizedStafford.DifferentialOperators",
-244
+241
 ],
 "GeneralizedStafford.GermTest.Satisfied": [
 "GeneralizedStafford.Germs",
@@ -4670,10 +4207,6 @@
 "GeneralizedStafford.Basic",
 71
 ],
-"GeneralizedStafford.cyclic_of_goldieRank_lt": [
-"GeneralizedStafford.GeneratorBounds",
-59
-],
 "GeneralizedStafford.devLE_quotient_ker_cyclicMap_iff": [
 "GeneralizedStafford.Basic",
 89
@@ -4684,19 +4217,11 @@
 ],
 "GeneralizedStafford.devLE_span_of_torsion": [
 "GeneralizedStafford.Filtered",
-80
-],
-"GeneralizedStafford.enveloping_corollaryB": [
-"GeneralizedStafford.Enveloping",
-97
+79
 ],
 "GeneralizedStafford.enveloping_fixedIdeal": [
 "GeneralizedStafford.Enveloping",
 78
-],
-"GeneralizedStafford.enveloping_generatorBounds": [
-"GeneralizedStafford.Enveloping",
-175
 ],
 "GeneralizedStafford.enveloping_hypotheses": [
 "GeneralizedStafford.Enveloping",
@@ -4704,7 +4229,7 @@
 ],
 "GeneralizedStafford.enveloping_prescribedCyclic": [
 "GeneralizedStafford.Enveloping",
-113
+97
 ],
 "GeneralizedStafford.enveloping_theoremA": [
 "GeneralizedStafford.Enveloping",
@@ -4712,7 +4237,7 @@
 ],
 "GeneralizedStafford.enveloping_twoGenerated": [
 "GeneralizedStafford.Enveloping",
-144
+128
 ],
 "GeneralizedStafford.eq_top_of_small_zero": [
 "GeneralizedStafford.Basic",
@@ -4734,37 +4259,25 @@
 "GeneralizedStafford.Germs",
 240
 ],
-"GeneralizedStafford.exists_span_eq_top_of_lt_mul": [
-"GeneralizedStafford.GeneratorBounds",
-203
-],
-"GeneralizedStafford.filtered_corollaryB": [
-"GeneralizedStafford.Filtered",
-124
-],
 "GeneralizedStafford.filtered_fixedIdeal": [
 "GeneralizedStafford.Filtered",
-105
-],
-"GeneralizedStafford.filtered_generatorBounds": [
-"GeneralizedStafford.Filtered",
-204
+104
 ],
 "GeneralizedStafford.filtered_hypotheses": [
 "GeneralizedStafford.Filtered",
-54
+53
 ],
 "GeneralizedStafford.filtered_prescribedCyclic": [
 "GeneralizedStafford.Filtered",
-140
+123
 ],
 "GeneralizedStafford.filtered_theoremA": [
 "GeneralizedStafford.Filtered",
-90
+89
 ],
 "GeneralizedStafford.filtered_twoGenerated": [
 "GeneralizedStafford.Filtered",
-172
+155
 ],
 "GeneralizedStafford.fixed_anchor": [
 "GeneralizedStafford.TheoremA",
@@ -4797,10 +4310,6 @@
 "GeneralizedStafford.idealBound_zero": [
 "GeneralizedStafford.Descent",
 166
-],
-"GeneralizedStafford.le_mul_of_span_eq_top": [
-"GeneralizedStafford.GeneratorBounds",
-187
 ],
 "GeneralizedStafford.leftToRight": [
 "GeneralizedStafford.Opposite",
@@ -4884,11 +4393,11 @@
 ],
 "GeneralizedStafford.right_side": [
 "GeneralizedStafford.Filtered",
-44
+43
 ],
 "GeneralizedStafford.ringKrullDim_ne_top_of_le": [
 "GeneralizedStafford.Filtered",
-40
+39
 ],
 "GeneralizedStafford.section_central_scalar": [
 "GeneralizedStafford.Germs",
@@ -4897,10 +4406,6 @@
 "GeneralizedStafford.smul_mkQ_epic_iff": [
 "GeneralizedStafford.Germs",
 107
-],
-"GeneralizedStafford.spanRank_le_of_goldieRank_lt": [
-"GeneralizedStafford.GeneratorBounds",
-136
 ],
 "GeneralizedStafford.span_pair_eq_span_affine": [
 "GeneralizedStafford.Modules",
@@ -4934,65 +4439,53 @@
 "GeneralizedStafford.Germs",
 444
 ],
-"GeneralizedStaffordChallenge.CorollaryBDimensionStatement": [
-"GeneralizedStafford.Challenge.Transport",
-146
-],
 "GeneralizedStaffordChallenge.CorollaryBFixedAnchorStatement": [
 "GeneralizedStafford.Challenge.Transport",
-156
+128
 ],
 "GeneralizedStaffordChallenge.CorollaryBFixedIdealStatement": [
 "GeneralizedStafford.Challenge.Transport",
-165
-],
-"GeneralizedStaffordChallenge.CorollaryBProperty": [
-"GeneralizedStafford.Challenge.FilteredTransport",
-47
+137
 ],
 "GeneralizedStaffordChallenge.CorollaryC1HAllStatement": [
 "GeneralizedStafford.Challenge.Transport",
-189
+161
 ],
 "GeneralizedStaffordChallenge.CorollaryC1OmegaStatement": [
 "GeneralizedStafford.Challenge.Transport",
-200
+172
 ],
 "GeneralizedStaffordChallenge.CorollaryC1StableStatement": [
 "GeneralizedStafford.Challenge.Transport",
-211
+183
 ],
 "GeneralizedStaffordChallenge.CorollaryC1Statement": [
 "GeneralizedStafford.Challenge.Transport",
-177
+149
 ],
 "GeneralizedStaffordChallenge.CorollaryC2FullRankStatement": [
 "GeneralizedStafford.Challenge.Transport",
-232
+204
+],
+"GeneralizedStaffordChallenge.CorollaryC2OmegaStatement": [
+"GeneralizedStafford.Challenge.Transport",
+235
 ],
 "GeneralizedStaffordChallenge.CorollaryC2PrescribedStatement": [
 "GeneralizedStafford.Challenge.Transport",
-243
+215
 ],
 "GeneralizedStaffordChallenge.CorollaryC2Statement": [
 "GeneralizedStafford.Challenge.Transport",
-255
-],
-"GeneralizedStaffordChallenge.CorollaryC3LowerStatement": [
-"GeneralizedStafford.Challenge.Transport",
-285
-],
-"GeneralizedStaffordChallenge.CorollaryC3UpperStatement": [
-"GeneralizedStafford.Challenge.Transport",
-299
+227
 ],
 "GeneralizedStaffordChallenge.DevDimLE": [
 "GeneralizedStafford.Challenge.Transport",
-62
+59
 ],
 "GeneralizedStaffordChallenge.DevDimLEOmega": [
 "GeneralizedStafford.Challenge.Transport",
-74
+71
 ],
 "GeneralizedStaffordChallenge.DiffOpCyclicLeftStatement": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
@@ -5018,17 +4511,9 @@
 "GeneralizedStafford.Challenge.DiffOpTransport",
 136
 ],
-"GeneralizedStaffordChallenge.EnvelopingCorollaryBStatement": [
-"GeneralizedStafford.Challenge.EnvelopingTransport",
-57
-],
 "GeneralizedStaffordChallenge.EnvelopingFixedIdealStatement": [
 "GeneralizedStafford.Challenge.EnvelopingTransport",
 49
-],
-"GeneralizedStaffordChallenge.EnvelopingGeneratorBoundsStatement": [
-"GeneralizedStafford.Challenge.EnvelopingTransport",
-85
 ],
 "GeneralizedStaffordChallenge.EnvelopingHypothesesStatement": [
 "GeneralizedStafford.Challenge.EnvelopingTransport",
@@ -5036,7 +4521,7 @@
 ],
 "GeneralizedStaffordChallenge.EnvelopingPrescribedCyclicStatement": [
 "GeneralizedStafford.Challenge.EnvelopingTransport",
-66
+57
 ],
 "GeneralizedStaffordChallenge.EnvelopingTheoremAStatement": [
 "GeneralizedStafford.Challenge.EnvelopingTransport",
@@ -5044,39 +4529,31 @@
 ],
 "GeneralizedStaffordChallenge.EnvelopingTwoGeneratedStatement": [
 "GeneralizedStafford.Challenge.EnvelopingTransport",
-76
-],
-"GeneralizedStaffordChallenge.FilteredCorollaryBStatement": [
-"GeneralizedStafford.Challenge.FilteredTransport",
-162
+67
 ],
 "GeneralizedStaffordChallenge.FilteredDomainStatement": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-205
+173
 ],
 "GeneralizedStaffordChallenge.FilteredFixedIdealStatement": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-155
-],
-"GeneralizedStaffordChallenge.FilteredGeneratorBoundsStatement": [
-"GeneralizedStafford.Challenge.FilteredTransport",
-187
+139
 ],
 "GeneralizedStaffordChallenge.FilteredHypothesesStatement": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-195
+163
 ],
 "GeneralizedStaffordChallenge.FilteredPrescribedCyclicStatement": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-170
+146
 ],
 "GeneralizedStaffordChallenge.FilteredTheoremAStatement": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-145
+129
 ],
 "GeneralizedStaffordChallenge.FilteredTwoGeneratedStatement": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-179
+155
 ],
 "GeneralizedStaffordChallenge.FixedAnchorProperty": [
 "GeneralizedStafford.Challenge.FilteredTransport",
@@ -5084,7 +4561,7 @@
 ],
 "GeneralizedStaffordChallenge.FixedAnchorStatement": [
 "GeneralizedStafford.Challenge.Transport",
-133
+108
 ],
 "GeneralizedStaffordChallenge.FixedIdealProperty": [
 "GeneralizedStafford.Challenge.FilteredTransport",
@@ -5092,139 +4569,127 @@
 ],
 "GeneralizedStaffordChallenge.FixedIdealStatement": [
 "GeneralizedStafford.Challenge.Transport",
-121
-],
-"GeneralizedStaffordChallenge.GeneratorBoundsProperty": [
-"GeneralizedStafford.Challenge.FilteredTransport",
-81
+96
 ],
 "GeneralizedStaffordChallenge.GradedSymbol.casesOn": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-113
+97
 ],
 "GeneralizedStaffordChallenge.GradedSymbol.gr": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-119
+103
 ],
 "GeneralizedStaffordChallenge.GradedSymbol.gr_eq_zero_iff": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-123
+107
 ],
 "GeneralizedStaffordChallenge.GradedSymbol.gr_mul": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-125
+109
 ],
 "GeneralizedStaffordChallenge.GradedSymbol.gr_surjective": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-121
+105
 ],
 "GeneralizedStaffordChallenge.GradedSymbol.mk.noConfusion": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-116
+100
 ],
 "GeneralizedStaffordChallenge.GradedSymbol.noConfusion": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-113
+97
 ],
 "GeneralizedStaffordChallenge.GradedSymbol.recOn": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-113
+97
 ],
 "GeneralizedStaffordChallenge.HAll": [
 "GeneralizedStafford.Challenge.Transport",
-108
+83
 ],
 "GeneralizedStaffordChallenge.HOmega": [
 "GeneralizedStafford.Challenge.Transport",
-113
+88
 ],
 "GeneralizedStaffordChallenge.HasCommNoetherianDomainGr": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-137
+121
 ],
 "GeneralizedStaffordChallenge.HasCommNoetherianGr": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-129
+113
 ],
 "GeneralizedStaffordChallenge.HasFiniteDevDim": [
 "GeneralizedStafford.Challenge.Transport",
-69
+66
 ],
 "GeneralizedStaffordChallenge.IsGoldieTorsion": [
 "GeneralizedStafford.Challenge.Transport",
-81
+78
 ],
 "GeneralizedStaffordChallenge.IsRegularElement": [
 "GeneralizedStafford.Challenge.Transport",
-44
+41
+],
+"GeneralizedStaffordChallenge.KnownDimensionStatement": [
+"GeneralizedStafford.Challenge.Transport",
+121
 ],
 "GeneralizedStaffordChallenge.PosetDevLE": [
 "GeneralizedStafford.Challenge.Transport",
-50
+47
 ],
 "GeneralizedStaffordChallenge.PrescribedCyclicProperty": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-53
+47
 ],
 "GeneralizedStaffordChallenge.RingFiltration.F": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-97
+81
 ],
 "GeneralizedStaffordChallenge.RingFiltration.below": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-107
+91
 ],
 "GeneralizedStaffordChallenge.RingFiltration.casesOn": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-93
+77
 ],
 "GeneralizedStaffordChallenge.RingFiltration.exhaustive": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-105
+89
 ],
 "GeneralizedStaffordChallenge.RingFiltration.mk.noConfusion": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-95
+79
 ],
 "GeneralizedStaffordChallenge.RingFiltration.mono": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-99
+83
 ],
 "GeneralizedStaffordChallenge.RingFiltration.mul_mem": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-103
+87
 ],
 "GeneralizedStaffordChallenge.RingFiltration.noConfusion": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-93
+77
 ],
 "GeneralizedStaffordChallenge.RingFiltration.one_mem": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-101
+85
 ],
 "GeneralizedStaffordChallenge.RingFiltration.recOn": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-93
-],
-"GeneralizedStaffordChallenge.SpanRankLE": [
-"GeneralizedStafford.Challenge.Transport",
-103
+77
 ],
 "GeneralizedStaffordChallenge.StablyCyclicProperty": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-61
+55
 ],
 "GeneralizedStaffordChallenge.TwoGeneratedProperty": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-70
-],
-"GeneralizedStaffordChallenge.UDimGE": [
-"GeneralizedStafford.Challenge.Transport",
-93
-],
-"GeneralizedStaffordChallenge.UDimLE": [
-"GeneralizedStafford.Challenge.Transport",
-98
+64
 ],
 "GeneralizedStaffordChallenge.WeylTwoGeneratedLeftStatement": [
 "GeneralizedStafford.Challenge.WeylTransport",
@@ -5236,115 +4701,95 @@
 ],
 "GeneralizedStaffordChallenge.below_toAA": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-229
-],
-"GeneralizedStaffordChallenge.corollaryBProperty_of_omega": [
-"GeneralizedStafford.Challenge.FilteredTransport",
-270
-],
-"GeneralizedStaffordChallenge.corollaryB_dimension": [
-"GeneralizedStaffordSolution",
-39
-],
-"GeneralizedStaffordChallenge.corollaryB_dimension_proof": [
-"GeneralizedStafford.Challenge.Transport",
-408
+197
 ],
 "GeneralizedStaffordChallenge.corollaryB_fixedAnchor": [
 "GeneralizedStaffordSolution",
-43
+42
 ],
 "GeneralizedStaffordChallenge.corollaryB_fixedAnchor_proof": [
 "GeneralizedStafford.Challenge.Transport",
-416
+320
 ],
 "GeneralizedStaffordChallenge.corollaryB_fixedIdeal": [
 "GeneralizedStaffordSolution",
-47
+46
 ],
 "GeneralizedStaffordChallenge.corollaryB_fixedIdeal_proof": [
 "GeneralizedStafford.Challenge.Transport",
-422
+326
 ],
 "GeneralizedStaffordChallenge.corollaryC1": [
 "GeneralizedStaffordSolution",
-51
+50
 ],
 "GeneralizedStaffordChallenge.corollaryC1_hAll": [
 "GeneralizedStaffordSolution",
-55
+54
 ],
 "GeneralizedStaffordChallenge.corollaryC1_hAll_proof": [
 "GeneralizedStafford.Challenge.Transport",
-436
+350
 ],
 "GeneralizedStaffordChallenge.corollaryC1_omega": [
 "GeneralizedStaffordSolution",
-59
+58
 ],
 "GeneralizedStaffordChallenge.corollaryC1_omega_proof": [
 "GeneralizedStafford.Challenge.Transport",
-443
+357
 ],
 "GeneralizedStaffordChallenge.corollaryC1_proof": [
 "GeneralizedStafford.Challenge.Transport",
-429
+343
 ],
 "GeneralizedStaffordChallenge.corollaryC1_stable": [
 "GeneralizedStaffordSolution",
-63
+62
 ],
 "GeneralizedStaffordChallenge.corollaryC1_stable_proof": [
 "GeneralizedStafford.Challenge.Transport",
-451
+365
 ],
 "GeneralizedStaffordChallenge.corollaryC2": [
 "GeneralizedStaffordSolution",
-75
+74
 ],
 "GeneralizedStaffordChallenge.corollaryC2_fullRank": [
 "GeneralizedStaffordSolution",
-67
+66
 ],
 "GeneralizedStaffordChallenge.corollaryC2_fullRank_proof": [
 "GeneralizedStafford.Challenge.Transport",
-458
+372
+],
+"GeneralizedStaffordChallenge.corollaryC2_omega": [
+"GeneralizedStaffordSolution",
+78
+],
+"GeneralizedStaffordChallenge.corollaryC2_omega_proof": [
+"GeneralizedStafford.Challenge.Transport",
+396
 ],
 "GeneralizedStaffordChallenge.corollaryC2_prescribed": [
 "GeneralizedStaffordSolution",
-71
+70
 ],
 "GeneralizedStaffordChallenge.corollaryC2_prescribed_proof": [
 "GeneralizedStafford.Challenge.Transport",
-466
+380
 ],
 "GeneralizedStaffordChallenge.corollaryC2_proof": [
 "GeneralizedStafford.Challenge.Transport",
-473
-],
-"GeneralizedStaffordChallenge.corollaryC3_lower": [
-"GeneralizedStaffordSolution",
-79
-],
-"GeneralizedStaffordChallenge.corollaryC3_lower_proof": [
-"GeneralizedStafford.Challenge.Transport",
-482
-],
-"GeneralizedStaffordChallenge.corollaryC3_upper": [
-"GeneralizedStaffordSolution",
-83
-],
-"GeneralizedStaffordChallenge.corollaryC3_upper_proof": [
-"GeneralizedStafford.Challenge.Transport",
-487
+387
 ],
 "GeneralizedStaffordChallenge.devDimLE_iff": [
 "GeneralizedStafford.Challenge.Transport",
-326
+255
 ],
 "GeneralizedStaffordChallenge.diffOpCyclicLeft": [
 "GeneralizedStaffordSolution",
-215
+194
 ],
 "GeneralizedStaffordChallenge.diffOpCyclicLeft_proof": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
@@ -5352,7 +4797,7 @@
 ],
 "GeneralizedStaffordChallenge.diffOpCyclicRight": [
 "GeneralizedStaffordSolution",
-211
+190
 ],
 "GeneralizedStaffordChallenge.diffOpCyclicRight_proof": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
@@ -5360,7 +4805,7 @@
 ],
 "GeneralizedStaffordChallenge.diffOpFixedAnchor": [
 "GeneralizedStaffordSolution",
-203
+182
 ],
 "GeneralizedStaffordChallenge.diffOpFixedAnchor_proof": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
@@ -5368,7 +4813,7 @@
 ],
 "GeneralizedStaffordChallenge.diffOpGlobalStafford": [
 "GeneralizedStaffordSolution",
-207
+186
 ],
 "GeneralizedStaffordChallenge.diffOpGlobalStafford_proof": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
@@ -5376,7 +4821,7 @@
 ],
 "GeneralizedStaffordChallenge.diffOpTwoGeneratedLeft": [
 "GeneralizedStaffordSolution",
-199
+178
 ],
 "GeneralizedStaffordChallenge.diffOpTwoGeneratedLeft_proof": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
@@ -5384,7 +4829,7 @@
 ],
 "GeneralizedStaffordChallenge.diffOpTwoGeneratedRight": [
 "GeneralizedStaffordSolution",
-195
+174
 ],
 "GeneralizedStaffordChallenge.diffOpTwoGeneratedRight_proof": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
@@ -5410,185 +4855,141 @@
 "GeneralizedStafford.Challenge.DiffOpTransport",
 66
 ],
-"GeneralizedStaffordChallenge.envelopingCorollaryB": [
-"GeneralizedStaffordSolution",
-176
-],
-"GeneralizedStaffordChallenge.envelopingCorollaryB_proof": [
-"GeneralizedStafford.Challenge.EnvelopingTransport",
-137
-],
 "GeneralizedStaffordChallenge.envelopingFixedIdeal": [
 "GeneralizedStaffordSolution",
-172
+159
 ],
 "GeneralizedStaffordChallenge.envelopingFixedIdeal_proof": [
 "GeneralizedStafford.Challenge.EnvelopingTransport",
-127
-],
-"GeneralizedStaffordChallenge.envelopingGeneratorBounds": [
-"GeneralizedStaffordSolution",
-188
-],
-"GeneralizedStaffordChallenge.envelopingGeneratorBounds_proof": [
-"GeneralizedStafford.Challenge.EnvelopingTransport",
-169
+110
 ],
 "GeneralizedStaffordChallenge.envelopingHypotheses": [
 "GeneralizedStaffordSolution",
-164
+151
 ],
 "GeneralizedStaffordChallenge.envelopingHypotheses_proof": [
 "GeneralizedStafford.Challenge.EnvelopingTransport",
-111
+94
 ],
 "GeneralizedStaffordChallenge.envelopingPrescribedCyclic": [
 "GeneralizedStaffordSolution",
-180
+163
 ],
 "GeneralizedStaffordChallenge.envelopingPrescribedCyclic_proof": [
 "GeneralizedStafford.Challenge.EnvelopingTransport",
-147
+120
 ],
 "GeneralizedStaffordChallenge.envelopingSide": [
 "GeneralizedStafford.Challenge.EnvelopingTransport",
-95
+78
 ],
 "GeneralizedStaffordChallenge.envelopingTheoremA": [
 "GeneralizedStaffordSolution",
-168
+155
 ],
 "GeneralizedStaffordChallenge.envelopingTheoremA_proof": [
 "GeneralizedStafford.Challenge.EnvelopingTransport",
-117
+100
 ],
 "GeneralizedStaffordChallenge.envelopingTwoGenerated": [
 "GeneralizedStaffordSolution",
-184
+167
 ],
 "GeneralizedStaffordChallenge.envelopingTwoGenerated_proof": [
 "GeneralizedStafford.Challenge.EnvelopingTransport",
-159
+132
 ],
 "GeneralizedStaffordChallenge.exists_nat_le_of_lt_top": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-395
-],
-"GeneralizedStaffordChallenge.filteredCorollaryB": [
-"GeneralizedStaffordSolution",
-143
-],
-"GeneralizedStaffordChallenge.filteredCorollaryB_proof": [
-"GeneralizedStafford.Challenge.FilteredTransport",
-349
+324
 ],
 "GeneralizedStaffordChallenge.filteredDomain": [
 "GeneralizedStaffordSolution",
-159
+146
 ],
 "GeneralizedStaffordChallenge.filteredDomain_proof": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-403
+332
 ],
 "GeneralizedStaffordChallenge.filteredFixedIdeal": [
 "GeneralizedStaffordSolution",
-139
+134
 ],
 "GeneralizedStaffordChallenge.filteredFixedIdeal_proof": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-339
-],
-"GeneralizedStaffordChallenge.filteredGeneratorBounds": [
-"GeneralizedStaffordSolution",
-155
-],
-"GeneralizedStaffordChallenge.filteredGeneratorBounds_proof": [
-"GeneralizedStafford.Challenge.FilteredTransport",
-380
+288
 ],
 "GeneralizedStaffordChallenge.filteredHypotheses": [
 "GeneralizedStaffordSolution",
-131
+126
 ],
 "GeneralizedStaffordChallenge.filteredHypotheses_proof": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-322
+271
 ],
 "GeneralizedStaffordChallenge.filteredPrescribedCyclic": [
 "GeneralizedStaffordSolution",
-147
+138
 ],
 "GeneralizedStaffordChallenge.filteredPrescribedCyclic_proof": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-359
+298
 ],
 "GeneralizedStaffordChallenge.filteredTheoremA": [
 "GeneralizedStaffordSolution",
-135
+130
 ],
 "GeneralizedStaffordChallenge.filteredTheoremA_proof": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-329
+278
 ],
 "GeneralizedStaffordChallenge.filteredTwoGenerated": [
 "GeneralizedStaffordSolution",
-151
+142
 ],
 "GeneralizedStaffordChallenge.filteredTwoGenerated_proof": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-370
+309
 ],
 "GeneralizedStaffordChallenge.filtered_side": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-242
+210
 ],
 "GeneralizedStaffordChallenge.fixedAnchor": [
 "GeneralizedStaffordSolution",
-35
+34
 ],
 "GeneralizedStaffordChallenge.fixedAnchorProperty_of_omega": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-258
+226
 ],
 "GeneralizedStaffordChallenge.fixedAnchor_proof": [
 "GeneralizedStafford.Challenge.Transport",
-400
+312
 ],
 "GeneralizedStaffordChallenge.fixedIdeal": [
 "GeneralizedStaffordSolution",
-31
+30
 ],
 "GeneralizedStaffordChallenge.fixedIdealProperty_of_omega": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-264
+232
 ],
 "GeneralizedStaffordChallenge.fixedIdeal_proof": [
 "GeneralizedStafford.Challenge.Transport",
-392
-],
-"GeneralizedStaffordChallenge.generatorBoundsProperty_of_omega": [
-"GeneralizedStafford.Challenge.FilteredTransport",
-311
-],
-"GeneralizedStaffordChallenge.goldieTorsionPart": [
-"GeneralizedStafford.Challenge.Transport",
-86
-],
-"GeneralizedStaffordChallenge.goldieTorsionPart_eq": [
-"GeneralizedStafford.Challenge.Transport",
-372
+304
 ],
 "GeneralizedStaffordChallenge.hAll_iff": [
 "GeneralizedStafford.Challenge.Transport",
-356
+285
 ],
 "GeneralizedStaffordChallenge.hAll_of_omega": [
-"GeneralizedStafford.Challenge.FilteredTransport",
-275
+"GeneralizedStafford.Challenge.Transport",
+333
 ],
 "GeneralizedStaffordChallenge.hOmega_iff": [
 "GeneralizedStafford.Challenge.Transport",
-331
+260
 ],
 "GeneralizedStaffordChallenge.isDifferentialOperator_iff": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
@@ -5596,7 +4997,7 @@
 ],
 "GeneralizedStaffordChallenge.isGoldieTorsion_iff": [
 "GeneralizedStafford.Challenge.Transport",
-348
+277
 ],
 "GeneralizedStaffordChallenge.isOrderLE_add": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
@@ -5624,15 +5025,23 @@
 ],
 "GeneralizedStaffordChallenge.isRegular_iff": [
 "GeneralizedStafford.Challenge.Transport",
-335
+264
 ],
 "GeneralizedStaffordChallenge.isRegular_of_ne_zero'": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-390
+319
+],
+"GeneralizedStaffordChallenge.knownDimension_hAll_of_omega": [
+"GeneralizedStaffordSolution",
+38
+],
+"GeneralizedStaffordChallenge.knownDimension_hAll_of_omega_proof": [
+"GeneralizedStafford.Challenge.Transport",
+339
 ],
 "GeneralizedStaffordChallenge.posetDevLE_iff": [
 "GeneralizedStafford.Challenge.Transport",
-319
+248
 ],
 "GeneralizedStaffordChallenge.prescribedCyclicLeft_of_eq": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
@@ -5640,7 +5049,7 @@
 ],
 "GeneralizedStaffordChallenge.prescribedCyclicProperty_of_omega": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-298
+256
 ],
 "GeneralizedStaffordChallenge.prescribedCyclicRight_of_eq": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
@@ -5648,19 +5057,19 @@
 ],
 "GeneralizedStaffordChallenge.span_singleton_eq": [
 "GeneralizedStafford.Challenge.Transport",
-339
+268
 ],
 "GeneralizedStaffordChallenge.stablyCyclic_of_omega": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-280
+238
 ],
 "GeneralizedStaffordChallenge.symbolToAA": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-233
+201
 ],
 "GeneralizedStaffordChallenge.toAA": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-219
+187
 ],
 "GeneralizedStaffordChallenge.twoGeneratedLeft_of_eq": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
@@ -5668,23 +5077,15 @@
 ],
 "GeneralizedStaffordChallenge.twoGeneratedProperty_of_omega": [
 "GeneralizedStafford.Challenge.FilteredTransport",
-304
+262
 ],
 "GeneralizedStaffordChallenge.twoGeneratedRight_of_eq": [
 "GeneralizedStafford.Challenge.DiffOpTransport",
 250
 ],
-"GeneralizedStaffordChallenge.uDimGE_iff": [
-"GeneralizedStafford.Challenge.Transport",
-362
-],
-"GeneralizedStaffordChallenge.uDimLE_iff": [
-"GeneralizedStafford.Challenge.Transport",
-367
-],
 "GeneralizedStaffordChallenge.weylAffineForm": [
 "GeneralizedStaffordSolution",
-99
+94
 ],
 "GeneralizedStaffordChallenge.weylAffineForm_proof": [
 "GeneralizedStafford.Challenge.WeylTransport",
@@ -5692,7 +5093,7 @@
 ],
 "GeneralizedStaffordChallenge.weylConjecture38": [
 "GeneralizedStaffordSolution",
-95
+90
 ],
 "GeneralizedStaffordChallenge.weylConjecture38_proof": [
 "GeneralizedStafford.Challenge.WeylTransport",
@@ -5700,7 +5101,7 @@
 ],
 "GeneralizedStaffordChallenge.weylFixedIdeal": [
 "GeneralizedStaffordSolution",
-103
+98
 ],
 "GeneralizedStaffordChallenge.weylFixedIdeal_proof": [
 "GeneralizedStafford.Challenge.WeylTransport",
@@ -5708,7 +5109,7 @@
 ],
 "GeneralizedStaffordChallenge.weylPrescribedCyclicLeft": [
 "GeneralizedStaffordSolution",
-119
+114
 ],
 "GeneralizedStaffordChallenge.weylPrescribedCyclicLeft_proof": [
 "GeneralizedStafford.Challenge.WeylTransport",
@@ -5716,7 +5117,7 @@
 ],
 "GeneralizedStaffordChallenge.weylPrescribedCyclicRight": [
 "GeneralizedStaffordSolution",
-115
+110
 ],
 "GeneralizedStaffordChallenge.weylPrescribedCyclicRight_proof": [
 "GeneralizedStafford.Challenge.WeylTransport",
@@ -5724,7 +5125,7 @@
 ],
 "GeneralizedStaffordChallenge.weylPrescribedTwoGeneratedLeft": [
 "GeneralizedStaffordSolution",
-127
+122
 ],
 "GeneralizedStaffordChallenge.weylPrescribedTwoGeneratedLeft_proof": [
 "GeneralizedStafford.Challenge.WeylTransport",
@@ -5732,7 +5133,7 @@
 ],
 "GeneralizedStaffordChallenge.weylPrescribedTwoGeneratedRight": [
 "GeneralizedStaffordSolution",
-123
+118
 ],
 "GeneralizedStaffordChallenge.weylPrescribedTwoGeneratedRight_proof": [
 "GeneralizedStafford.Challenge.WeylTransport",
@@ -5740,7 +5141,7 @@
 ],
 "GeneralizedStaffordChallenge.weylTorsionCyclicLeft": [
 "GeneralizedStaffordSolution",
-111
+106
 ],
 "GeneralizedStaffordChallenge.weylTorsionCyclicLeft_proof": [
 "GeneralizedStafford.Challenge.WeylTransport",
@@ -5748,7 +5149,7 @@
 ],
 "GeneralizedStaffordChallenge.weylTorsionCyclicRight": [
 "GeneralizedStaffordSolution",
-107
+102
 ],
 "GeneralizedStaffordChallenge.weylTorsionCyclicRight_proof": [
 "GeneralizedStafford.Challenge.WeylTransport",
@@ -5756,7 +5157,7 @@
 ],
 "GeneralizedStaffordChallenge.weylTwoGeneratedLeft": [
 "GeneralizedStaffordSolution",
-91
+86
 ],
 "GeneralizedStaffordChallenge.weylTwoGeneratedLeft_proof": [
 "GeneralizedStafford.Challenge.WeylTransport",
@@ -5764,7 +5165,7 @@
 ],
 "GeneralizedStaffordChallenge.weylTwoGeneratedRight": [
 "GeneralizedStaffordSolution",
-87
+82
 ],
 "GeneralizedStaffordChallenge.weylTwoGeneratedRight_proof": [
 "GeneralizedStafford.Challenge.WeylTransport",
@@ -5772,7 +5173,7 @@
 ],
 "GeneralizedStaffordChallenge.withCentre": [
 "GeneralizedStafford.Challenge.Transport",
-379
+291
 ],
 "GeneralizedStaffordWeylChallenge.AffineFormStatement": [
 "GeneralizedStafford.Challenge.WeylTransport",

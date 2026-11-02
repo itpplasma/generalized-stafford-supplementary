@@ -1,0 +1,347 @@
+# Statement map: paper environments and proof steps -> Lean declarations of
+# itpplasma/generalized-stafford-formal at the commit `pin`.
+#
+# Checked by scripts/check_statement_map.py (`make check`), which prints every
+# declaration at `pin` and compares the sha256 of the printed text with the
+# value recorded here. The printed text of a declaration is its type; for a
+# declaration of GeneralizedStaffordChallenge.lean it also includes the full
+# definitions (types and bodies) of every challenge-file constant the type
+# refers to, transitively, so a changed statement definition changes the hash.
+#
+# Moving the pin: set `pin`, run `scripts/check_statement_map.py --update`,
+# and re-audit the paper paragraphs of every entry whose hash changed
+# (AGENTS.md of generalized-stafford, synchronization rule 9).
+#
+# Fields: `label` is the paper \label; `kind` the LaTeX environment;
+# `cite` gives the source of a result quoted from the literature;
+# `challenge` lists compared statements of GeneralizedStaffordChallenge.lean,
+# `library` the library theorems that prove them, and `algebraic_analysis`
+# declarations of the AlgebraicAnalysis dependency at the revision that the
+# pin's lake-manifest.json resolves (hashed like library declarations). Every
+# statement of ours must map to Lean; an entry without a faithful counterpart
+# has `status: missing` and a `missing:` description, and fails the check
+# until the statement is formalized.
+
+formal_repository: itpplasma/generalized-stafford-formal
+pin: e63321970bcb7cf360a378bf48368f23d9bc1e6a
+
+environments:
+  - label: thm:Aprime
+    kind: theorem
+    title: Theorem A'
+    challenge:
+      - {name: GeneralizedStaffordChallenge.fixedIdeal, sha256: d14aa47ec0121d8374a5f0b62caa5189d9393b366b15cb6a3624b75225201aea}
+    library:
+      - {name: GeneralizedStafford.fixed_ideal, sha256: e7386616c66407970bf2af9096f6152d50769ff3f1ab198a213ae9e02414c722}
+
+  - label: thm:A
+    kind: theorem
+    title: Theorem A
+    challenge:
+      - {name: GeneralizedStaffordChallenge.fixedAnchor, sha256: d805cd383434286cc32a0cbb0b23932d33e8ce0554dbf7a0764ec09ac0695788}
+    library:
+      - {name: GeneralizedStafford.fixed_anchor, sha256: 3a67c1f7114ed068b894080403feab83799263d9c0d90d3c0bf56ae3944d4146}
+
+  - label: cor:B
+    kind: corollary
+    title: Corollary B (H_omega)
+    challenge:
+      - {name: GeneralizedStaffordChallenge.corollaryB_fixedAnchor, sha256: e2b2ddd5193140e5e59f606dd0b77380386d743c3be44d0fa9ea65c1daf8587b}
+      - {name: GeneralizedStaffordChallenge.corollaryB_fixedIdeal, sha256: 39ff53b66fc1286ebdf717d06c9c82660ad3926a27a5a93e3120d1f884887528}
+    library:
+      - {name: GeneralizedStafford.fixed_anchor_of_devLE_omega, sha256: 67abdb231f65ce3d14069ba73f509bd8e8d0023324aa69bf4eda3d63f8bffe61}
+      - {name: GeneralizedStafford.fixed_ideal_of_devLE_omega, sha256: d0683b3e458b821ec899eb7f9027697d1bb8383619b329edf9da596361aa156e}
+
+  - label: cor:C
+    kind: mainthm
+    title: Corollary C (C.1 and C.2 under (H_all), for instance Kdim R <= omega)
+    challenge:
+      - {name: GeneralizedStaffordChallenge.corollaryC1_hAll, sha256: 37194b21252771cd69f104c361d83ef31a24e052edb3d805cfde3f47d9d18be5}
+      - {name: GeneralizedStaffordChallenge.corollaryC1_omega, sha256: a65bf360cec9e8d76a4a3f9475d2fbbd28637a7b5b7969174be06631fb08ad09}
+      - {name: GeneralizedStaffordChallenge.corollaryC2_prescribed, sha256: d0beb4a894c32b7754b57bd6ca0a20600a7961f4bd87c9ba4cf026fe1e10ce6e}
+      - {name: GeneralizedStaffordChallenge.corollaryC2, sha256: 99bb82a24e55e834abbfa21ce45c16058a69062f28933480a6d01c0be96fbe7e}
+      - {name: GeneralizedStaffordChallenge.corollaryC2_omega, sha256: e728daadb31929041012f9d76200cc9a217d03cb18d831cdc4178be6285380bf}
+      - {name: GeneralizedStaffordChallenge.corollaryC2_fullRank, sha256: c308a0f30d56bcf0748ddaedc207100cf6a5f692547e9faaab431cd21fd1af88}
+    library:
+      - {name: GeneralizedStaffordChallenge.corollaryC2_omega_proof, sha256: 4b3363b8e5e9252a32add31db2d890349b505611a7548d1f184db77d8cf0b977}
+      - {name: GeneralizedStafford.prescribed_cyclic_of_hAll, sha256: 6707bbe62cb64a94de95101cbe94c75ac6d4af1ea77edac657d698e03d8013d7}
+      - {name: GeneralizedStafford.prescribed_cyclic_of_devLE_omega, sha256: a71c5af1d06211decb1b6205a628a659b5ddbc2ffea344127b86f799b89d07e4}
+      - {name: GeneralizedStafford.two_generated_prescribed, sha256: 2405d97bd5ac85911aad0302b869197c66a3eb005b4a55661f809af1cd18d986}
+      - {name: GeneralizedStafford.two_generated, sha256: c4f17a183d0ab926c1f3b898641c989e7ad295e947493dcf40c74a39f12436ef}
+
+  - label: prop:critical
+    kind: proposition
+    title: critical submodules (finite bounds) and critical series
+    cite: "[McConnellRobson2001, 6.2.10]"
+    algebraic_analysis:
+      - {name: Module.DevLE.exists_critical_submodule, sha256: 06e23b56f814438cc3f0b0f2fadf1edc7c2ebd2591270ef865edb2e1ca322a5f}
+      - {name: Module.DevLE.nonempty_criticalFiltration, sha256: 55211c83a8772839cd1619d3154c3fb5e040cdad80c9cc89e04c237726f49ad4}
+
+  - label: thm:goldie
+    kind: theorem
+    title: Goldie's theorem for simple right Noetherian rings
+    cite: "[Goldie1960, Thms. 4.1, 4.4]; [McConnellRobson2001, 2.3.5, 2.3.6]"
+    algebraic_analysis:
+      - {name: AlgebraicAnalysis.Goldie.exists_mem_nonZeroDivisors_of_isEssential, sha256: 4b242d29224585b2e031e4ef46c6d2e10bd5d77057e0b908d4cd0c078489c650}
+      - {name: AlgebraicAnalysis.Goldie.isEssential_of_mem_nonZeroDivisors, sha256: 83ca972964677784a893535ad9ecdd340748297b455ba017cbdbc63ddd8f57fe}
+      - {name: AlgebraicAnalysis.Goldie.exists_right_ore, sha256: aac07faa0d328633fb0969b79c329dbfbbcfb492ed318add4902979926f74dcb}
+
+  - label: lem:omega
+    kind: lemma
+    title: Kdim R <= omega gives finite Kdim R/I for I containing a regular element (H_all)
+    cite: "[McConnellRobson2001, 6.2.4, 6.3.9]"
+    challenge:
+      - {name: GeneralizedStaffordChallenge.knownDimension_hAll_of_omega, sha256: 695c6376a9221d06a9952186233b533d905a6ca2cf18d332a49ed1b97eaab2ee}
+    library:
+      - {name: GeneralizedStaffordChallenge.knownDimension_hAll_of_omega_proof, sha256: fd811a39c44a3085d27524a1a91d666988a35eac8e5de667a2df08ee284f3fa0}
+      - {name: GeneralizedStaffordChallenge.hAll_of_omega, sha256: b78f27658ff0f248d726b26bba89571dc7f20e2d36d7372670976e0fdf896fef}
+      - {name: GeneralizedStafford.principalQuotientsFinite_of_devLE_omega, sha256: 03a772117a46bea71a6076bb310a5674b30c7c47633e94c28c13e298d408e11b}
+      - {name: GeneralizedStafford.quotient_finite_of_omega, sha256: da6890772bb2c0c78ce6c6ff7da4f1af210317896303c072cf0507b0ca44a74f}
+
+  - label: lem:unit
+    kind: lemma
+    title: unit germs
+    library:
+      - {name: GeneralizedStafford.smul_mkQ_epic_iff, sha256: f1cd38d4e19b853a4d257a801f830599d7e02380d75546898459e3490b3c63f1}
+      - {name: GeneralizedStafford.quotient_section_epic_iff, sha256: d22a7df3c59c9773943b98cc1efb27ed1b4f6c893b3ed5fef151946c876c9d32}
+
+  - label: lem:schur
+    kind: lemma
+    title: critical germs (Schur, finite dimension, detection by top factors)
+    algebraic_analysis:
+      - {name: Module.Germ.Hom.exists_inverse_of_critical, sha256: c5c7c4b91fdc518d3c8eb115502a31fb4290ce51533e8442b764c6614a714412}
+      - {name: Module.Germ.End.divisionRing, sha256: 17a0de6fa290de0346aef69e0676c6616e8633abb1cc880e5fcff4bececa9e85}
+      - {name: Module.Germ.Hom.finite_finrank_le_topLength, sha256: a6b5e6b72b01e01649f97252e7f42e4b7977fb815c60f68e5f6a2e8567b3ef12}
+      - {name: Module.Germ.Hom.exists_topFactor_iso_of_ne_zero, sha256: d3f80a31de66b5dbcd99b9cbbe774fdca044f1f8a01ac1d2b72a8455df6e6796}
+
+  - label: lem:epic
+    kind: lemma
+    title: epic criterion
+    algebraic_analysis:
+      - {name: Module.Germ.Hom.epic_iff_injective_comp_topFactors, sha256: 9bc2c8ac224d9d9bcb45fc125bd895bd4861e76bb78770b4f439697f4669b254}
+
+  - label: lem:central
+    kind: lemma
+    title: central scalars act through the centre of the Schur ring
+    library:
+      - {name: GeneralizedStafford.section_central_scalar, sha256: fefa3a16ed26f41520e07ac7be1ebd98c1c561fd5f3572c7ef8e3401eaa02ebc}
+    algebraic_analysis:
+      - {name: Module.Germ.End.centralMap_commute, sha256: 3f3c8f7681bd4b5ba21fabfc70a470c87d4d236e0d77a2509e00fb613c4b77c0}
+
+  - label: lem:pencil
+    kind: lemma
+    title: pencils
+    algebraic_analysis:
+      - {name: AlgebraicAnalysis.TorsionEscape.centralPencil_injective_finite, sha256: 6433ebd2e463955e96c261b8a1814d7916c9bc2ca57fe16a2d1269288adbffca}
+      - {name: AlgebraicAnalysis.TorsionEscape.reversed_centralPencil_injective_finite, sha256: ddfe6285e6db60fdc7bdc725d7500e5a58b0a41068cc050950745219671b4c65}
+
+  - label: lem:escape
+    kind: lemma
+    title: escape
+    algebraic_analysis:
+      - {name: AlgebraicAnalysis.Goldie.IsGoldieTorsion.exists_smul_mul_not_mem, sha256: e533b0483c8e37db4d60f73f330a63f59f01ee35d44f6b4fabd305948d9a0830}
+
+  - label: lem:rank
+    kind: lemma
+    title: maximal rank
+    algebraic_analysis:
+      - {name: AlgebraicAnalysis.Goldie.IsGoldieTorsion.exists_injective_right_mul, sha256: da4fbf34d80693ff3861748a468514aa974d59ba0e400ea540b24626c77e8f1e}
+      - {name: AlgebraicAnalysis.TorsionEscape.exists_injective_of_escape, sha256: 0e32e6cd7bfc0a50e4ef9c84c23b0ef4e151a45575a0348d90f70b247dcf6f30}
+
+  - label: lem:sectiontorsion
+    kind: lemma
+    title: sections of a Goldie-torsion critical module are Goldie-torsion
+    algebraic_analysis:
+      - {name: AlgebraicAnalysis.Goldie.isGoldieTorsion_section, sha256: ec439ac9ef7552cc2df09c0868d2265d2fa4f3b19e6c010b19c3aa04ea14d6e1}
+
+  - label: lem:stability
+    kind: lemma
+    title: pencil stability of epic sections and of tests
+    library:
+      - {name: GeneralizedStafford.germ_pencil_finite, sha256: 55feb277fc7714b99c4b70148de1106759ad0dbaa954e818015d7d24152c0173}
+      - {name: GeneralizedStafford.GermTest.pencil_finite, sha256: f2dee37f4be35c6f29e7c0ee37a381d7ddbdb2fdcb45ba3a3a6e9b5171ebab5a}
+
+  - label: lem:select
+    kind: lemma
+    title: simultaneous tests (choosing x + H t)
+    library:
+      - {name: GeneralizedStafford.GermTest.exists_affine_satisfied, sha256: 9b8791ba47636a82809862631ae7b1b0d4b989eeed2053e506418b934cb35114}
+      - {name: GeneralizedStafford.exists_affine_epic_tests, sha256: 73ee30d21073a3bed75daef556f5b472ae246ab71844ed638fee1a9676699770}
+
+  - label: prop:C1
+    kind: proposition
+    title: (C.1) for Kdim M finite, and stable cyclicity for Kdim(uR) finite
+    challenge:
+      - {name: GeneralizedStaffordChallenge.corollaryC1, sha256: 1432b2c3d3a3aa5bdfbc54f2fbe753a47aa5bdcfe088170b42eac5a1905b60ba}
+      - {name: GeneralizedStaffordChallenge.corollaryC1_stable, sha256: 911937ee689243c53237499614e368b9a0eea29c11d92a6774a7b8a5ce708eb7}
+    library:
+      - {name: GeneralizedStafford.prescribed_cyclic, sha256: 45274e4ac2c095b751002956039103394fda4f62bf98d58eb8beb5d9585621b1}
+      - {name: GeneralizedStafford.span_pair_eq_span_affine, sha256: f11aff53051b0870cbb59df0b8a952733ebcf76990f1aa66fcadfeb4567a37be}
+
+  - label: prop:C2
+    kind: proposition
+    title: (C.2) two-generated right ideals
+    challenge:
+      - {name: GeneralizedStaffordChallenge.corollaryC2_fullRank, sha256: c308a0f30d56bcf0748ddaedc207100cf6a5f692547e9faaab431cd21fd1af88}
+      - {name: GeneralizedStaffordChallenge.corollaryC2_prescribed, sha256: d0beb4a894c32b7754b57bd6ca0a20600a7961f4bd87c9ba4cf026fe1e10ce6e}
+      - {name: GeneralizedStaffordChallenge.corollaryC2, sha256: 99bb82a24e55e834abbfa21ce45c16058a69062f28933480a6d01c0be96fbe7e}
+    library:
+      - {name: GeneralizedStaffordChallenge.corollaryC2_fullRank_proof, sha256: abfeb27fcb95085de07bc945ad13d229c5f945f0afdd43a19e3909703df05fb8}
+      - {name: GeneralizedStafford.two_generated_prescribed, sha256: 2405d97bd5ac85911aad0302b869197c66a3eb005b4a55661f809af1cd18d986}
+      - {name: GeneralizedStafford.two_generated, sha256: c4f17a183d0ab926c1f3b898641c989e7ad295e947493dcf40c74a39f12436ef}
+
+  - label: thm:filtered-facts
+    kind: theorem
+    title: filtered rings with commutative Noetherian gr
+    cite: "[McConnellRobson2001, 1.6.9, 6.5.6, 6.4.8]"
+    library:
+      - {name: GeneralizedStafford.right_side, sha256: a5d456bd1ca057f7ef77053ee224bc0995a15d360e57f30e33d54759d926bf94}
+
+  - label: thm:weyl-facts
+    kind: theorem
+    title: Weyl algebra, simple right Noetherian domain, infinite centre containing k, Kdim <= omega, transposition
+    cite: "[McConnellRobson2001, 1.3.5, 6.6.15]"
+    library:
+      - {name: GeneralizedStafford.Weyl.isSimpleRing, sha256: bc3fcb389c0679b32fe85bed3ae0873a3ced85d61a2e6837f5232fff9da12e4a}
+      - {name: GeneralizedStafford.Weyl.isNoetherian, sha256: ed9f29b9936e5977f13c0aac355a85510f8b8687fefc0152d636181c35821314}
+      - {name: GeneralizedStafford.Weyl.infinite_center, sha256: edc1997d6e761027caae9b666f7f4c19b0fa5711450166600f82f6a7883be4cc}
+      - {name: GeneralizedStafford.Weyl.hOmega, sha256: 68124060c075adbd3179b6becf204a2672b8a1a0bf52a9e3e2da12ea731c8ef8}
+      - {name: GeneralizedStafford.Weyl.transposeRingEquiv, sha256: 2a9388d3432c861c32de92d5b8276d52a6a6cbc9d4be34cb84b3c71349c89e25}
+    algebraic_analysis:
+      - {name: AlgebraicAnalysis.Weyl.isDomain, sha256: 5514d39f3d9cc018eec17e5dd8ef13237471fbe43895d1ab321ec7fa2e8cc8bd}
+
+  - label: thm:DX-facts
+    kind: theorem
+    title: D(X), simple Noetherian domain on both sides, infinite centre, finite Kdim on both sides
+    cite: "[McConnellRobson2001, 15.1.20, 15.3.7, 15.4.5, 15.4.7, 15.5.6]; [Bavula2010, Thm. 3.7]"
+    library:
+      - {name: GeneralizedStafford.DiffOp.isSimpleRing, sha256: 4c452172433479103befd1eb82c15844c4cfe0a39182f47fbd9cf4bca07d712a}
+      - {name: GeneralizedStafford.DiffOp.isDomain, sha256: 801497c14d23f63e697b794301c4bf569b385368158d26f123fff0e4b4ea6929}
+      - {name: GeneralizedStafford.DiffOp.noetherianRight, sha256: 56ed33061db1d1c085658faf22f655f5de53daa2f822e5e7e163fd28bba357c9}
+      - {name: GeneralizedStafford.DiffOp.noetherianLeft, sha256: 2ee865d9b5f4593a6b11fed4b9e0cd8291a20e729beb78a10aa916f0835c9271}
+      - {name: GeneralizedStafford.DiffOp.infiniteCenterRight, sha256: 2161943fec96ff0d9d9d4a9193c406b75dcdec15e8e15905533b7fe5fe46e68b}
+      - {name: GeneralizedStafford.DiffOp.homegaRight, sha256: a45bd4f9a5e0ca09b765df1e9b4817cfd20ca6ea322bbcd2347698945ccc30a5}
+      - {name: GeneralizedStafford.DiffOp.homegaLeft, sha256: 983139b68e971d050e9539c63efa524699ec3d22256aedff67847179a0d3c40d}
+    algebraic_analysis:
+      - {name: AlgebraicAnalysis.DifferentialOperators.SmoothOperators.devLE_right, sha256: d68ec09156473d2c348ff26cc223841a24871a0d386db05f39fa80d6b691f0fe}
+      - {name: AlgebraicAnalysis.DifferentialOperators.SmoothOperators.devLE_left, sha256: f7784ac9c04ce3d286c2deed3dd5eea1a04361ac364bb506ffcbc0f3d8982807}
+
+  - label: thm:apps-a
+    kind: theorem
+    title: Applications (a) simple filtered rings with commutative Noetherian gr
+    challenge:
+      - {name: GeneralizedStaffordChallenge.filteredHypotheses, sha256: 8f706f394860edfe30771cd46430b29ac4b41760a8b05808e541ead709de9cc9}
+      - {name: GeneralizedStaffordChallenge.filteredTheoremA, sha256: 5d22d1afe18b432a672d960dd1824edf77fa8eba3cd7687e03ed77d582a05228}
+      - {name: GeneralizedStaffordChallenge.filteredFixedIdeal, sha256: cf93245748447b35b11975bcbb59dbf1eb1e8c8b991e37d76743dc43bb1bf232}
+      - {name: GeneralizedStaffordChallenge.filteredPrescribedCyclic, sha256: 4c43b2b2e2c394e3ade1bd5b17f71db8cb0b154e6202cc9314ebc3572e2ef567}
+      - {name: GeneralizedStaffordChallenge.filteredTwoGenerated, sha256: fe005151af044f5496fdbe373b5b3e9b53391bfb23396324c63934cb8a55dcd8}
+      - {name: GeneralizedStaffordChallenge.corollaryC2_fullRank, sha256: c308a0f30d56bcf0748ddaedc207100cf6a5f692547e9faaab431cd21fd1af88}
+    library:
+      - {name: GeneralizedStafford.filtered_hypotheses, sha256: 8dd913ef22eed49d587b601e6f62326b820d19c6205d320dd358ffa61d0363c0}
+      - {name: GeneralizedStafford.filtered_theoremA, sha256: 5a72bf764ece11bb34ac82b7e167e37873f67d987dc1614a02dbbc50e6a86a67}
+      - {name: GeneralizedStafford.filtered_fixedIdeal, sha256: d698e2a0f11a859b806ae54fcdb688b64d51ccd38099d7f8c8abf53461c50cfd}
+      - {name: GeneralizedStafford.filtered_prescribedCyclic, sha256: 5ed8b5433d4409d0c3b349f8158194e63d48198141c991b96ed3e70ad93b1932}
+      - {name: GeneralizedStafford.filtered_twoGenerated, sha256: 272c50503228a30882aa8309618e2351ccc79dff82e409a037c52cada96c1cbe}
+
+  - label: thm:apps-b
+    kind: theorem
+    title: Applications (b) Weyl algebras A_n(k), char 0
+    challenge:
+      - {name: GeneralizedStaffordChallenge.weylConjecture38, sha256: 6096ec80654ada1cbd745958e40773108cb084473fbf05a921f1023a36f1b98f}
+      - {name: GeneralizedStaffordChallenge.weylAffineForm, sha256: 02c4497f6e521b4735b66fb0dcbd0d566a5d1161f15191e36fff7165806197ed}
+      - {name: GeneralizedStaffordChallenge.weylFixedIdeal, sha256: 04f85966e8fec9ea4bc3533e8621c8823ae05f81026e1dfd1af59de237efe0ad}
+      - {name: GeneralizedStaffordChallenge.weylTorsionCyclicRight, sha256: 33ef044fdf082a78646014ef3ee3980b4c0ca488b839f7879ed83d05bf85a6ae}
+      - {name: GeneralizedStaffordChallenge.weylTorsionCyclicLeft, sha256: ba2ae850b7ada368ef28af472b978bfe50b1e1329f831c421c11a43db0cbb421}
+      - {name: GeneralizedStaffordChallenge.weylPrescribedCyclicRight, sha256: c9f772337a237ecd8120f6d0163be2f381b6231d6037909145b00ed90bbc03ea}
+      - {name: GeneralizedStaffordChallenge.weylPrescribedCyclicLeft, sha256: 09911be12d9fa460db3b3f138e27ee8a2c95d4edf6bf4683108e0ad80e1591fe}
+      - {name: GeneralizedStaffordChallenge.weylTwoGeneratedRight, sha256: 0fd54a9ab4417af486ac4bb6c13b76f8b2c2724ff1400a4957da8d480f686fd9}
+      - {name: GeneralizedStaffordChallenge.weylTwoGeneratedLeft, sha256: d08dd2975d582453e5afd29acea74fb8289e3ef6b50ab4f949283bb3986dd4fe}
+      - {name: GeneralizedStaffordChallenge.weylPrescribedTwoGeneratedRight, sha256: 62ee1d2db01f0fedcb7edf9e1017d74abb8dacdce0c85e7365bdbaf9a283923b}
+      - {name: GeneralizedStaffordChallenge.weylPrescribedTwoGeneratedLeft, sha256: 2d5fd7625787be1cd2a4e50552b4ab65ecc004772a195d215557d0e0ebf13645}
+    library:
+      - {name: GeneralizedStafford.Weyl.conjecture38, sha256: a533032e1244474ce935bbe3c10408cadd0427413b19e5cc2d5a65c3189a96d7}
+      - {name: GeneralizedStafford.Weyl.affineForm, sha256: 7301991f4767749fc47330e903d4316b04f9f4ad9fb63c23b6ba53e617eb3672}
+      - {name: GeneralizedStafford.Weyl.fixedIdealForm, sha256: 9359a5396e4c305e7b795b7ac42654ea321a1b76c361840ee026199cdf96f8d8}
+      - {name: GeneralizedStafford.Weyl.torsionCyclicRight, sha256: f5fb7edf6b458fb43cb62accd7bd1f04f3fe01773640c7f880131cf5140d65e4}
+      - {name: GeneralizedStafford.Weyl.torsionCyclicLeft, sha256: 428e0ca78d1737674f0c50934037b03c2a72d6f7530f7ff014a1400792250d43}
+      - {name: GeneralizedStafford.Weyl.prescribedCyclicRight, sha256: 22f566049faf13e7ce83f8422fd28a74e35d884ce183fc7e926152e4c1c82d8d}
+      - {name: GeneralizedStafford.Weyl.prescribedCyclicLeft, sha256: 3e42e69a29740b7d968994992a970a13ec53afdf3de9e36fb0fec3ec64bb0af7}
+      - {name: GeneralizedStafford.Weyl.twoGeneratedRight, sha256: 4b57c4f909b8f0069e92fbbb31b4755cef4eb35df4b72dd2c28535bfdb0c91e6}
+      - {name: GeneralizedStafford.Weyl.twoGeneratedLeft, sha256: de0cb6b727aebe2ce6dda96e34cda4d219a977658800839aeafd6fc338c13526}
+      - {name: GeneralizedStafford.Weyl.prescribedTwoGeneratedRight, sha256: 15224496f83b0c22289d3464663b4573dc3703a4d7e410fdc29323d2a9f44f1b}
+      - {name: GeneralizedStafford.Weyl.prescribedTwoGeneratedLeft, sha256: 1d1042494594af14d9c58f1aded2575973767a6f5ecf1e5bb9dc76e1b4632e3f}
+
+  - label: thm:apps-c
+    kind: theorem
+    title: Applications (c) differential operators D(X), X smooth affine, char 0
+    challenge:
+      - {name: GeneralizedStaffordChallenge.diffOpTwoGeneratedRight, sha256: 17f498ff16c556a52513763d9d748d30f18c06abee8b111c6465f12eb604ee5a}
+      - {name: GeneralizedStaffordChallenge.diffOpTwoGeneratedLeft, sha256: d60e94ecb8fe72e8c0bf3dc1a6c6976b4d6abd77e065efd042ea9eb5e8c3bdfa}
+      - {name: GeneralizedStaffordChallenge.diffOpFixedAnchor, sha256: 8a4dbb823f11a8a1d6e9c1843a6e4f03682d14de5d6fc1c3ddf31ddfebb7d7c9}
+      - {name: GeneralizedStaffordChallenge.diffOpGlobalStafford, sha256: bc6cc20b18e85e7c67de5f4ab3ca0430b00e24e96c03549889bad8fa8973566f}
+      - {name: GeneralizedStaffordChallenge.diffOpCyclicRight, sha256: 28009b44ba3155146ab0ab58aaa1417ce5ec3c0b28a3319263402e7b1a31d0c3}
+      - {name: GeneralizedStaffordChallenge.diffOpCyclicLeft, sha256: c5a89289953397fe8a23831c90ef6dadac276acf954df5b98bce0133865013d9}
+    library:
+      - {name: GeneralizedStafford.DiffOp.twoGeneratedRight, sha256: 8c61323d10d9c4dc7788556b51eb48cbc8f11fa5fc15b9db9cb2ea346db8342f}
+      - {name: GeneralizedStafford.DiffOp.twoGeneratedLeft, sha256: 033a8dc87cfd2675eb45a67a14ceedc217898cd2de540efa375549872c0a22a1}
+      - {name: GeneralizedStafford.DiffOp.affineForm_right, sha256: 6b51a7921b528ab0a91ab2484c6c55bef76d19aa6719f1e69f3351222f77ee69}
+      - {name: GeneralizedStafford.DiffOp.affineForm_left, sha256: 03a8a65394ded929f080a87e7c7ce3a0e4f9c5e767732c471114f5a23ccd7987}
+      - {name: GeneralizedStafford.DiffOp.globalStafford, sha256: e3c96fc1391c391147fef34e258f8630fc0d78dd1e143026f86af92ea9594588}
+      - {name: GeneralizedStafford.DiffOp.prescribedCyclicRight, sha256: ecb63aba4d6b72acc89b4fe2b9c0f39ac4d26fbf55e7b84ac11377e75e44fb28}
+      - {name: GeneralizedStafford.DiffOp.prescribedCyclicLeft, sha256: b5c0d588df0b71e91b74c2a35fdc415d3c89ce81268e1527adc3de34099bd2c1}
+
+  - label: thm:apps-d
+    kind: theorem
+    title: Applications (d) simple quotients U(g)/J of enveloping algebras
+    challenge:
+      - {name: GeneralizedStaffordChallenge.envelopingHypotheses, sha256: 0fb37880f9ab472132569671da212ea091bef24392f5474f017351178dbe1738}
+      - {name: GeneralizedStaffordChallenge.envelopingTheoremA, sha256: 2d20a3e03072a9fc599192187d70e3aa57bb00789dd1b8abe6ead271ce4d88c6}
+      - {name: GeneralizedStaffordChallenge.envelopingFixedIdeal, sha256: 1ce38a4d5b3c0ef5597706e73200ff88b683ea47b5991d443c3ec4b524be24fb}
+      - {name: GeneralizedStaffordChallenge.envelopingPrescribedCyclic, sha256: abd0a36df665a8ba7baa178a74d003e0257971afecbf439677b5cce776a57acf}
+      - {name: GeneralizedStaffordChallenge.envelopingTwoGenerated, sha256: 02714d8d4441cca45a12dd193638ebf126a04bf70228ee40c801676d8be12019}
+    library:
+      - {name: GeneralizedStafford.enveloping_hypotheses, sha256: bbfd4f7daf658bde6e26592d3bcfd1f89fd420a9f2e74a25b0cdc7c0a602b88e}
+      - {name: GeneralizedStafford.enveloping_theoremA, sha256: 639c43acab42807caba73e780f83b016a581ff5f4bb365d5a66a7d58e686d3cf}
+      - {name: GeneralizedStafford.enveloping_fixedIdeal, sha256: 21d5d4c55574101c479599c4f294bc059107483d0844309eec2a8cfd3b5f5920}
+      - {name: GeneralizedStafford.enveloping_prescribedCyclic, sha256: 065b4bfe137bfcb6818b7ab5f0f028b567c21fd101a143bc7b46a9004ad414af}
+      - {name: GeneralizedStafford.enveloping_twoGenerated, sha256: 7f4655663f97d604bc7efc76cf2ab891696b58efb5a01249a51ac0a0e1eee3b3}
+
+  - label: thm:apps-e
+    kind: theorem
+    title: Applications (e) simple quantizations (filtered, gr a domain)
+    challenge:
+      - {name: GeneralizedStaffordChallenge.filteredDomain, sha256: 9743bbdcf086d9d801b5ebe57dc4cd46211ea29b18a11ee19ccef81765dcdd6a}
+    library:
+      - {name: GeneralizedStaffordChallenge.filteredDomain_proof, sha256: 56625c29cb3bf3e1959945f3979734f66c97bbcbbf6486ca2ef0651ed93e4111}
+
+# Neutral proof-step labels (rule 5): a reorganized proof on either side
+# shows up as a broken mapping.
+proof_steps:
+  - step: select
+    title: Lemma select, choice of x + H t satisfying finitely many germ tests
+    library:
+      - {name: GeneralizedStafford.GermTest.exists_affine_satisfied, sha256: 9b8791ba47636a82809862631ae7b1b0d4b989eeed2053e506418b934cb35114}
+  - step: select-steps-1-2
+    title: Lemma select, Steps 1 and 2 (an H making every map injective)
+    library:
+      - {name: GeneralizedStafford.exists_affine_direction_of_goldie, sha256: 4c9d74cce72da9e7c96f682c1c844925c174781309232be4b0bb245ae906a81d}
+  - step: select-step-1
+    title: Lemma select, Step 1 (one H_0 for all pairs, by induction on the pairs)
+    algebraic_analysis:
+      - {name: AlgebraicAnalysis.TorsionEscape.exists_simultaneously_injective, sha256: 23fb1b46ae49a13ecc85c85c4d7e50c9cda684ab7726ec926f1f0f5ea264e95b}
+  - step: pencil-stability
+    title: an epic germ v stays epic under v + u c for all but finitely many central c
+    library:
+      - {name: GeneralizedStafford.germ_pencil_finite, sha256: 55feb277fc7714b99c4b70148de1106759ad0dbaa954e818015d7d24152c0173}
+  - step: descent-base
+    title: proof of Theorem A', base P(N+1)
+    library:
+      - {name: GeneralizedStafford.idealBound_initial, sha256: 1b92cea01ee49cb055e7f0197800d2304207b2a849e81f6a74a8b11f11a1de6d}
+  - step: descent-step
+    title: proof of Theorem A', Steps 1-8, P(e+1) implies P(e)
+    library:
+      - {name: GeneralizedStafford.idealBound_step, sha256: dbd03aecb9c84d26c9807903b6a5ef452b2e0e2a153e1a2824522dcda6a88916}
+  - step: descent-termination
+    title: proof of Theorem A', endpoint P(0)
+    library:
+      - {name: GeneralizedStafford.idealBound_zero, sha256: 422167d71e102177e4be234c491d7a9676e424e3589d4be3db723edbe22013e9}

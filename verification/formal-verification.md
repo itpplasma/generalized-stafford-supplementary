@@ -10,8 +10,8 @@ establishes. [PLAN.md](../PLAN.md) holds the current gate states.
 | Pins | `scripts/check-pins.py` (run by `scripts/verify.sh`) | `lean-toolchain`, `lakefile.toml` and `lake-manifest.json` match `dependency-pins.json`; one shared Mathlib package. |
 | Build | `lake build` | The library and the solution compile at the pins. |
 | Axiom audit | `scripts/verify.sh` | Every name in [endpoints.txt](endpoints.txt) exists and depends only on `propext`, `Classical.choice` and `Quot.sound`, checked with `--trust=0`. |
-| Palomar check (local replay) | `scripts/verify-palomar.sh` | The challenge and solution copies are byte-identical, the challenge has exactly 46 `sorry` holes; the solution proves each theorem of `comparator.json` with the challenge's exact name and type; the challenge imports only Mathlib; the solution does not import the challenge; NanoDa and the Lean kernel accept the solution. |
-| Statement faithfulness | independent statement-faithfulness audit (2 November 2026) passed; audited challenge sha256 `4cb2cd5e7a6043f4c38fecddb78850d6f8012048c91a7de7e188d18598dc9e95`; later changes name/docstring-only, confirmed by the final review | The challenge statements say what the written theorems say. |
+| Palomar check (local replay) | `scripts/verify-palomar.sh` | The challenge and solution copies are byte-identical, the challenge has exactly 41 `sorry` holes; the solution proves each theorem of `comparator.json` with the challenge's exact name and type; the challenge imports only Mathlib; the solution does not import the challenge; NanoDa and the Lean kernel accept the solution. |
+| Statement faithfulness | statement-faithfulness audit | PASS: independent statement-faithfulness audits of 2 November 2026 of the 40-theorem challenge (sha256 `07efe11f…`, all statements unchanged from the audited 46-theorem challenge except the new `corollaryC2_omega`; repair applied: `knownDimension_hAll_of_omega` added) and of that addition (sha256 `778588a0…`); the final change is docstring-only (precise McConnell--Robson locators 6.2.3 and 6.3.9), sha256 `272c7eb9454d5ef02e6d5bb5ea41e0cbc3d112be9d2a5e931a29b7226dfd413f`. |
 | Human review | none yet | Required before any claim of human verification. |
 
 Machine checks establish that the Lean proofs are correct for the Lean
@@ -19,7 +19,20 @@ statements. Whether those statements match the intended mathematics is the separ
 statement-faithfulness question. Neither check is human review, and none of
 them is publication.
 
-## Release verification record
+## Verification record: challenge restricted to the paper
+
+Status: commit `e63321970bcb7cf360a378bf48368f23d9bc1e6a` on branch `paper-scope`, 2 November 2026, with the pins of the record below (AlgebraicAnalysis `22b3946c0cfc13960cd238319acea76ae0d5f168`, Mathlib `c55e6e786f49471c72fbddbec5415808896aec1e`). The challenge was reduced to the numbered results of the paper: `corollaryB_dimension`, `corollaryC3_lower`, `corollaryC3_upper`, `filteredCorollaryB`, `filteredGeneratorBounds`, `envelopingCorollaryB` and `envelopingGeneratorBounds` were removed, with the challenge definitions only they used and the library module `GeneralizedStafford/GeneratorBounds.lean`, and `corollaryC2_omega` (the omega case of C.2, which Corollary C states) and `knownDimension_hAll_of_omega` (McConnell-Robson 6.3.9, the cited input of Corollary B) were added. The 39 other statements are unchanged. Commands, as below, each under a 16 GiB memory cap:
+
+```sh
+PYTHON=python3 scripts/verify.sh
+scripts/verify-palomar.sh
+```
+
+Both exited 0. `verify.sh`: pins, full build of `GeneralizedStafford` and `GeneralizedStaffordSolution`, 81 endpoint axiom reports with `--trust=0`, axioms exactly `propext`, `Classical.choice`, `Quot.sound`. `verify-palomar.sh`: duplicate files byte-identical, exactly 41 `sorry` holes, both import-closure checks passed, and in the local replay of the Palomar check (same tool revisions as below; Landrun in best-effort mode) all 41 compared theorems were accepted (`nanoda kernel accepts the solution`, `Lean default kernel accepts the solution`, `Your solution is okay!`). `tests/SolutionOracle.lean` reports the three standard axioms for each of the 41 theorems. The challenge sha256 is `272c7eb9454d5ef02e6d5bb5ea41e0cbc3d112be9d2a5e931a29b7226dfd413f`. No statement-faithfulness audit has been run on this file yet.
+
+## Release verification record of the 46-theorem challenge
+
+This record and the statement audits it lists apply to the earlier challenge, superseded by the record above.
 
 Status: commit `17f84e3bc693b309f40dc5c75a901ec891214bf0`, 2 November 2026, with AlgebraicAnalysis pinned at `22b3946c0cfc13960cd238319acea76ae0d5f168` and Mathlib at `c55e6e786f49471c72fbddbec5415808896aec1e`. Its parent commits move the application-independent Goldie splitting lemmas of `GeneratorBounds.lean` to AlgebraicAnalysis (`AlgebraicAnalysis.RingTheory.Goldie.Splitting`) and re-pins it; the challenge, solution and `comparator.json` bytes are those of `4eca6de8e3ce`. Commands, from the repository root with `~/.elan/bin` on `PATH`:
 
